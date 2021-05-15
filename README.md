@@ -1,2 +1,2 @@
 # sandmark-nightly
-Stores nightly runs of sandmark
+Stores nightly runs of sandmark.
