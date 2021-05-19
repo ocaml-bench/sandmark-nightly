@@ -59,6 +59,7 @@ rm -rf _results/
 
 #push to sandmark-nightly
 cd $SANDMARK_NIGHTLY_DIR/sandmark-nightly
+git pull
 git add .
 git commit -m "this is an automated commit"
 git push
