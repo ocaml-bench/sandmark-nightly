@@ -32,6 +32,7 @@ mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$TIMESTAMP
 cd $SANDMARK_NIGHTLY_DIR/sandmark/
 git pull origin master
 make clean
+eval $(opam env)
 
 #sequential benchmarks
 TAG='"macro_bench"' make run_config_filtered.json
