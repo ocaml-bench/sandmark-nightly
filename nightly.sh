@@ -1,25 +1,24 @@
 #!/bin/bash
 
-#add local path to crontab path
-#PATH=$PATH:/home/shubham/.local/bin:/home/shubham/.opam/4.10.0+multicore/bin:/home/shubham/.local/bin:/home/shubham/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-
 #TOKEN required for automatic commit to sandmark-nightly repo
-TOKEN=${TOKEN:-""}
+#To generate the token use the following tutorial link
+#https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+TOKEN=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
 
 #check if sandmark and sandmark-nightly repo exist in the default or custom SANDMARK_NIGHTLY_DIR
 function check_sandmark_subdir {
-	if [ $(find $1 -name "sandmark-nightly" | wc -l) -lt 1 ]; then
-		git clone https://$TOKEN@github.com/shubhamkumar13/sandmark-nightly.git $1/
+	if [ ! -d $1/sandmark-nightly ]; then
+		git clone https://$TOKEN@github.com/shubhamkumar13/sandmark-nightly.git $1/sandmark-nightly
 	fi;
-	if [ $(find $1 -name "sandmark" | wc -l) -lt 1 ]; then
-		git clone https://github.com/ocaml-bench/sandmark.git $1/
+	if [ ! -d $1/sandmark ]; then
+		git clone https://github.com/ocaml-bench/sandmark.git $1/sandmark
 	fi;
 }
 
 #if nothing specified then default sandmark directory
-SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR:-""}
-if [ ! -z $SANDMARK_NIGHTLY_DIR ]; then 
-	mkdir -p $(HOME)/sandmark_nightly_workspace && SANDMARK_NIGHTLY_DIR=$(HOME)/sandmark_nightly_workspace
+SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR:-"$HOME/sandmark_nightly_workspace"}
+if [ ! -d $SANDMARK_NIGHTLY_DIR ]; then 
+	mkdir $SANDMARK_NIGHTLY_DIR
 fi;
 
 check_sandmark_subdir $SANDMARK_NIGHTLY_DIR
