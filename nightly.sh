@@ -3,7 +3,7 @@
 #TOKEN required for automatic commit to sandmark-nightly repo
 #To generate the token use the following tutorial link
 #https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-TOKEN=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
+TOKEN=${TOKEN:-""}
 
 #check if sandmark and sandmark-nightly repo exist in the default or custom SANDMARK_NIGHTLY_DIR
 function check_sandmark_subdir {
