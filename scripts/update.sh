@@ -3,7 +3,7 @@
 cd /srv/data/sandmark-nightly
 git pull
 
-sudo cp -a /etc/skel/sandmark-nighty/*.ipynb /etc/skel/
+sudo cp /srv/data/sandmark-nightly/notebooks/*.ipynb /etc/skel/
 
 IN=$(grep 'jupyterhub-users' /etc/group)
 
