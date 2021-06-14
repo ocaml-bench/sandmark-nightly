@@ -1,5 +1,5 @@
 # sandmark-nightly
-Stores nightly runs of sandmark.
+Stores nightly runs of sandmark
 
 # How to setup on an AWS machine
 
