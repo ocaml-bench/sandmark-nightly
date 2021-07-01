@@ -3,7 +3,7 @@
 #TOKEN required for automatic commit to sandmark-nightly repo
 #To generate the token use the following tutorial link
 #https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-TOKEN=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
+TOKEN=
 
 #git urls of ocaml 4.12.0, ocaml 4.12+domains+effects, ocaml 4.12+domains
 OCAML_412_DOMAINS_EFFECTS="https://github.com/ocaml-multicore/ocaml-multicore.git refs/heads/4.12+domains+effects"
@@ -88,7 +88,7 @@ RUN_BENCH_TARGET=pausetimes_multicore \
 	RUN_CONFIG_JSON=multicore_parallel_run_config_filtered.json \
 	make ocaml-versions/4.12.0+domains+effects+instrumented.bench
 
-cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_trunk.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
+cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_multicore.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
 rmm -rf _results/
 
 #push to sandmark-nightly
