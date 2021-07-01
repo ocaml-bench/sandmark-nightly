@@ -3,7 +3,7 @@
 #TOKEN required for automatic commit to sandmark-nightly repo
 #To generate the token use the following tutorial link
 #https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-TOKEN=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
+TOKEN=
 
 #git urls of ocaml 4.12.0, ocaml 4.12+domains+effects, ocaml 4.12+domains
 OCAML_412_DOMAINS_EFFECTS="https://github.com/ocaml-multicore/ocaml-multicore.git refs/heads/4.12+domains+effects"
