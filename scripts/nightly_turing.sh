@@ -43,6 +43,10 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS
 mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_STOCK
 mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_STOCK/
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
+
 
 #get the latest sandmark pull
 cd $SANDMARK_NIGHTLY_DIR/sandmark/
@@ -73,8 +77,8 @@ rm -rf _results/
 #pausetimes benchmarks
 #sequential
 TAG='"macro_bench"' make run_config_filtered.json
-RUN_BENCH_TARGET=pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+stock+instrumented.bench
-RUN_BENCH_TARGET=pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+domains+effects+instrumented.bench
+RUN_BENCH_TARGET=run_pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+stock+instrumented.bench
+RUN_BENCH_TARGET=run_pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+domains+effects+instrumented.bench
 
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+stock+instrumented_1.pausetimes_trunk.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_STOCK/
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_trunk.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
@@ -83,17 +87,17 @@ rm -rf _results/
 #parallel
 TAG='"macro_bench"' make multicore_parallel_run_config_filtered.json
 
-RUN_BENCH_TARGET=pausetimes_multicore \
+RUN_BENCH_TARGET=run_pausetimes_multicore \
 	BUILD_BENCH_TARGET=multibench_parallel \
 	RUN_CONFIG_JSON=multicore_parallel_run_config_filtered.json \
 	make ocaml-versions/4.12.0+domains+effects+instrumented.bench
 
-cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_multicore.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
-rmm -rf _results/
+cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_multicore.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
+rm -rf _results/
 
 #push to sandmark-nightly
 cd $SANDMARK_NIGHTLY_DIR/sandmark-nightly
-git pull ocaml-bench main
+git pull origin main
 git add .
 git commit -m "this is an automated commit (turing)"
-git push ocaml-bench main
+git push origin main
