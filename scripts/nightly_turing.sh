@@ -77,8 +77,8 @@ rm -rf _results/
 #pausetimes benchmarks
 #sequential
 TAG='"macro_bench"' make run_config_filtered.json
-RUN_BENCH_TARGET=pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+stock+instrumented.bench
-RUN_BENCH_TARGET=pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+domains+effects+instrumented.bench
+RUN_BENCH_TARGET=run_pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+stock+instrumented.bench
+RUN_BENCH_TARGET=run_pausetimes_trunk RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/4.12.0+domains+effects+instrumented.bench
 
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+stock+instrumented_1.pausetimes_trunk.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_STOCK/
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_trunk.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
