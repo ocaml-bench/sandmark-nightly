@@ -75,8 +75,8 @@ def app():
 
     current = os.getcwd().split('/')
     current.pop()
-    artifacts_dir = '/'.join(current) + '/pausetimes'
-    print(artifacts_dir)
+    artifacts_dir = '/'.join(current) + '/sandmark-nightly' + '/pausetimes'
+    # print(artifacts_dir)
 
     benches = BenchStruct("parallel", artifacts_dir, "_1.pausetimes_multicore.summary.bench")
     benches.add_files(benches.get_bench_files())

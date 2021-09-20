@@ -19,7 +19,7 @@ def app():
     
     current = os.getcwd().split('/')
     current.pop()
-    artifacts_dir = '/'.join(current)
+    artifacts_dir = '/'.join(current) + '/sandmark-nightly'
     benches = benchstruct.BenchStruct("parallel", artifacts_dir, "_1.orunchrt.summary.bench")
     benches.add_files(benches.get_bench_files())
     benches.sort()

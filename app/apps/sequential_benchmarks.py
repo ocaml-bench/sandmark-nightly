@@ -106,7 +106,8 @@ def app():
 
 	current = os.getcwd().split('/')
 	current.pop()
-	artifacts_dir = '/'.join(current)
+	artifacts_dir = '/'.join(current) + '/sandmark-nightly'
+	# print(artifacts_dir)
 	benches = benchstruct.BenchStruct("sequential", artifacts_dir, "_1.orun.summary.bench")
 	benches.add_files(benches.get_bench_files())
 	benches.sort()
@@ -126,7 +127,7 @@ def app():
 
 	def unzip_dict(d):
 		a = unzip(list(d))
-		# print(a[1])
+		# print(a)
 		(x, y) = a[0], flatten(a[1])
 		return (x, y)
 
@@ -149,6 +150,7 @@ def app():
 			# create the selectbox in columns
 			host_val = containers[i][0].selectbox('hostname', benches.structure.keys(), key = str(i) + '0_' + benches.config["bench_type"])
 			timestamp_val = containers[i][1].selectbox('timestamp', benches.structure[host_val].keys(), key = str(i) + '1_' + benches.config["bench_type"])
+			# st.write(benches.structure)
 			commits, variants = unzip_dict((benches.structure[host_val][timestamp_val]).items())
 			# st.write(variants)
 			fmtted_variants = [fmt_variant(c, v) for c,v in zip(commits, variants)]
@@ -170,7 +172,7 @@ def app():
 
 	def get_dataframe(file):
 		# json to dataframe
-
+		# print(file)
 		with open(file) as f:
 			data = []
 			for l in f:

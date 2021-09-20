@@ -44,6 +44,7 @@ class BenchStruct:
                     f = root.split("/" + self.config["bench_type"])
                     bench_files.append((os.path.join(root,file)))
         
+        # print(bench_files)
         return bench_files
 
 

@@ -75,7 +75,7 @@ def app():
 
     current = os.getcwd().split('/')
     current.pop()
-    artifacts_dir = '/'.join(current) + '/pausetimes'
+    artifacts_dir = '/'.join(current) + '/sandmark-nightly' + '/pausetimes'
     benches = BenchStruct( "sequential", artifacts_dir, ["_1.pausetimes_trunk.summary.bench","_1.pausetimes_multicore.summary.bench"])
     benches.add_files(benches.get_bench_files())
     benches.sort()
