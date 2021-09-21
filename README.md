@@ -12,4 +12,4 @@ Stores nightly runs of sandmark
 # How to run the webapp locally
 1. Install [streamlit](https://docs.streamlit.io/en/stable/installation.html)
 2. Clone the repo `git clone https://github.com/ocaml-bench/sandmark-nightly.git` and `cd sandmark-nightly`
-3. When inside the repo directory run `streamlit run app/app.py` the app should ideally be now hosted at `localhost:8501`
+3. When inside the repo directory run `streamlit run app/app.py` the app should ideally host at `localhost:8501`
