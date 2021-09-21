@@ -123,7 +123,7 @@ def app():
             d['n'+topic] = 1 / d[topic].div(fastest_sequential[n],axis=0)
             d['b'+topic] = int(fastest_sequential[n])
             frames.append(d)
-        return pd.concat(frames)
+        return pd.concat(frames, ignore_index=True)
 
 
     # Sequential runs
@@ -145,6 +145,7 @@ def app():
     # mdf.sort_values(['name','variant','num_domains'])
 
     mdf = mdf.sort_values(['name'])
+    # mdf = mdf[~mdf.index.duplicated()]
     time_g = sns.relplot(x='num_domains', y = 'time_secs', hue='variant', col='name',
             data=mdf, kind='line', style='variant', markers=True, col_wrap = 5, 
             lw=5, palette="muted")
