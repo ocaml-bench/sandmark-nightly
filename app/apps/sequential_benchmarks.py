@@ -1,3 +1,4 @@
+from pandas.core.frame import DataFrame
 import streamlit as st
 from re import U, split, sub
 import numpy as np
@@ -170,27 +171,78 @@ def app():
 
 	selected_files = flatten(selected_benches.to_filepath())
 
+	def dataframe_intersection(data_frames):
+		pass
+
 	def get_dataframe(file):
 		# json to dataframe
 		# print(file)
 		with open(file) as f:
 			data = []
 			for l in f:
-				data.append(json.loads(l))
-			df = pdjson.json_normalize(data)
+				temp = json.loads(l)
+				data.append(temp)
+			df = pd.json_normalize(data)
 			value     = file.split('/' + benches.config["bench_type"] + '/')[1]
 			date      = value.split('/')[1].split('_')[0]
 			commit_id = value.split('/')[2][:7]
 			variant   = value.split('/')[3].split('_')[0]
 			df["variant"] = variant + '_' + date + '_' + commit_id
-		
 		return df
+
 
 
 	def get_dataframes_from_files(files):
 		data_frames = [get_dataframe(file) for file in files]
-		df = pd.concat (data_frames, sort=False)
-		df = df.sort_values(['name'])
+		# col_headers = reduce(lambda x, y : list(set(x["name"]) & set(y["name"])), data_frames)
+		# col_headers.remove("variant")
+		# st.write(col_headers)
+		smallest_size_df = min(data_frames, key=lambda x : x.index.stop)
+		# smallest_size_df_name_lst = list(smallest_size_df["name"])
+		# new_adf = []
+		# new_data_frames = []
+		# for adf in data_frames[1:]:
+		# 	for _, row in adf.iterrows():
+		# 		if row["name"] in smallest_size_df_name_lst:
+		# 			new_adf.append(row)
+		# 	new_data_frames.append(pd.DataFrame(new_adf))
+		# print(type(new_data_frames[0]))
+		# new_data_frames = []
+		# for d in data_frames:
+		# 	if smallest_size_df.equals(d):
+		# 		continue 
+		# 	else:
+		# 		diff = smallest_size_df.compare(d)
+		# 		st.write(diff["name"])
+		# lst = smallest_size_df["name"]
+		# def fun(e):
+		# 	return e in lst
+		new_data_frames = []
+		diff_data_frames = []
+		for d in data_frames:
+			diff = pd.concat([d,smallest_size_df]).drop_duplicates(subset = ['name'], keep=False)
+			diff_data_frames.append(diff)
+			# st.write(d[~d.name.isin(diff.name)])
+		# 	# cond = diff["name"].isin(d["name"])
+		# 	# d.drop(d[cond].index, inplace=True)
+		# 	# st.write(diff)
+		# 	# st.write(d)
+		# 	# st.write(d[~d.name.isin(diff.name)])
+		# 	# new_data_frames.append(d[~d.name.isin(diff.name)])
+		# 	# st.write(type(d.name))
+		# 	# d = d[(d.name != diff.name)]
+		# 	st.write(d.name.isin(diff.name))
+			# st.write("DIFF")
+			# st.write(diff)
+		for d in data_frames:
+			for diff in diff_data_frames:
+				new_d = d[~d.name.isin(diff.name)]
+			new_data_frames.append(new_d)
+			# st.write(new_d)
+
+		df = pd.concat(new_data_frames, sort=False)
+		df.sort_values(['name'])
+		# st.write(df)
 		return df
 
 	def plot(df, y_axis):
@@ -232,16 +284,16 @@ def app():
 		df = df.sort_values(["name","variant"])
 		grouped = df.filter(items=['name',topic,'variant','display_name']+additionalTopics).groupby('variant')
 		ndata_frames = []
+		# st.write(grouped)
 		for group in grouped:
 			(v,data) = group
-			# st.write(v)
-			# st.write(variant)
 			if(v != variant):
 				data['b'+topic] = grouped.get_group(variant)[topic].values
 				data[['n'+topic]] = data[[topic]].div(grouped.get_group(variant)[topic].values, axis=0)
 				for t in additionalTopics:
 					data[[t]] = grouped.get_group(variant)[t].values
 				ndata_frames.append(data)
+				# st.write(data)
 			else:
 				continue
 		if ndata_frames :
@@ -264,7 +316,7 @@ def app():
 			return g
 
 	df = get_dataframes_from_files(selected_files)
-	df = df.drop_duplicates(subset=['name','variant'])
+	# df = df.drop_duplicates(subset=['name','variant'])
 
 
 	st.header("Select baseline (for normalized graphs)")
@@ -293,7 +345,7 @@ def app():
 
 
 	# FIXME : coq fails to build on domains
-	df = df[(df.name != 'coq.BasicSyntax.v') & (df.name != 'coq.AbstractInterpretation.v')]
+	# df = df[(df.name != 'coq.BasicSyntax.v') & (df.name != 'coq.AbstractInterpretation.v')]
 
 	baseline = fmt_baseline(baseline_record)
 
