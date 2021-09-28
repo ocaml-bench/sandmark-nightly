@@ -10,6 +10,12 @@ Stores nightly runs of sandmark
 5. Run the script from the terminal with `bash setup_aws.sh`.
 
 # How to run the webapp locally
-1. Install [streamlit](https://docs.streamlit.io/en/stable/installation.html)
-2. Clone the repo `git clone https://github.com/ocaml-bench/sandmark-nightly.git` and `cd sandmark-nightly`
-3. When inside the repo directory run `streamlit run app/app.py` the app should ideally host at `localhost:8501`
+
+```bash
+# Install dependencies
+$ pip3 install streamlit seaborn multipledispatch nested_dict
+$ git clone https://github.com/ocaml-bench/sandmark-nightly.git
+$ cd sandmark-nightly
+$ streamlit run app/app.py
+```
+The app will be available at `http://localhost:8501`

@@ -9,6 +9,7 @@ from pprint import pprint
 
 import json
 import os
+import re
 import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
@@ -16,14 +17,14 @@ from apps import benchstruct
 
 def app():
     st.title("Parallel Benchmarks")
-    
+
     current = os.getcwd().split('/')
     current.pop()
     artifacts_dir = '/'.join(current) + '/sandmark-nightly'
     benches = benchstruct.BenchStruct("parallel", artifacts_dir, "_1.orunchrt.summary.bench")
     benches.add_files(benches.get_bench_files())
     benches.sort()
-    
+
     st.header("Select variants")
     n = int(st.text_input('Number of variants','2', key=benches.config["bench_type"]))
 
@@ -95,7 +96,7 @@ def app():
             commit_id = value.split('/')[2][:7]
             variant   = value.split('/')[3].split('_')[0]
             df["variant"] = variant + '_' + date + '_' + commit_id
-        
+
         return df
 
 
@@ -106,7 +107,13 @@ def app():
         return df
 
     df = get_dataframes_from_files(selected_files)
-    
+
+    def renameLabel(n,topic=""):
+        n = n.replace("name = ","")
+        if (topic==""):
+            return re.sub("_multicore\..*","",n)
+        return re.sub("_multicore\..*","",n) + " (" + str(mdf.loc[mdf['name'] == n]['b'+topic].values[0]) + ")"
+
     def getFastestSequential(df,topic):
         fastest_sequential = {}
         for g in df.groupby(['name']):
@@ -117,7 +124,7 @@ def app():
     def normalize(sdf, mdf, topic):
         frames = []
         fastest_sequential = getFastestSequential(sdf, topic)
-        for g in mdf.groupby('name'):        
+        for g in mdf.groupby('name'):
             (n,d) = g
             n = n.replace('_multicore','')
             d['n'+topic] = 1 / d[topic].div(fastest_sequential[n],axis=0)
@@ -144,20 +151,23 @@ def app():
         st.write(mdf)
     # mdf.sort_values(['name','variant','num_domains'])
 
-    mdf = mdf.sort_values(['name'])
-    # mdf = mdf[~mdf.index.duplicated()]
-    time_g = sns.relplot(x='num_domains', y = 'time_secs', hue='variant', col='name',
-            data=mdf, kind='line', style='variant', markers=True, col_wrap = 5, 
-            lw=5, palette="muted")
-    
-    st.header("Time")
-    st.pyplot(time_g)
+    #mdf = mdf.sort_values(['name'])
+    # #mdf = mdf[~mdf.index.duplicated()]
+    #time_g = sns.relplot(x='num_domains', y = 'time_secs', hue='variant', col='name',
+    #        data=mdf, kind='line', style='variant', markers=True, col_wrap = 4,
+    #        lw=5, palette="muted")
+
+    #st.header("Time")
+    #st.pyplot(time_g)
 
     mdf = mdf.sort_values(['name'])
     with sns.plotting_context(rc={"font.size":14,"axes.titlesize":14,"axes.labelsize":14, "legend.fontsize":14}):
         speedup_g = sns.relplot(x='num_domains', y = 'ntime_secs', hue='variant', col='name',
-                data=mdf, kind='line', style='variant', markers=True, col_wrap = 5, 
-                lw=3)
-    
+                data=mdf, kind='line', style='variant', markers=True, col_wrap = 4,
+                lw=3, height=3)
+        for ax in speedup_g.axes:
+            ax.set_title(renameLabel(ax.title.get_text(),"time_secs"))
+            ax.set_ylabel("Speedup")
+
     st.header("Speedup")
     st.pyplot(speedup_g)

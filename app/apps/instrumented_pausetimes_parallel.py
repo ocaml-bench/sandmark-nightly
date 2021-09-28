@@ -7,6 +7,7 @@ from functools import reduce
 from nested_dict import nested_dict
 from pprint import pprint
 
+import re
 import json
 import os
 import pandas as pd
@@ -60,7 +61,7 @@ def app():
 	# This idea is only for sandmark nightly
 
     class BenchStruct(benchstruct.BenchStruct):
-        
+
         def get_bench_files(self):
             bench_files = []
 
@@ -70,7 +71,7 @@ def app():
                     if file.endswith(self.config["bench_stem"]):
                         f = root.split("/" + self.config["bench_type"])
                         bench_files.append((os.path.join(root,file)))
-            
+
             return bench_files
 
     current = os.getcwd().split('/')
@@ -100,7 +101,7 @@ def app():
         # st.write(a)
         (x, y) = a[0], flatten(a[1])
         return (x, y)
-    
+
     @dispatch(str)
     def fmt_variant(file):
         variant   = file.split('/')[-1].split('_1')[0]
@@ -123,7 +124,7 @@ def app():
         new_variant = variant_stem + '_' + variant_root
         # st.write(new_variant)
         return (commit , new_variant)
-    
+
 
     def get_selected_values(n):
         lst = []
@@ -140,7 +141,7 @@ def app():
                 variant_val = containers[i][2].selectbox('variant', fmtted_variants, key = str(i) + '2_' + benches.config["bench_type"])
                 selected_commit, selected_variant = unfmt_variant(variant_val)
                 lst.append({"host" : host_val, "timestamp" : timestamp_val, "commit" : selected_commit, "variant" : selected_variant})
-    
+
         return lst
 
     selected_benches = BenchStruct( "parallel", artifacts_dir, "_1.pausetimes_multicore.summary.bench")
@@ -162,7 +163,7 @@ def app():
                 data.append(json.loads(l))
             df = pdjson.json_normalize(data)
         df["variant"] = fmt_variant(file)
-        
+
         return df
 
 
@@ -178,9 +179,13 @@ def app():
         mdf = mdf.drop_duplicates(subset=["name","variant", "max_latency", "num_domains"])
         mdf = mdf.sort_values(['name'])
         return mdf
-    
+
     mdf = get_dataframes_from_files(selected_files)
-    
+
+    def renameForLatency(n):
+        n = n.replace("name = ","")
+        return re.sub("_multicore\..*","",n)
+
     def plotLatencyAt(df,at):
         fdf = df.filter(["name","variant",at + "_latency","num_domains"])
         fdf.sort_values(by="name",inplace=True)
@@ -188,21 +193,23 @@ def app():
         with sns.plotting_context(rc={"font.size":14,"axes.titlesize":14,"axes.labelsize":14,
                                     "legend.fontsize":14}):
             g = sns.relplot(x='num_domains', y = at + '_latency', hue='variant', col='name',
-                            data=fdf, kind='line', style='variant', markers=True, col_wrap = 5, lw=3)
+                data=fdf, kind='line', style='variant', markers=True, col_wrap = 4,
+                height = 3)
             for ax in g.axes:
-                ax.set_ylabel(at + " latency (microseconds)")
-                ax.set_xlabel("Number of Domains")
+                ax.set_title(renameForLatency(ax.title.get_text()))
+                ax.set_ylabel(at + " latency (μs)")
+                ax.set_xlabel("# Domains")
                 ax.set_yscale('log')
             return g
 
     st.header("Max Latency")
     with st.expander("Expand"):
-        st.write(mdf)
+        #st.write(mdf)
 
         max_latency_g = plotLatencyAt(mdf,"max")
         st.pyplot(max_latency_g)
-    
-    
+
+
     def getLatencyAt(df,percentile,idx):
         groups = df.groupby('variant')
         ndfs = []
@@ -219,18 +226,18 @@ def app():
     mdf2 = getLatencyAt(mdf,"99.9",-1)
     st.header("99.9th Percentile Latency")
     with st.expander("Expand"):
-        st.write(mdf2.filter(["name","variant","99.9_latency"]))
+        #st.write(mdf2.filter(["name","variant","99.9_latency"]))
 
         g_99_9 = plotLatencyAt(mdf2,"99.9")
         st.pyplot(g_99_9)
-    
+
     mdf3 = getLatencyAt(mdf,"99",-2)
     st.header("99th Percentile Latency")
     with st.expander("Expand"):
-        st.write(mdf3.filter(["name","variant","99_latency"]))
+        #st.write(mdf3.filter(["name","variant","99_latency"]))
 
         g_99 = plotLatencyAt(mdf3,"99")
         st.pyplot(g_99)
-    
+
     st.header("Mean Latency")
     st.pyplot(plotLatencyAt(mdf,"mean"))
