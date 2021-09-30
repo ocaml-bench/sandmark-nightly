@@ -1,7 +1,7 @@
 #!/bin/bash
 #Check if SKEL=/etc/skel in /etc/default/useradd is uncommented and then proceed to execute the bash script
 
-#pip3 install nested_dict pandas seaborn
+pip3 install nested_dict pandas seaborn
 
 git clone https://github.com/ocaml-bench/sandmark-nightly.git
 

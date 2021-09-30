@@ -1,7 +1,7 @@
 # sandmark-nightly
 Stores nightly runs of sandmark
 
-# How to setup on an AWS machine
+# How to setup nightly notebooks on an AWS machine
 
 1. Use the AWS setup tutorial mentioned in the [TLJH documentation](https://tljh.jupyter.org/en/latest/install/amazon.html).
 2. Check the `SKEL` variable in `/etc/default/useradd` to be uncommented and it should be assigned to `/etc/skel` and it should end up looking like `SKEL=/etc/skel`.
