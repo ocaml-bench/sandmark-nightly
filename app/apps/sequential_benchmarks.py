@@ -123,7 +123,15 @@ def app():
 	selected_files = flatten(selected_benches.to_filepath())
 
 	def dataframe_intersection(data_frames):
-		pass
+		intersection_set_list = [set(df['name']) for df in data_frames]
+		list_diff = list(reduce(lambda x, y: x.intersection(y), intersection_set_list))
+		new_data_frames = []
+		for elem in list_diff:
+			for df in data_frames:
+				new_data_frames.append(df[(df.name == elem)])
+		list_diff.sort()
+		st.write(list_diff)
+		return new_data_frames
 
 	def get_dataframe(file):
 		# json to dataframe
@@ -145,10 +153,10 @@ def app():
 
 	def get_dataframes_from_files(files):
 		data_frames = [get_dataframe(file) for file in files]
-
+		new_data_frames = dataframe_intersection(data_frames=data_frames)
 		df = pd.concat(new_data_frames, sort=False)
+		st.write(df)
 		df.sort_values(['name'])
-		# st.write(df)
 		return df
 
 	def plot(df, y_axis):
