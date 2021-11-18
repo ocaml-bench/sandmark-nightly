@@ -145,51 +145,6 @@ def app():
 
 	def get_dataframes_from_files(files):
 		data_frames = [get_dataframe(file) for file in files]
-		# col_headers = reduce(lambda x, y : list(set(x["name"]) & set(y["name"])), data_frames)
-		# col_headers.remove("variant")
-		# st.write(col_headers)
-		smallest_size_df = min(data_frames, key=lambda x : x.index.stop)
-		# smallest_size_df_name_lst = list(smallest_size_df["name"])
-		# new_adf = []
-		# new_data_frames = []
-		# for adf in data_frames[1:]:
-		# 	for _, row in adf.iterrows():
-		# 		if row["name"] in smallest_size_df_name_lst:
-		# 			new_adf.append(row)
-		# 	new_data_frames.append(pd.DataFrame(new_adf))
-		# print(type(new_data_frames[0]))
-		# new_data_frames = []
-		# for d in data_frames:
-		# 	if smallest_size_df.equals(d):
-		# 		continue 
-		# 	else:
-		# 		diff = smallest_size_df.compare(d)
-		# 		st.write(diff["name"])
-		# lst = smallest_size_df["name"]
-		# def fun(e):
-		# 	return e in lst
-		new_data_frames = []
-		diff_data_frames = []
-		for d in data_frames:
-			diff = pd.concat([d,smallest_size_df]).drop_duplicates(subset = ['name'], keep=False)
-			diff_data_frames.append(diff)
-			# st.write(d[~d.name.isin(diff.name)])
-		# 	# cond = diff["name"].isin(d["name"])
-		# 	# d.drop(d[cond].index, inplace=True)
-		# 	# st.write(diff)
-		# 	# st.write(d)
-		# 	# st.write(d[~d.name.isin(diff.name)])
-		# 	# new_data_frames.append(d[~d.name.isin(diff.name)])
-		# 	# st.write(type(d.name))
-		# 	# d = d[(d.name != diff.name)]
-		# 	st.write(d.name.isin(diff.name))
-			# st.write("DIFF")
-			# st.write(diff)
-		for d in data_frames:
-			for diff in diff_data_frames:
-				new_d = d[~d.name.isin(diff.name)]
-			new_data_frames.append(new_d)
-			# st.write(new_d)
 
 		df = pd.concat(new_data_frames, sort=False)
 		df.sort_values(['name'])
