@@ -130,7 +130,7 @@ def app():
 			for df in data_frames:
 				new_data_frames.append(df[(df.name == elem)])
 		list_diff.sort()
-		st.write(list_diff)
+		# st.write(list_diff)
 		return new_data_frames
 
 	def get_dataframe(file):
@@ -155,7 +155,7 @@ def app():
 		data_frames = [get_dataframe(file) for file in files]
 		new_data_frames = dataframe_intersection(data_frames=data_frames)
 		df = pd.concat(new_data_frames, sort=False)
-		st.write(df)
+		# st.write(df)
 		df.sort_values(['name'])
 		return df
 
