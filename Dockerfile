@@ -8,4 +8,5 @@ RUN chmod 0644 /etc/cron.d/sandmark-nightly-client-crontab && \
     crontab /etc/cron.d/sandmark-nightly-client-crontab
 RUN git clone https://github.com/ocaml-bench/sandmark-nightly.git
 WORKDIR /sandmark-nightly
+COPY . .
 CMD streamlit run app/app.py
