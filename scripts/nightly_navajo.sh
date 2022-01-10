@@ -64,11 +64,11 @@ cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+domains_1.orun.summary.benc
 rm -rf _results/
 
 #parallel benchmarks
-TAG='"macro_bench"' make multicore_parallel_navajo_run_config.json
+TAG='"macro_bench"' make multicore_parallel_navajo_run_config_filtered.json
 
 RUN_BENCH_TARGET=run_orunchrt \
 	BUILD_BENCH_TARGET=multibench_parallel \
-	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config.json \
+	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json \
 	make ocaml-versions/5.00.0+domains.bench
 
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+domains_1.orunchrt.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE/
@@ -85,11 +85,11 @@ rm -rf _results/
 #rm -rf _results/
 
 #parallel
-#TAG='"macro_bench"' make multicore_parallel_navajo_run_config.json 
+#TAG='"macro_bench"' make multicore_parallel_navajo_run_config_filtered.json 
 
 #RUN_BENCH_TARGET=run_pausetimes_multicore \
 #	BUILD_BENCH_TARGET=multibench_parallel \
-#	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config.json\
+#	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json\
 #	make ocaml-versions/4.12.0+domains+effects+instrumented.bench
 
 #cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/4.12.0+domains+effects+instrumented_1.pausetimes_multicore.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
