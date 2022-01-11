@@ -17,7 +17,7 @@ from multipledispatch import dispatch
 
 def app():
     st.title("Instrumented Pausetimes (sequential)")
-
+    st.info("Archived Results - The current benchmarks are and do not reflect the latest nightly run")
 	# Problem : right now the structure is a nested dict of
 	#     `(hostname * (timestamp * (variants list)) dict ) dict`
 	# and this nested structure although works but it is a bit difficult to work with
