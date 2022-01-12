@@ -110,4 +110,7 @@ def app():
                     0:  10  22 
                     1:  22  10 
                 ```
+        
+        ### Disclaimer 
+        This app is not performance optimized and hence rendering time might be slow so please be patient with it, Thanks :D
     ''')
