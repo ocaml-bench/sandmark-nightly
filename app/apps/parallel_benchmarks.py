@@ -26,7 +26,7 @@ def app():
     benches.sort()
 
     st.header("Select variants")
-    n = int(st.text_input('Number of variants','2', key=benches.config["bench_type"]))
+    n = int(st.text_input('Number of variants','1', key=benches.config["bench_type"]))
 
     containers = [st.columns(3) for i in range(n)]
 
