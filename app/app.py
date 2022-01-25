@@ -2,6 +2,11 @@ import streamlit as st
 from multiapp import MultiApp
 from apps import index, sequential_benchmarks, parallel_benchmarks, instrumented_pausetimes_sequential, instrumented_pausetimes_parallel # import your app modules here
 
+st.set_page_config(
+    page_title="Sandmark Nightly",
+    page_icon="🐫"
+)
+
 app = MultiApp()
 
 # Add all your application here
