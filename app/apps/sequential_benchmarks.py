@@ -140,7 +140,10 @@ def app():
 			data = []
 			for l in f:
 				temp = json.loads(l)
-				data.append(temp)
+				#check if the benchmark json contains name field
+				#avoids crashing if the entry doesn't contain a benchmark
+				if 'name' in temp:
+					data.append(temp)
 			df = pd.json_normalize(data)
 			value     = file.split('/' + benches.config["bench_type"] + '/')[1]
 			date      = value.split('/')[1].split('_')[0]
@@ -228,7 +231,7 @@ def app():
 			g._legend.remove()
 			g.ax.set_xlabel("Benchmarks")
 			return g
-
+	
 	df = get_dataframes_from_files(selected_files)
 	# df = df.drop_duplicates(subset=['name','variant'])
 
