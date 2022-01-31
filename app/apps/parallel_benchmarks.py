@@ -40,12 +40,20 @@ def app():
 
     def unzip_dict(d):
         a = unzip(list(d))
-        # print(a[1])
-        (x, y) = a[0], flatten(a[1])
-        return (x, y)
+        # st.write(a)
+        commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
+        return commit_variant_tuple_lst
 
-    def fmt_variant(commit, variant):
-        return (variant.split('_')[0] + '+' + str(commit) + '_' + variant.split('_')[1])
+    def fmt_variant(commit, variant_lst):
+        # st.write(commit)
+        # st.write(variant)
+        def fmt(commit, variant):
+            variant_name = variant.split('_')[0]
+            commit_id = str(commit)
+            variant_tail = variant.split('_')[1]
+            return (variant.split('_')[0] + '+' + str(commit) + '_' + variant.split('_')[1])
+        fmt_variant_lst = [fmt(commit, v) for v in variant_lst]
+        return fmt_variant_lst
 
     def unfmt_variant(variant):
         commit = variant.split('_')[0].split('+')[-1]
@@ -63,10 +71,11 @@ def app():
             # create the selectbox in columns
             host_val = containers[i][0].selectbox('hostname', benches.structure.keys(), key = str(i) + '0_sequential')
             timestamp_val = containers[i][1].selectbox('timestamp', benches.structure[host_val].keys(), key = str(i) + '1_sequential')
-            commits, variants = unzip_dict((benches.structure[host_val][timestamp_val]).items())
-            # st.write(variants)
-            fmtted_variants = [fmt_variant(c, v) for c,v in zip(commits, variants)]
-            # st.write(fmtted_variant)
+            commit_variant_tuple_lst = unzip_dict((benches.structure[host_val][timestamp_val]).items())
+            # st.write(commit_variant_tuple_lst)
+            fmtted_variants = [fmt_variant(c, v) for c,v in commit_variant_tuple_lst]
+            fmtted_variants = flatten(fmtted_variants)
+            st.write(fmtted_variants)
             variant_val = containers[i][2].selectbox('variant', fmtted_variants, key = str(i) + '2_sequential')
             selected_commit, selected_variant = unfmt_variant(variant_val)
             lst.append({"host" : host_val, "timestamp" : timestamp_val, "commit" : selected_commit, "variant" : selected_variant})
@@ -89,8 +98,10 @@ def app():
         with open(file) as f:
             data = []
             for l in f:
-                data.append(json.loads(l))
-            df = pdjson.json_normalize(data)
+                temp = json.loads(l)
+                if 'name' in temp:
+                    data.append(temp)
+            df = pd.json_normalize(data)
             value     = file.split('/' + benches.config["bench_type"] + '/')[1]
             date      = value.split('/')[1].split('_')[0]
             commit_id = value.split('/')[2][:7]

@@ -79,12 +79,21 @@ def app():
 
 	def unzip_dict(d):
 		a = unzip(list(d))
-		# print(a)
-		(x, y) = a[0], flatten(a[1])
-		return (x, y)
+		# st.write(a)
+		commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
+		return commit_variant_tuple_lst
 
-	def fmt_variant(commit, variant):
-		return (variant.split('_')[0] + '+' + str(commit) + '_' + variant.split('_')[1])
+	def fmt_variant(commit, variant_lst):
+		# st.write(commit)
+		# st.write(variant)
+		def fmt(commit, variant):
+			variant_name = variant.split('_')[0]
+			commit_id = str(commit)
+			variant_tail = variant.split('_')[1]
+			return (variant.split('_')[0] + '+' + str(commit) + '_' + variant.split('_')[1])
+		fmt_variant_lst = [fmt(commit, v) for v in variant_lst]
+		return fmt_variant_lst
+
 
 	def unfmt_variant(variant):
 		commit = variant.split('_')[0].split('+')[-1]
@@ -103,10 +112,11 @@ def app():
 			host_val = containers[i][0].selectbox('hostname', benches.structure.keys(), key = str(i) + '0_' + benches.config["bench_type"])
 			timestamp_val = containers[i][1].selectbox('timestamp', benches.structure[host_val].keys(), key = str(i) + '1_' + benches.config["bench_type"])
 			# st.write(benches.structure)
-			commits, variants = unzip_dict((benches.structure[host_val][timestamp_val]).items())
-			# st.write(variants)
-			fmtted_variants = [fmt_variant(c, v) for c,v in zip(commits, variants)]
-			# st.write(fmtted_variant)
+			commit_variant_tuple_lst = unzip_dict((benches.structure[host_val][timestamp_val]).items())
+			fmtted_variants = [fmt_variant(c, v) for c,v in commit_variant_tuple_lst]
+			# st.write("formatted variants")
+			# st.write(fmtted_variants)
+			fmtted_variants = flatten(fmtted_variants)
 			variant_val = containers[i][2].selectbox('variant', fmtted_variants, key = str(i) + '2_' + benches.config["bench_type"])
 			selected_commit, selected_variant = unfmt_variant(variant_val)
 			lst.append({"host" : host_val, "timestamp" : timestamp_val, "commit" : selected_commit, "variant" : selected_variant})
@@ -135,7 +145,7 @@ def app():
 
 	def get_dataframe(file):
 		# json to dataframe
-		# print(file)
+		# st.write(file)
 		with open(file) as f:
 			data = []
 			for l in f:
@@ -246,10 +256,11 @@ def app():
 		'timestamp', 
 		selected_benches.structure[baseline_host].keys(),
 		key = 'B1_' + benches.config["bench_type"])    
-	baseline_commits, baseline_variant = unzip_dict((selected_benches.structure[baseline_host][baseline_timestamp]).items())
+	baseline_commit_variants_tuples_lst = unzip_dict((selected_benches.structure[baseline_host][baseline_timestamp]).items())
 
-	fmtted_variants = [fmt_variant(c, v) for c,v in zip(baseline_commits, baseline_variant)]
-	# st.write(fmtted_variant)
+	fmtted_variants = [fmt_variant(c, v) for c,v in baseline_commit_variants_tuples_lst]
+	fmtted_variants = set(flatten(fmtted_variants))
+	# st.write(fmtted_variants)
 	variant_val = baseline_container[2].selectbox('variant', fmtted_variants, key = 'B2_' + benches.config["bench_type"])
 	baseline_commit, baseline_variant = unfmt_variant(variant_val)
 
