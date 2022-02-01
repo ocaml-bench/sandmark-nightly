@@ -75,7 +75,7 @@ def app():
             # st.write(commit_variant_tuple_lst)
             fmtted_variants = [fmt_variant(c, v) for c,v in commit_variant_tuple_lst]
             fmtted_variants = flatten(fmtted_variants)
-            st.write(fmtted_variants)
+            # st.write(fmtted_variants)
             variant_val = containers[i][2].selectbox('variant', fmtted_variants, key = str(i) + '2_sequential')
             selected_commit, selected_variant = unfmt_variant(variant_val)
             lst.append({"host" : host_val, "timestamp" : timestamp_val, "commit" : selected_commit, "variant" : selected_variant})
