@@ -230,7 +230,8 @@ def app():
 			st.warning("Variants selected are the same, please select different variants to generate a normalized graph")
 			return pd.DataFrame()
 
-	def plot_normalised(df, topic):
+	def plot_normalised(baseline, df, topic):
+		xlabel = "Benchmarks (baseline = " + baseline + ")"
 		if not df.empty:
 			df = pd.DataFrame.copy(df)
 			df.sort_values(by=[topic],inplace=True)
@@ -239,7 +240,7 @@ def app():
 			g.set_xticklabels(rotation=90)
 			g.ax.legend(loc=8)
 			g._legend.remove()
-			g.ax.set_xlabel("Benchmarks")
+			g.ax.set_xlabel(xlabel)
 			return g
 	
 	df = get_dataframes_from_files(selected_files)
@@ -290,7 +291,7 @@ def app():
 	with st.expander("Data"):
 		st.write(ndf)
 	with st.expander("Graph"):
-		g = plot_normalised(ndf,'ntime_secs')
+		g = plot_normalised(baseline, ndf,'ntime_secs')
 		st.pyplot(g)
 
 	st.header("Top heap words")
@@ -303,7 +304,7 @@ def app():
 	with st.expander("Data"):
 		st.write(ndf)
 	with st.expander("Graph"):
-		g = plot_normalised(ndf, 'ngc.top_heap_words')
+		g = plot_normalised(baseline, ndf, 'ngc.top_heap_words')
 		st.pyplot(g)
 
 	st.header("Max RSS (KB)")
@@ -316,7 +317,7 @@ def app():
 	with st.expander("Data"):
 		st.write(ndf)
 	with st.expander("Graph"):
-		g = plot_normalised(ndf, 'nmaxrss_kB')
+		g = plot_normalised(baseline, ndf, 'nmaxrss_kB')
 		st.pyplot(g)
 
 	st.header("Major Collections")
@@ -329,7 +330,7 @@ def app():
 	with st.expander("Data"):
 		st.write(ndf)
 	with st.expander("Graph"):
-		g = plot_normalised(ndf, 'ngc.major_collections')
+		g = plot_normalised(baseline, ndf, 'ngc.major_collections')
 		st.pyplot(g)
 
 	st.header("Minor Collections")
@@ -342,5 +343,5 @@ def app():
 	with st.expander("Data"):
 		st.write(ndf)
 	with st.expander("Graph"):
-		g = plot_normalised(ndf, 'ngc.minor_collections')
+		g = plot_normalised(baseline, ndf, 'ngc.minor_collections')
 		st.pyplot(g)
