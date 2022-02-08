@@ -6,8 +6,9 @@
 TOKEN=$1
 
 #git urls of ocaml 4.12.0, ocaml 4.12+domains+effects, ocaml 4.12+domains
-OCAML_MULTICORE="https://github.com/ocaml-multicore/ocaml-multicore.git refs/heads/5.00"
+#OCAML_MULTICORE="https://github.com/ocaml-multicore/ocaml-multicore.git refs/heads/5.00"
 OCAML_TRUNK="https://github.com/ocaml/ocaml.git refs/heads/trunk"
+OCAML_STABLE="ad8e6eb60285e69c71d09942d68b28abf51cbe93"
 
 #replace urls with latest commit id
 function get_latest_commit {
@@ -15,8 +16,9 @@ function get_latest_commit {
     echo "${get_commit[0]}"
 }
 
-OCAML_MULTICORE=$(get_latest_commit "git ls-remote $OCAML_MULTICORE")
+#OCAML_MULTICORE=$(get_latest_commit "git ls-remote $OCAML_MULTICORE")
 OCAML_TRUNK=$(get_latest_commit "git ls-remote $OCAML_TRUNK")
+OCAML_MMAP=$(get_latest_commit "git ls-remote $OCAML_MMAP")
 
 #check if sandmark and sandmark-nightly repo exist in the default or custom SANDMARK_NIGHTLY_DIR
 function check_sandmark_subdir {
@@ -40,9 +42,12 @@ HOSTNAME="navajo"
 
 #initialize the date and time and create sequential and parallel directories
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
+#mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
 mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_TRUNK
-mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_STABLE
+#mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_TRUNK
+mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_STABLE
 #mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_STOCK/
 #mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
 #mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/pausetimes/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_412_DOMAINS_EFFECTS/
@@ -50,28 +55,38 @@ mkdir -p $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$O
 
 #get the latest sandmark pull
 cd $SANDMARK_NIGHTLY_DIR/sandmark/
-git pull origin master
+git checkout main
+git pull origin main
 make clean
 eval $(opam env)
 
 #sequential benchmarks
 TAG='"macro_bench"' make run_config_filtered.json
-RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/5.00.0+trunk.bench
-RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/5.00.0+domains.bench
+USE_SYS_DUNE_HACK=1 RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/5.00.0+trunk.bench
+USE_SYS_DUNE_HACK=1 RUN_CONFIG_JSON=run_config_filtered.json make ocaml-versions/5.00.0+stable.bench
 
 cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+trunk_1.orun.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_TRUNK
-cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+domains_1.orun.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
+cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+stable_1.orun.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_STABLE
+#cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+domains_1.orun.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/sequential/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE
 rm -rf _results/
 
 #parallel benchmarks
 TAG='"macro_bench"' make multicore_parallel_navajo_run_config_filtered.json
 
-RUN_BENCH_TARGET=run_orunchrt \
+USE_SYS_DUNE_HACK=1 \
+	RUN_BENCH_TARGET=run_orunchrt \
 	BUILD_BENCH_TARGET=multibench_parallel \
 	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json \
-	make ocaml-versions/5.00.0+domains.bench
+	make ocaml-versions/5.00.0+trunk.bench
 
-cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+domains_1.orunchrt.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_MULTICORE/
+USE_SYS_DUNE_HACK=1 \
+	RUN_BENCH_TARGET=run_orunchrt \
+	BUILD_BENCH_TARGET=multibench_parallel \
+	RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json \
+	make ocaml-versions/5.00.0+stable.bench
+
+cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+trunk_1.orunchrt.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_TRUNK/
+cp -a $SANDMARK_NIGHTLY_DIR/sandmark/_results/5.00.0+stable_1.orunchrt.summary.bench $SANDMARK_NIGHTLY_DIR/sandmark-nightly/parallel/$HOSTNAME/$TIMESTAMP/$OCAML_STABLE/
 rm -rf _results/
 
 #pausetimes benchmarks
