@@ -174,7 +174,7 @@ def app():
     mdf = mdf.sort_values(['name'])
     with sns.plotting_context(rc={"font.size":14,"axes.titlesize":14,"axes.labelsize":14, "legend.fontsize":14}):
         speedup_g = sns.relplot(x='num_domains', y = 'ntime_secs', hue='variant', col='name',
-                data=mdf, kind='line', style='variant', markers=True, col_wrap = 4,
+                data=mdf, kind='line', style='variant', markers=True, col_wrap = 3,
                 lw=3, height=3)
         for ax in speedup_g.axes:
             ax.set_title(renameLabel(ax.title.get_text(),"time_secs"))
