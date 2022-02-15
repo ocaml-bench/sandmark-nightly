@@ -37,5 +37,5 @@ SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR} CUSTOM_FILE="ocaml-versions/custom_
 cd $SANDMARK_NIGHTLY_DIR/sandmark-nightly/
 git pull origin main
 git add .
-git commit -m "Automated commit (Turing)"
+git commit -m "Automated commit (Navajo)"
 git push origin main
