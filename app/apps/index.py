@@ -56,7 +56,7 @@ def app():
         - Sequential Benchmarks : 
             - Variants : 
                 - OCaml 5.0+trunk
-                - OCaml 5.0+domains
+                - OCaml 5.0+stable
             - Metrics :
                 - Time
                 - Top Heap Words
@@ -66,7 +66,8 @@ def app():
     
         - Parallel Benchmarks :
             - Variants :
-                - OCaml 5.0+domains
+                - OCaml 5.0+trunk
+                - OCaml 5.0+stable
             - Metrics :
                 - Speedup
 
