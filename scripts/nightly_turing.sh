@@ -9,7 +9,7 @@ SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR:-"$HOME/production/sandmark_nightly_
 # Check if sandmark and sandmark-nightly directories exist
 function check_sandmark_subdir {
 	if [ ! -d $1/sandmark-nightly ]; then
-		git clone https://github.com/ocaml-bench/sandmark-nightly.git $1/sandmark-nightly
+		git clone https://$TOKEN@github.com/ocaml-bench/sandmark-nightly.git $1/sandmark-nightly
 	fi;
 	if [ ! -d $1/sandmark ]; then
 		git clone https://github.com/ocaml-bench/sandmark.git $1/sandmark
