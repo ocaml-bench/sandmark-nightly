@@ -115,8 +115,8 @@ def app():
 			commit_variant_tuple_lst = unzip_dict((benches.structure[host_val][timestamp_val]).items())
 			fmtted_variants = [fmt_variant(c, v) for c,v in commit_variant_tuple_lst]
 			# st.write("formatted variants")
-			# st.write(fmtted_variants)
 			fmtted_variants = flatten(fmtted_variants)
+			# st.write(fmtted_variants)
 			variant_val = containers[i][2].selectbox('variant', fmtted_variants, key = str(i) + '2_' + benches.config["bench_type"])
 			selected_commit, selected_variant = unfmt_variant(variant_val)
 			lst.append({"host" : host_val, "timestamp" : timestamp_val, "commit" : selected_commit, "variant" : selected_variant})
@@ -131,6 +131,13 @@ def app():
 		st.write(selected_benches.structure)
 
 	selected_files = flatten(selected_benches.to_filepath())
+
+	unique_num_selected_files = len(set(selected_files))
+
+	normalization_state = True
+
+	if unique_num_selected_files < len(selected_files):
+		normalization_state = False
 
 	def dataframe_intersection(data_frames):
 		intersection_set_list = [set(df['name']) for df in data_frames]
@@ -206,29 +213,35 @@ def app():
 		df["display_name"] = pd.Series(disp_name, index=df.index)
 		return df
 
-	def normalise(df,variant,topic,additionalTopics=[]):
-		df = add_display_name(df,variant,topic)
-		df = df.sort_values(["name","variant"])
-		grouped = df.filter(items=['name',topic,'variant','display_name']+additionalTopics).groupby('variant')
-		ndata_frames = []
-		# st.write(grouped)
-		for group in grouped:
-			(v,data) = group
-			if(v != variant):
-				data['b'+topic] = grouped.get_group(variant)[topic].values
-				data[['n'+topic]] = data[[topic]].div(grouped.get_group(variant)[topic].values, axis=0)
-				for t in additionalTopics:
-					data[[t]] = grouped.get_group(variant)[t].values
-				ndata_frames.append(data)
-				# st.write(data)
-			else:
-				continue
-		if ndata_frames :
-			df = pd.concat(ndata_frames)
-			return df
-		else:
-			st.warning("Variants selected are the same, please select different variants to generate a normalized graph")
+	def normalise(df,variant,topic, normalization_state, additionalTopics=[]):
+		if not normalization_state:
+			st.error("Redundant variants selected, please choose unique variants to compare")
 			return pd.DataFrame()
+		
+		else:
+			st.write(normalization_state)
+			df = add_display_name(df,variant,topic)
+			df = df.sort_values(["name","variant"])
+			grouped = df.filter(items=['name',topic,'variant','display_name']+additionalTopics).groupby('variant')
+			ndata_frames = []
+			# st.write(grouped)
+			for group in grouped:
+				(v,data) = group
+				if(v != variant):
+					data['b'+topic] = grouped.get_group(variant)[topic].values
+					data[['n'+topic]] = data[[topic]].div(grouped.get_group(variant)[topic].values, axis=0)
+					for t in additionalTopics:
+						data[[t]] = grouped.get_group(variant)[t].values
+					ndata_frames.append(data)
+					# st.write(data)
+				else:
+					continue
+			if ndata_frames:
+				df = pd.concat(ndata_frames)
+				return df
+			else:
+				st.warning("Variants selected are the same, please select different variants to generate a normalized graph")
+				return pd.DataFrame()
 
 	def plot_normalised(baseline, df, topic):
 		xlabel = "Benchmarks (baseline = " + baseline + ")"
@@ -286,7 +299,7 @@ def app():
 	with st.expander("Graph"):
 		st.pyplot(plot(df.copy(), 'time_secs'))
 
-	ndf = normalise(df.copy(), baseline, 'time_secs')
+	ndf = normalise(df.copy(), baseline, 'time_secs', normalization_state)
 	st.header("Normalized Time")
 	with st.expander("Data"):
 		st.write(ndf)
@@ -299,7 +312,7 @@ def app():
 		st.write(df)
 	with st.expander("Graph"):
 		st.pyplot(plot(df.copy(), 'gc.top_heap_words'))
-	ndf = normalise(df.copy(), baseline, 'gc.top_heap_words')
+	ndf = normalise(df.copy(), baseline, 'gc.top_heap_words', normalization_state)
 	st.header("Normalized top heap words")
 	with st.expander("Data"):
 		st.write(ndf)
@@ -312,7 +325,7 @@ def app():
 		st.write(df)
 	with st.expander("Graph"):
 		st.pyplot(plot(df.copy(), "maxrss_kB"))
-	ndf = normalise(df.copy(), baseline, 'maxrss_kB')
+	ndf = normalise(df.copy(), baseline, 'maxrss_kB', normalization_state)
 	st.header("Normalized Max RSS (KB)")
 	with st.expander("Data"):
 		st.write(ndf)
@@ -325,7 +338,7 @@ def app():
 		st.write(df)
 	with st.expander("Graph"):
 		st.pyplot(plot(df.copy(), "gc.major_collections"))
-	ndf = normalise(df.copy(), baseline, 'gc.major_collections')
+	ndf = normalise(df.copy(), baseline, 'gc.major_collections', normalization_state)
 	st.header("Normalized major collections")
 	with st.expander("Data"):
 		st.write(ndf)
@@ -338,7 +351,7 @@ def app():
 		st.write(df)
 	with st.expander("Graph"):
 		st.pyplot(plot(df.copy(), "gc.minor_collections"))
-	ndf = normalise(df.copy(), baseline, 'gc.minor_collections')
+	ndf = normalise(df.copy(), baseline, 'gc.minor_collections', normalization_state)
 	st.header("Normalized minor collections")
 	with st.expander("Data"):
 		st.write(ndf)
