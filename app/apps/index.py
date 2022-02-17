@@ -3,31 +3,8 @@ import streamlit as st
 from git import Repo
 import pathlib
 
-def get_repo_obj(dirpath):
-    repo = Repo(dirpath)
-    return repo
-
-def curr_branch(repo):
-    git = repo.git
-    branch = git.branch("--show-current")
-    return branch
-
-def latest_commit(repo):
-    branch = curr_branch(repo)
-    commits = list(repo.iter_commits(branch))
-    return commits[0].hexsha
-
-def get_sandmark_branch_and_commit_id(curr_workdir):
-    sandmark = curr_workdir.parent / 'sandmark'
-    repo = get_repo_obj(str(sandmark))
-    branch = curr_branch(repo)
-    commit = latest_commit(repo)
-    return (branch, commit)
-
 def app():
     st.title("Sandmark Nightly")
-    curr_dir = pathlib.Path.cwd()
-    (curr_branch, curr_commit) = get_sandmark_branch_and_commit_id(curr_dir)
     st.markdown('''
         ### What is Sandmark Nightly?
         Sandmark Nightly is a pipeline which runs the [Sandmark](https://github.com/ocaml-bench/sandmark) benchmarks 
@@ -142,8 +119,3 @@ def app():
         ### Disclaimer 
         This app is not performance optimized and hence rendering time might be slow so please be patient with it, Thanks :D
     ''')
-    st.subheader("Sandmark info")
-    curr_branch = "Current Branch = " + curr_branch
-    curr_commit = "Latest Commit = " + curr_commit
-    st.text(curr_branch)
-    st.text(curr_commit)
