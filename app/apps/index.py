@@ -1,6 +1,5 @@
 from sre_constants import GROUPREF_EXISTS
 import streamlit as st
-import os
 from git import Repo
 import pathlib
 
