@@ -8,17 +8,17 @@ SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR:-"$HOME/production/sandmark_nightly_
 
 # Check if sandmark and sandmark-nightly directories exist
 function check_sandmark_subdir {
-	if [ ! -d $1/sandmark-nightly ]; then
-		git clone https://$TOKEN@github.com/ocaml-bench/sandmark-nightly.git $1/sandmark-nightly
-	fi;
-	if [ ! -d $1/sandmark ]; then
-		git clone https://github.com/ocaml-bench/sandmark.git $1/sandmark
-	fi;
+    if [ ! -d $1/sandmark-nightly ]; then
+        git clone -b testing https://$TOKEN@github.com/ocaml-bench/sandmark-nightly.git $1/sandmark-nightly
+    fi;
+    if [ ! -d $1/sandmark ]; then
+        git clone https://github.com/ocaml-bench/sandmark.git $1/sandmark
+    fi;
 }
 
 # Sandmark nightly directory
 if [ ! -d $SANDMARK_NIGHTLY_DIR ]; then 
-	mkdir $SANDMARK_NIGHTLY_DIR
+    mkdir $SANDMARK_NIGHTLY_DIR
 fi;
 
 # Check Sandmark nightly sub-directories
@@ -35,7 +35,7 @@ SANDMARK_NIGHTLY_DIR=${SANDMARK_NIGHTLY_DIR} CUSTOM_FILE="ocaml-versions/custom_
 
 # Push to sandmark-nightly
 cd $SANDMARK_NIGHTLY_DIR/sandmark-nightly/
-git pull origin main
+git pull origin testing
 git add .
 git commit -m "Automated commit (Turing)"
-git push origin main
+git push origin testing
