@@ -1,0 +1,20 @@
+ intervaltree is not installed.  Install using pip3 install.
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+rm -rf dependencies/packages/ocaml/ocaml.5.00.0+stable
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.00.0+stable
+mkdir -p dependencies/packages/ocaml/ocaml.5.00.0+stable
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.00.0+stable/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.00.0+stable
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.00.0+stable/
+{	if [ "https://github.com/sadiqj/ocaml/archive/refs/heads/eventring-pr.zip" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.00.0+stable.json)"; \
+	else \
+		url="https://github.com/sadiqj/ocaml/archive/refs/heads/eventring-pr.zip"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.00.0+stable/opam;
+opam update
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.00.0+stable ocaml-base-compiler.5.00.0+stable
+[ERROR] No compiler matching 'ocaml-base-compiler.5.00.0+stable' found, use 'opam switch list-available' to see what is available, or use '--packages' to select packages explicitly.
+make: *** [Makefile:119: _opam/5.00.0+stable] Error 5
