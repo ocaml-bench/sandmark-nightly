@@ -4,7 +4,8 @@ from apps import index, sequential_benchmarks, parallel_benchmarks, instrumented
 
 st.set_page_config(
     page_title="Sandmark Nightly",
-    page_icon="🐫"
+    page_icon="🐫",
+    layout="wide"
 )
 
 app = MultiApp()
