@@ -577,3 +577,28 @@ Executing benchmarks with:
   RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json
   RUN_BENCH_TARGET=run_orunchrt  (WRAPPER=orunchrt)
   PRE_BENCH_EXEC=
+Error: _build/5.00.0+stable_1/benchmarks/benchmarksgame: No such file or
+directory
+Error: _build/5.00.0+stable_1/benchmarks/decompress: No such file or
+directory
+Error: _build/5.00.0+stable_1/benchmarks/multicore-grammatrix: No such file
+or directory
+Error: _build/5.00.0+stable_1/benchmarks/multicore-minilight/parallel: No
+such file or directory
+Error: _build/5.00.0+stable_1/benchmarks/multicore-minilight/sequential: No
+such file or directory
+Error: _build/5.00.0+stable_1/benchmarks/multicore-numerical: No such file or
+directory
+        orun LU_decomposition_multicore.120_4096.orunchrt.bench [5.00.0+stable_1] (got signal SEGV)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.120_4096.orunchrt.bench -- taskset --cpu-list 4-63,68-127 chrt -r 1 ./LU_decomposition_multicore.exe 120 4096 &> /dev/null
+        orun LU_decomposition_multicore.16_4096.orunchrt.bench [5.00.0+stable_1] (got signal SEGV)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.16_4096.orunchrt.bench -- taskset --cpu-list 4-19 chrt -r 1 ./LU_decomposition_multicore.exe 16 4096 &> /dev/null
+        orun LU_decomposition_multicore.32_4096.orunchrt.bench [5.00.0+stable_1] (got signal SEGV)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.32_4096.orunchrt.bench -- taskset --cpu-list 4-35 chrt -r 1 ./LU_decomposition_multicore.exe 32 4096 &> /dev/null
+        orun LU_decomposition_multicore.64_4096.orunchrt.bench [5.00.0+stable_1] (got signal SEGV)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.64_4096.orunchrt.bench -- taskset --cpu-list 4-63,68-71 chrt -r 1 ./LU_decomposition_multicore.exe 64 4096 &> /dev/null
+        orun LU_decomposition_multicore.8_4096.orunchrt.bench [5.00.0+stable_1] (got signal SEGV)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.8_4096.orunchrt.bench -- taskset --cpu-list 4-11 chrt -r 1 ./LU_decomposition_multicore.exe 8 4096 &> /dev/null
+        orun LU_decomposition_multicore.96_4096.orunchrt.bench [5.00.0+stable_1] (got signal KILL)
+(cd _build/5.00.0+stable_1/benchmarks/multicore-numerical && /local/scratch/sandmark_nightly_workspace/sandmark/_opam/5.00.0+stable/bin/orun -o ../../LU_decomposition_multicore.96_4096.orunchrt.bench -- taskset --cpu-list 4-63,68-103 chrt -r 1 ./LU_decomposition_multicore.exe 96 4096 &> /dev/null
+find: ‘_build/5.00.0+stable_1’: No such file or directory
