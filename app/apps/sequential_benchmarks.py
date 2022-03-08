@@ -1,4 +1,3 @@
-from pandas.core.frame import DataFrame
 import streamlit as st
 from re import U, split, sub
 import numpy as np
@@ -127,8 +126,8 @@ def app():
 	selected_benches.sort()
 
 	# Expander for showing bench files
-	with st.expander("Show metadata of selected benchmarks"):
-		st.write(selected_benches.structure)
+	st.subheader("Benchmarks Selected")
+	st.write(selected_benches.display())
 
 	selected_files = flatten(selected_benches.to_filepath())
 
