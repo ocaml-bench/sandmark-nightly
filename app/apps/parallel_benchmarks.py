@@ -87,8 +87,8 @@ def app():
 
 
     # Expander for showing bench files
-    with st.expander("Show metadata of selected benchmarks"):
-        st.write(selected_benches.structure)
+    st.subheader("Selected Benchmarks")
+    st.write(selected_benches.display())
 
     selected_files = flatten(selected_benches.to_filepath())
 

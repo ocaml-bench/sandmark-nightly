@@ -1,6 +1,7 @@
 from nested_dict import nested_dict
 import os
 from collections import OrderedDict
+import pandas as pd
 
 class BenchStruct:
     config = {}
@@ -54,3 +55,20 @@ class BenchStruct:
     def sort(self):
         self.structure = {k:OrderedDict(sorted(v.items(),reverse=True)) for k,v in self.structure.items()}
         self.structure = nested_dict(self.structure)
+    
+    def display(self):
+        data = list()
+        for host_timestamp_commit_tuple, variant_lst in self.structure.items_flat():
+            host = host_timestamp_commit_tuple[0]
+            timestamp = host_timestamp_commit_tuple[1]
+            commit_id = host_timestamp_commit_tuple[2]
+            if len(variant_lst) > 1:
+                temp_lst = [[host, timestamp, commit_id, variant] for variant in variant_lst]
+                for l in temp_lst:
+                    data.append(l)
+            else:
+                temp_lst = [host, timestamp, commit_id, variant_lst[0]]
+                data.append(temp_lst)
+
+        df_data = pd.DataFrame(data, columns=['hostname', 'timestamp', 'commit_id', 'variant'])
+        return df_data
