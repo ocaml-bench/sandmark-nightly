@@ -14,8 +14,8 @@ app = MultiApp()
 app.add_app("Sandmark Nightly", index.app)
 app.add_app("Sequential Benchmarks", sequential_benchmarks.app)
 app.add_app("Parallel Benchmarks", parallel_benchmarks.app)
-app.add_app("Instrumented Pausetimes Sequential", instrumented_pausetimes_sequential.app)
-app.add_app("Instrumented Pausetimes Parallel", instrumented_pausetimes_parallel.app)
+#app.add_app("Instrumented Pausetimes Sequential", instrumented_pausetimes_sequential.app)
+#app.add_app("Instrumented Pausetimes Parallel", instrumented_pausetimes_parallel.app)
 
 # The main app
 app.run()

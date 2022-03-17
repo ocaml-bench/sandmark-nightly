@@ -13,7 +13,7 @@ def get_commit_id(file):
         # commit keyword points to the latest commit of sandmark
         if re.search('commit', line):
             return line
-    
+
     file_.close()
 
 def get_the_latest_commits(machine_list):
@@ -29,7 +29,7 @@ def get_the_latest_commits(machine_list):
         first_log = log[0]
         commit_dir = first_log.split('.')[-2]
         logpath_list.append(first_log)
-    
+
     commit_list = [(logpath.split('/')[-4], get_commit_id(logpath).split(' ')[1].strip()) for logpath in logpath_list]
     return commit_list
 
@@ -75,27 +75,6 @@ def app():
             - Metrics :
                 - Speedup
 
-        - Instrumented Pausetimes (sequential) :
-            The instrumented pausetimes are not updated currently
-            - Past :
-                - Variants :
-                    - OCaml 4.12.0+stock+instrumented
-                    - OCaml 4.12.0+domains+effects+instrumented
-                - Metrics :
-                    - Max Latency
-                    - 99.9th Percentile Latency
-                    - 99th Precentile Latency
-
-        - Instrumented Pausetimes (parallel) :
-            The instrumented pausetimes are not updated currently
-            - Past :
-                - Variants :
-                    - OCaml 4.12.0+domains+effects+instrumented
-                - Metrics :
-                    - Max Latency
-                    - 99.9th Percentile Latency
-                    - 99th Perecentile Latency
-                    - Mean Latency
         ### Machines used for generating results
         - Turing :
             - Basic Hardware and Software Info :
@@ -145,9 +124,6 @@ def app():
                     0:  10  22
                     1:  22  10
                 ```
-
-        ### Disclaimer
-        This app is not performance optimized and hence rendering time might be slow so please be patient with it, Thanks :D
     ''')
     st.header("Sandmark info")
     st.subheader("Latest commit")
