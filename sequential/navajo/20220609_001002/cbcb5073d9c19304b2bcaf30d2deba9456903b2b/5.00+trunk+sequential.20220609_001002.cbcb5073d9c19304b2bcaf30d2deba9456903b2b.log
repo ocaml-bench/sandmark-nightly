@@ -1,0 +1,139 @@
+ intervaltree is not installed.  Install using pip3 install.
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.0.0+stable
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.0.0+stable
+mkdir -p dependencies/packages/ocaml/ocaml.5.0.0+stable
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.0.0+stable/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.0.0+stable
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.0.0+stable/
+{	if [ "https://github.com/ocaml/ocaml/archive/trunk.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.0.0+stable.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/trunk.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.0.0+stable/opam;
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.0.0+stable ocaml-base-compiler.5.0.0+stable
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.0.0+stable] downloaded from https://github.com/ocaml/ocaml/archive/trunk.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+∗ installed ocaml-base-compiler.5.0.0+stable
+∗ installed ocaml-config.1
+∗ installed ocaml.5.0.0+stable
+Done.
+# Run eval $(opam env) to update the current shell environment
+Package sexplib0 does not exist, create as a NEW package? [Y/n] y
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0] synchronised from git+https://github.com/shakthimaan/sexplib0.git#multicore
+sexplib0 is now pinned to git+https://github.com/shakthimaan/sexplib0.git#multicore (version v0.15.0)
+opam pin add -n --yes --switch 5.0.0+stable base.v0.14.3 https://github.com/janestreet/base.git#v0.14.3
+Package base does not exist, create as a NEW package? [Y/n] y
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3] synchronised from git+https://github.com/janestreet/base.git#v0.14.3
+base is now pinned to git+https://github.com/janestreet/base.git#v0.14.3 (version v0.14.3)
+opam pin add -n --yes --switch 5.0.0+stable coq-core https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-core does not exist, create as a NEW package? [Y/n] y
+[coq-core.~dev: http]
+[coq-core.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-core is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.0.0+stable coq-stdlib https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-stdlib does not exist, create as a NEW package? [Y/n] y
+[coq-stdlib.~dev: http]
+[coq-stdlib.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-stdlib is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.0.0+stable ocamlfind https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+Package ocamlfind does not exist, create as a NEW package? [Y/n] y
+[ocamlfind.~dev: http]
+[ocamlfind.~dev] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlfind is now pinned to https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz (version 1.9.3.git)
+Using default dune.2.9.0
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1
+Linking to system dune files found at: /home/sandmark/.opam/ocaml-base-compiler.4.13.1
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune --version = 2.9.0
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune /tmp/sandmark/_opam/sys_dune/bin/dune
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/jbuilder /tmp/sandmark/_opam/sys_dune/bin/jbuilder
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/lib/dune /tmp/sandmark/_opam/sys_dune/lib/dune
+opam install --switch=5.0.0+stable --yes "dune.2.9.0" "dune-configurator.2.9.0"
+The following actions will be performed:
+  ∗ install dune              2.9.0
+  ∗ install result            1.5   [required by dune-configurator]
+  ∗ install csexp             1.3.2 [required by dune-configurator]
+  ∗ install dune-configurator 2.9.0
+===== ∗ 4 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[result.1.5] downloaded from cache at https://opam.ocaml.org/cache/
+[csexp.1.3.2] downloaded from cache at https://opam.ocaml.org/cache/
+[dune-configurator.2.9.0] downloaded from cache at https://opam.ocaml.org/cache/
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed dune.2.9.0
+∗ installed result.1.5
+∗ installed csexp.1.3.2
+[ERROR] The compilation of dune-configurator failed at "/tmp/sandmark/_opam/5.0.0+stable/bin/dune build -p dune-configurator -j 127 @install".
+
+#=== ERROR while compiling dune-configurator.2.9.0 ============================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.0.0+stable | file:///tmp/sandmark/dependencies
+# path                 /tmp/sandmark/_opam/5.0.0+stable/.opam-switch/build/dune-configurator.2.9.0
+# command              /tmp/sandmark/_opam/5.0.0+stable/bin/dune build -p dune-configurator -j 127 @install
+# exit-code            1
+# env-file             /tmp/sandmark/_opam/log/dune-configurator-16425-427793.env
+# output-file          /tmp/sandmark/_opam/log/dune-configurator-16425-427793.out
+### output ###
+# File "otherlibs/configurator/src/dune", line 7, characters 12-16:
+# 7 |  (libraries unix csexp result)
+#                 ^^^^
+# Error: Library "unix" in /tmp/sandmark/_opam/5.0.0+stable/lib/ocaml is hidden
+# (unsatisfied 'exist_if').
+# Hint: try:
+#   dune external-lib-deps --missing --no-config --root . --ignore-promoted-rules --default-target @install --always-show-command-line --promote-install-files --release --only-packages dune-configurator -p dune-configurator --profile release -j 127 @install
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+┌─ The following actions failed
+│ λ build dune-configurator 2.9.0
+└─ 
+┌─ The following changes have been performed
+│ ∗ install csexp  1.3.2
+│ ∗ install dune   2.9.0
+│ ∗ install result 1.5
+└─ 
+# Run eval $(opam env) to update the current shell environment
+
+The former state can be restored with:
+    opam switch import "/tmp/sandmark/_opam/5.0.0+stable/.opam-switch/backup/state-20220608231414.export"
+make: *** [Makefile:103: setup_sys_dune/5.0.0+stable] Error 31
