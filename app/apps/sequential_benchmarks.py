@@ -255,33 +255,24 @@ def app():
         else:
             st.write(normalization_state)
             df = add_display_name(df, baseline, topic)
-            df = df.sort_values(["name", "variant"])
-            grouped = df.filter(
-                items=["name", topic, "variant", "display_name"] + additionalTopics
-            ).groupby("variant")
-            ndata_frames = []
-            # st.write(grouped)
-            for group in grouped:
-                (v, data) = group
-                if v != baseline:
-                    data["b" + topic] = grouped.get_group(baseline)[topic].values
-                    data[["n" + topic]] = data[[topic]].div(
-                        grouped.get_group(baseline)[topic].values, axis=0
-                    )
-                    for t in additionalTopics:
-                        data[[t]] = grouped.get_group(baseline)[t].values
-                    ndata_frames.append(data)
-                    # st.write(data)
-                else:
-                    continue
-            if ndata_frames:
-                df = pd.concat(ndata_frames)
-                return df
-            else:
+            items = ["name", topic, "variant", "display_name"] + additionalTopics
+            df_filtered = df.filter(items=items)
+            try:
+                df_pivot = df_filtered.reset_index().pivot(
+                    index="name", columns="variant", values=[topic]
+                )
+            except ValueError:
                 st.warning(
                     "Variants selected are the same, please select different variants to generate a normalized graph"
                 )
                 return pd.DataFrame()
+            baseline_column = (topic, baseline)
+            select_columns = [c for c in df_pivot.columns if c != baseline_column]
+            normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+            normalised = normalised.melt(
+                col_level=1, ignore_index=False, value_name="n" + topic
+            ).reset_index()
+            return pd.merge(normalised, df_filtered, on=["name", "variant"])
 
     def plot_normalised(baseline, df, topic):
         xlabel = "Benchmarks (baseline = " + baseline + ")"
