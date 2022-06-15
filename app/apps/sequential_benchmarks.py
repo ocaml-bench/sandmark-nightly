@@ -245,7 +245,7 @@ def app():
         df["display_name"] = pd.Series(disp_name, index=df.index)
         return df
 
-    def normalise(df, variant, topic, normalization_state, additionalTopics=[]):
+    def normalise(df, baseline, topic, normalization_state, additionalTopics=[]):
         if not normalization_state:
             st.error(
                 "Redundant variants selected, please choose unique variants to compare"
@@ -254,7 +254,7 @@ def app():
 
         else:
             st.write(normalization_state)
-            df = add_display_name(df, variant, topic)
+            df = add_display_name(df, baseline, topic)
             df = df.sort_values(["name", "variant"])
             grouped = df.filter(
                 items=["name", topic, "variant", "display_name"] + additionalTopics
@@ -263,13 +263,13 @@ def app():
             # st.write(grouped)
             for group in grouped:
                 (v, data) = group
-                if v != variant:
-                    data["b" + topic] = grouped.get_group(variant)[topic].values
+                if v != baseline:
+                    data["b" + topic] = grouped.get_group(baseline)[topic].values
                     data[["n" + topic]] = data[[topic]].div(
-                        grouped.get_group(variant)[topic].values, axis=0
+                        grouped.get_group(baseline)[topic].values, axis=0
                     )
                     for t in additionalTopics:
-                        data[[t]] = grouped.get_group(variant)[t].values
+                        data[[t]] = grouped.get_group(baseline)[t].values
                     ndata_frames.append(data)
                     # st.write(data)
                 else:
