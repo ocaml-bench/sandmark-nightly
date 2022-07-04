@@ -45,8 +45,10 @@ class BenchStruct:
 
     def get_bench_files(self):
         root_dir = f"{self.config['artifacts_dir']}/{self.config['bench_type']}"
-        pattern = f"**/*{self.config['bench_stem']}"
-        return glob.glob(pattern, root_dir=root_dir, recursive=True)
+        pattern = f"{root_dir}/**/*{self.config['bench_stem']}"
+        bench_files = glob.glob(pattern, recursive=True)
+        n = len(root_dir) + 1  # root_dir path + '/'
+        return [path[n:] for path in bench_files]
 
     def __repr__(self):
         return f"{self.structure}"
