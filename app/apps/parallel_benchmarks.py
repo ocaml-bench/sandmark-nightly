@@ -48,30 +48,11 @@ def app():
         return commit_variant_tuple_lst
 
     def fmt_variant(commit, variant_lst):
-        # st.write(commit)
-        # st.write(variant)
-        def fmt(commit, variant):
-            variant_name = variant.split("_")[0]
-            commit_id = str(commit)
-            variant_tail = variant.split("_")[1]
-            return (
-                variant.split("_")[0] + "+" + str(commit) + "_" + variant.split("_")[1]
-            )
-
-        fmt_variant_lst = [fmt(commit, v) for v in variant_lst]
+        fmt_variant_lst = [f"{commit};{v}" for v in variant_lst]
         return fmt_variant_lst
 
     def unfmt_variant(variant):
-        commit = variant.split("_")[0].split("+")[-1]
-        variant_root = variant.split("_")[1]
-        variant_stem = variant.split("_")[0].split("+")
-        variant_stem.pop()
-        variant_stem = reduce(
-            lambda a, b: b if a == "" else a + "+" + b, variant_stem, ""
-        )
-        new_variant = variant_stem + "_" + variant_root
-        # st.write(new_variant)
-        return (commit, new_variant)
+        return variant.split(";", 1)
 
     def get_selected_values(n):
         lst = []
