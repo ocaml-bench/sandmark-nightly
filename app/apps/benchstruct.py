@@ -2,6 +2,7 @@ from nested_dict import nested_dict
 import os
 from collections import OrderedDict
 import pandas as pd
+import glob
 
 
 class BenchStruct:
@@ -45,19 +46,11 @@ class BenchStruct:
         return lst
 
     def get_bench_files(self):
-        bench_files = []
-
-        # Loads file metadata
-        for root, dirs, files in os.walk(
-            self.config["artifacts_dir"] + "/" + self.config["bench_type"]
-        ):
-            for file in files:
-                if file.endswith(self.config["bench_stem"]):
-                    f = root.split("/" + self.config["bench_type"])
-                    bench_files.append((os.path.join(root, file)))
-
-        # print(bench_files)
-        return bench_files
+        dir_ = self.config["artifacts_dir"]
+        bench_type = self.config["bench_type"]
+        stem = self.config["bench_stem"]
+        pattern = f"{dir_}/{bench_type}/**/*{stem}"
+        return glob.glob(pattern, recursive=True)
 
     def __repr__(self):
         return f"{self.structure}"
