@@ -18,10 +18,8 @@ class BenchStruct:
         self.structure[host][timestamp][commit].append(variant)
 
     def add_files(self, files):
-        for x in files:
-            l = x.split(str("/" + self.config["bench_type"] + "/"))[1]
-            d = l.split("/")
-            self.add(d[0], d[1], d[2], d[3])
+        for relative_path in files:
+            self.add(*relative_path.split("/"))
 
     def to_filepath(self):
         lst = []
@@ -46,11 +44,9 @@ class BenchStruct:
         return lst
 
     def get_bench_files(self):
-        dir_ = self.config["artifacts_dir"]
-        bench_type = self.config["bench_type"]
-        stem = self.config["bench_stem"]
-        pattern = f"{dir_}/{bench_type}/**/*{stem}"
-        return glob.glob(pattern, recursive=True)
+        root_dir = f"{self.config['artifacts_dir']}/{self.config['bench_type']}"
+        pattern = f"**/*{self.config['bench_stem']}"
+        return glob.glob(pattern, root_dir=root_dir, recursive=True)
 
     def __repr__(self):
         return f"{self.structure}"
