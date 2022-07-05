@@ -1,5 +1,9 @@
+import os
 from functools import reduce
 import streamlit as st
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ARTIFACTS_DIR = os.path.join(HERE, "..", "..")
 
 
 def fmt_variants(commit, variants):

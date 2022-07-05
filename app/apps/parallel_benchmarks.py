@@ -13,17 +13,14 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values
+from apps.utils import get_selected_values, ARTIFACTS_DIR
 
 
 def app():
     st.title("Parallel Benchmarks")
 
-    current = os.getcwd().split("/")
-    current.pop()
-    artifacts_dir = "/".join(current) + "/sandmark-nightly"
     benches = benchstruct.BenchStruct(
-        "parallel", artifacts_dir, "_1.orunchrt.summary.bench"
+        "parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench"
     )
     benches.add_files(benches.get_bench_files())
     benches.sort()
@@ -32,7 +29,7 @@ def app():
     n = int(st.text_input("Number of variants", "1", key=benches.config["bench_type"]))
 
     selected_benches = benchstruct.BenchStruct(
-        "parallel", artifacts_dir, "_1.orunchrt.summary.bench"
+        "parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench"
     )
     for f in get_selected_values(n, benches):
         selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])

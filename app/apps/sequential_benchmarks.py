@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values
+from apps.utils import get_selected_values, ARTIFACTS_DIR
 
 
 def app():
@@ -57,12 +57,8 @@ def app():
     # ....
     # <host n>
 
-    current = os.getcwd().split("/")
-    current.pop()
-    artifacts_dir = "/".join(current) + "/sandmark-nightly"
-    # print(artifacts_dir)
     benches = benchstruct.BenchStruct(
-        "sequential", artifacts_dir, "_1.orun.summary.bench"
+        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
     benches.add_files(benches.get_bench_files())
     benches.sort()
@@ -71,7 +67,7 @@ def app():
     n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
 
     selected_benches = benchstruct.BenchStruct(
-        "sequential", artifacts_dir, "_1.orun.summary.bench"
+        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
     for f in get_selected_values(n, benches):
         selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])
