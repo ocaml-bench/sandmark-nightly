@@ -3,6 +3,28 @@ import os
 from collections import OrderedDict
 import pandas as pd
 import glob
+from dataclasses import dataclass
+
+
+@dataclass
+class BenchRun:
+    host: str
+    timestamp: str
+    commit: str
+    variant: str
+
+    def filepath(self, artifacts_dir, bench_type):
+        return os.path.join(
+            artifacts_dir,
+            bench_type,
+            self.host,
+            self.timestamp,
+            self.commit,
+            self.variant,
+        )
+
+    def __repr__(self):
+        return f"+{self.commit}_".join(self.variant.rsplit("_", 1))
 
 
 class BenchStruct:
@@ -15,28 +37,22 @@ class BenchStruct:
         self.config["bench_stem"] = bench_stem
 
     def add(self, host, timestamp, commit, variant):
-        self.structure[host][timestamp][commit].append(variant)
+        run = BenchRun(host=host, timestamp=timestamp, commit=commit, variant=variant)
+        self.structure[host][timestamp][commit].append(run)
 
     def add_files(self, files):
         for relative_path in files:
             self.add(*relative_path.split("/"))
 
     def to_filepath(self):
-        filepaths = []
-        for host, timestamps in self.structure.items():
-            for timestamp, commits in timestamps.items():
-                for commit, bench_files in commits.items():
-                    for bench_file in bench_files:
-                        t = os.path.join(
-                            self.config["artifacts_dir"],
-                            self.config["bench_type"],
-                            host,
-                            timestamp,
-                            commit,
-                            bench_file,
-                        )
-                        filepaths.append(t)
-        return filepaths
+        return [
+            run.filepath(
+                self.config["artifacts_dir"],
+                self.config["bench_type"],
+            )
+            for _, runs in self.structure.items_flat()
+            for run in runs
+        ]
 
     def get_bench_files(self):
         root_dir = f"{self.config['artifacts_dir']}/{self.config['bench_type']}"
@@ -57,11 +73,8 @@ class BenchStruct:
 
     def display(self):
         data = []
-        for host_timestamp_commit_tuple, variant_lst in self.structure.items_flat():
-            host = host_timestamp_commit_tuple[0]
-            timestamp = host_timestamp_commit_tuple[1]
-            commit_id = host_timestamp_commit_tuple[2]
-            rows = [[host, timestamp, commit_id, variant] for variant in variant_lst]
+        for _, runs in self.structure.items_flat():
+            rows = [[run.host, run.timestamp, run.commit, run.variant] for run in runs]
             data.extend(rows)
 
         df_data = pd.DataFrame(
