@@ -6,18 +6,6 @@ def flatten(lst):
     return reduce(lambda a, b: a + b, lst)
 
 
-# [(a1, b1), (a2, b2) ... (an, bn)] => ([a1, a2, ... an], [b1, b2, ... bn])
-def unzip(lst):
-    return list(zip(*lst))
-
-
-def unzip_dict(d):
-    a = unzip(list(d))
-    # st.write(a)
-    commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
-    return commit_variant_tuple_lst
-
-
 def fmt_variants(commit, variants):
     return [f"+{commit}_".join(v.rsplit("_", 1)) for v in variants]
 
@@ -28,27 +16,28 @@ def unfmt_variant(variant):
     return (commit, f"{name}_{stem}")
 
 
-def get_selected_values(n, benches):
+def get_selected_values(n, benches, key_prefix=""):
     containers = [st.columns(3) for i in range(n)]
     selections = []
     for i in range(n):
         # create the selectbox in columns
+        prefix = key_prefix or str(i)
         host_val = containers[i][0].selectbox(
             "hostname",
             benches.structure.keys(),
-            key=f"{i}0_{benches.config['bench_type']}",
+            key=f"{prefix}0_{benches.config['bench_type']}",
         )
         timestamp_val = containers[i][1].selectbox(
             "timestamp",
             benches.structure[host_val].keys(),
-            key=f"{i}1_{benches.config['bench_type']}",
+            key=f"{prefix}1_{benches.config['bench_type']}",
         )
         commit_variants = benches.structure[host_val][timestamp_val].items()
         fmtted_variants = [
             c_v for c, vs in commit_variants for c_v in fmt_variants(c, vs)
         ]
         variant_val = containers[i][2].selectbox(
-            "variant", fmtted_variants, key=f"{i}2_{benches.config['bench_type']}"
+            "variant", fmtted_variants, key=f"{prefix}2_{benches.config['bench_type']}"
         )
         selected_commit, selected_variant = unfmt_variant(variant_val)
         selections.append(

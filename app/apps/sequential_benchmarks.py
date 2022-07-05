@@ -13,13 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import (
-    fmt_variants,
-    unfmt_variant,
-    flatten,
-    get_selected_values,
-    unzip_dict,
-)
+from apps.utils import flatten, get_selected_values
 
 
 def app():
@@ -223,37 +217,7 @@ def app():
     # df = df.drop_duplicates(subset=['name','variant'])
 
     st.header("Select baseline (for normalized graphs)")
-    baseline_container = st.columns(3)
-    baseline_host = baseline_container[0].selectbox(
-        "hostname",
-        selected_benches.structure.keys(),
-        key="B0_" + benches.config["bench_type"],
-    )
-    baseline_timestamp = baseline_container[1].selectbox(
-        "timestamp",
-        selected_benches.structure[baseline_host].keys(),
-        key="B1_" + benches.config["bench_type"],
-    )
-    baseline_commit_variants_tuples_lst = unzip_dict(
-        (selected_benches.structure[baseline_host][baseline_timestamp]).items()
-    )
-
-    fmtted_variants = [
-        fmt_variants(c, v) for c, v in baseline_commit_variants_tuples_lst
-    ]
-    fmtted_variants = set(flatten(fmtted_variants))
-    # st.write(fmtted_variants)
-    variant_val = baseline_container[2].selectbox(
-        "variant", fmtted_variants, key="B2_" + benches.config["bench_type"]
-    )
-    baseline_commit, baseline_variant = unfmt_variant(variant_val)
-
-    baseline_record = {
-        "host": baseline_host,
-        "timestamp": baseline_timestamp,
-        "commit": baseline_commit,
-        "variant": baseline_variant,
-    }
+    baseline_record = get_selected_values(1, selected_benches, key_prefix="B")[0]
 
     # FIXME : coq fails to build on domains
     # df = df[(df.name != 'coq.BasicSyntax.v') & (df.name != 'coq.AbstractInterpretation.v')]
