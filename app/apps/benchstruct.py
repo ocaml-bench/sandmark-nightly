@@ -56,20 +56,13 @@ class BenchStruct:
         self.structure = nested_dict(self.structure)
 
     def display(self):
-        data = list()
+        data = []
         for host_timestamp_commit_tuple, variant_lst in self.structure.items_flat():
             host = host_timestamp_commit_tuple[0]
             timestamp = host_timestamp_commit_tuple[1]
             commit_id = host_timestamp_commit_tuple[2]
-            if len(variant_lst) > 1:
-                temp_lst = [
-                    [host, timestamp, commit_id, variant] for variant in variant_lst
-                ]
-                for l in temp_lst:
-                    data.append(l)
-            else:
-                temp_lst = [host, timestamp, commit_id, variant_lst[0]]
-                data.append(temp_lst)
+            rows = [[host, timestamp, commit_id, variant] for variant in variant_lst]
+            data.extend(rows)
 
         df_data = pd.DataFrame(
             data, columns=["hostname", "timestamp", "commit_id", "variant"]
