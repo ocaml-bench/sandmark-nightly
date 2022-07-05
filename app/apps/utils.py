@@ -1,10 +1,6 @@
 from functools import reduce
 import streamlit as st
 
-# [[a11, a12 ... a1n], [a21, a22 ... a2n], ... [am1, am2 ... amn]] => [a11]
-def flatten(lst):
-    return reduce(lambda a, b: a + b, lst)
-
 
 def fmt_variants(commit, variants):
     return [f"+{commit}_".join(v.rsplit("_", 1)) for v in variants]

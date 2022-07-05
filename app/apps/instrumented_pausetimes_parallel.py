@@ -194,7 +194,7 @@ def app():
     with st.expander("Show metadata of selected benchmarks"):
         st.write(selected_benches.structure)
 
-    selected_files = flatten(selected_benches.to_filepath())
+    selected_files = selected_benches.to_filepath()
 
     def get_dataframe(file):
         # json to dataframe

@@ -22,26 +22,21 @@ class BenchStruct:
             self.add(*relative_path.split("/"))
 
     def to_filepath(self):
-        lst = []
+        filepaths = []
         for host, timestamps in self.structure.items():
             for timestamp, commits in timestamps.items():
                 for commit, bench_files in commits.items():
-                    t = [
-                        self.config["artifacts_dir"]
-                        + "/"
-                        + self.config["bench_type"]
-                        + "/"
-                        + str(host)
-                        + "/"
-                        + str(timestamp)
-                        + "/"
-                        + str(commit)
-                        + "/"
-                        + str(bench_file)
-                        for bench_file in bench_files
-                    ]
-                    lst.append(t)
-        return lst
+                    for bench_file in bench_files:
+                        t = os.path.join(
+                            self.config["artifacts_dir"],
+                            self.config["bench_type"],
+                            host,
+                            timestamp,
+                            commit,
+                            bench_file,
+                        )
+                        filepaths.append(t)
+        return filepaths
 
     def get_bench_files(self):
         root_dir = f"{self.config['artifacts_dir']}/{self.config['bench_type']}"

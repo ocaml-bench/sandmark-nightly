@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, flatten
+from apps.utils import get_selected_values
 
 
 def app():
@@ -42,7 +42,7 @@ def app():
     st.subheader("Selected Benchmarks")
     st.write(selected_benches.display())
 
-    selected_files = flatten(selected_benches.to_filepath())
+    selected_files = selected_benches.to_filepath()
 
     def get_dataframe(file):
         # json to dataframe
