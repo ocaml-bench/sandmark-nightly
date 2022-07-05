@@ -13,6 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
+from apps.utils import fmt_variant, unfmt_variant
 
 
 def app():
@@ -84,14 +85,6 @@ def app():
         # st.write(a)
         commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
         return commit_variant_tuple_lst
-
-    def fmt_variant(commit, variant_lst):
-        return [f"+{commit}_".join(v.rsplit("_", 1)) for v in variant_lst]
-
-    def unfmt_variant(variant):
-        prefix, stem = variant.rsplit("_", 1)
-        name, commit = prefix.rsplit("+", 1)
-        return (commit, f"{name}_{stem}")
 
     def get_selected_values(n):
         lst = []
