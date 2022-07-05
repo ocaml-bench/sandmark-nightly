@@ -7,7 +7,7 @@ ARTIFACTS_DIR = os.path.join(HERE, "..", "..")
 
 
 def get_selected_values(n, benches, key_prefix=""):
-    containers = [st.columns(3) for i in range(n)]
+    containers = [st.columns([1, 1, 4]) for i in range(n)]
     selections = []
     for i in range(n):
         # create the selectbox in columns
