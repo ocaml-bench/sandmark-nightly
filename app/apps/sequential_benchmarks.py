@@ -13,7 +13,13 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import fmt_variant, unfmt_variant
+from apps.utils import (
+    fmt_variant,
+    unfmt_variant,
+    flatten,
+    get_selected_values,
+    unzip_dict,
+)
 
 
 def app():
@@ -70,68 +76,11 @@ def app():
     st.header("Select variants")
     n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
 
-    containers = [st.columns(3) for i in range(n)]
-
-    # [[a11, a12 ... a1n], [a21, a22 ... a2n], ... [am1, am2 ... amn]] => [a11]
-    def flatten(lst):
-        return reduce(lambda a, b: a + b, lst)
-
-    # [(a1, b1), (a2, b2) ... (an, bn)] => ([a1, a2, ... an], [b1, b2, ... bn])
-    def unzip(lst):
-        return list(zip(*lst))
-
-    def unzip_dict(d):
-        a = unzip(list(d))
-        # st.write(a)
-        commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
-        return commit_variant_tuple_lst
-
-    def get_selected_values(n):
-        lst = []
-        for i in range(n):
-            # create the selectbox in columns
-            host_val = containers[i][0].selectbox(
-                "hostname",
-                benches.structure.keys(),
-                key=str(i) + "0_" + benches.config["bench_type"],
-            )
-            timestamp_val = containers[i][1].selectbox(
-                "timestamp",
-                benches.structure[host_val].keys(),
-                key=str(i) + "1_" + benches.config["bench_type"],
-            )
-            # st.write(benches.structure)
-            commit_variant_tuple_lst = unzip_dict(
-                (benches.structure[host_val][timestamp_val]).items()
-            )
-            fmtted_variants = [fmt_variant(c, v) for c, v in commit_variant_tuple_lst]
-            # st.write("formatted variants")
-            fmtted_variants = flatten(fmtted_variants)
-            # st.write(fmtted_variants)
-            variant_val = containers[i][2].selectbox(
-                "variant",
-                fmtted_variants,
-                key=str(i) + "2_" + benches.config["bench_type"],
-            )
-            selected_commit, selected_variant = unfmt_variant(variant_val)
-            lst.append(
-                {
-                    "host": host_val,
-                    "timestamp": timestamp_val,
-                    "commit": selected_commit,
-                    "variant": selected_variant,
-                }
-            )
-        return lst
-
     selected_benches = benchstruct.BenchStruct(
         "sequential", artifacts_dir, "_1.orun.summary.bench"
     )
-    _ = [
+    for f in get_selected_values(n, benches):
         selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])
-        for f in get_selected_values(n)
-    ]
-    selected_benches.sort()
 
     # Expander for showing bench files
     st.subheader("Benchmarks Selected")
