@@ -14,7 +14,7 @@ import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
 from apps.utils import (
-    fmt_variant,
+    fmt_variants,
     unfmt_variant,
     flatten,
     get_selected_values,
@@ -239,7 +239,7 @@ def app():
     )
 
     fmtted_variants = [
-        fmt_variant(c, v) for c, v in baseline_commit_variants_tuples_lst
+        fmt_variants(c, v) for c, v in baseline_commit_variants_tuples_lst
     ]
     fmtted_variants = set(flatten(fmtted_variants))
     # st.write(fmtted_variants)
