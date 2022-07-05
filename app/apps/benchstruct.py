@@ -28,7 +28,8 @@ class BenchRun:
         prefix, _ = self.variant.rsplit("_", 1)
         variant = prefix.rstrip(f"+{self.type}")
         hash_ = self.commit[:7]
-        return f"{variant}+{hash_}"
+        date, time = self.timestamp.split("_", 1)
+        return f"{variant}+{hash_}+{time}"
 
 
 class BenchStruct:
@@ -48,7 +49,8 @@ class BenchStruct:
             commit=commit,
             variant=variant,
         )
-        self.structure[host][timestamp].append(run)
+        date, _ = timestamp.split("_", 1)
+        self.structure[host][date].append(run)
 
     def add_files(self, files):
         for relative_path in files:

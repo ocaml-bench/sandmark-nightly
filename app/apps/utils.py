@@ -17,12 +17,12 @@ def get_selected_values(n, benches, key_prefix=""):
             benches.structure.keys(),
             key=f"{prefix}0_{benches.config['bench_type']}",
         )
-        timestamp_val = containers[i][1].selectbox(
-            "timestamp",
+        date_val = containers[i][1].selectbox(
+            "date",
             benches.structure[host_val].keys(),
             key=f"{prefix}1_{benches.config['bench_type']}",
         )
-        runs = [run for run in benches.structure[host_val][timestamp_val]]
+        runs = [run for run in benches.structure[host_val][date_val]]
         selection = containers[i][2].selectbox(
             "variant", runs, key=f"{prefix}2_{benches.config['bench_type']}"
         )
