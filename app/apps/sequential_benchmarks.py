@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import fmt_variant, unfmt_variant
+from apps.utils import get_selected_values, ARTIFACTS_DIR
 
 
 def app():
@@ -57,12 +57,8 @@ def app():
     # ....
     # <host n>
 
-    current = os.getcwd().split("/")
-    current.pop()
-    artifacts_dir = "/".join(current) + "/sandmark-nightly"
-    # print(artifacts_dir)
     benches = benchstruct.BenchStruct(
-        "sequential", artifacts_dir, "_1.orun.summary.bench"
+        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
     benches.add_files(benches.get_bench_files())
     benches.sort()
@@ -70,74 +66,17 @@ def app():
     st.header("Select variants")
     n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
 
-    containers = [st.columns(3) for i in range(n)]
-
-    # [[a11, a12 ... a1n], [a21, a22 ... a2n], ... [am1, am2 ... amn]] => [a11]
-    def flatten(lst):
-        return reduce(lambda a, b: a + b, lst)
-
-    # [(a1, b1), (a2, b2) ... (an, bn)] => ([a1, a2, ... an], [b1, b2, ... bn])
-    def unzip(lst):
-        return list(zip(*lst))
-
-    def unzip_dict(d):
-        a = unzip(list(d))
-        # st.write(a)
-        commit_variant_tuple_lst = [(x1, x2) for x1, x2 in zip(a[0], a[1])]
-        return commit_variant_tuple_lst
-
-    def get_selected_values(n):
-        lst = []
-        for i in range(n):
-            # create the selectbox in columns
-            host_val = containers[i][0].selectbox(
-                "hostname",
-                benches.structure.keys(),
-                key=str(i) + "0_" + benches.config["bench_type"],
-            )
-            timestamp_val = containers[i][1].selectbox(
-                "timestamp",
-                benches.structure[host_val].keys(),
-                key=str(i) + "1_" + benches.config["bench_type"],
-            )
-            # st.write(benches.structure)
-            commit_variant_tuple_lst = unzip_dict(
-                (benches.structure[host_val][timestamp_val]).items()
-            )
-            fmtted_variants = [fmt_variant(c, v) for c, v in commit_variant_tuple_lst]
-            # st.write("formatted variants")
-            fmtted_variants = flatten(fmtted_variants)
-            # st.write(fmtted_variants)
-            variant_val = containers[i][2].selectbox(
-                "variant",
-                fmtted_variants,
-                key=str(i) + "2_" + benches.config["bench_type"],
-            )
-            selected_commit, selected_variant = unfmt_variant(variant_val)
-            lst.append(
-                {
-                    "host": host_val,
-                    "timestamp": timestamp_val,
-                    "commit": selected_commit,
-                    "variant": selected_variant,
-                }
-            )
-        return lst
-
     selected_benches = benchstruct.BenchStruct(
-        "sequential", artifacts_dir, "_1.orun.summary.bench"
+        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
-    _ = [
+    for f in get_selected_values(n, benches):
         selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])
-        for f in get_selected_values(n)
-    ]
-    selected_benches.sort()
 
     # Expander for showing bench files
     st.subheader("Benchmarks Selected")
     st.write(selected_benches.display())
 
-    selected_files = flatten(selected_benches.to_filepath())
+    selected_files = selected_benches.to_filepath()
 
     unique_num_selected_files = len(set(selected_files))
 
@@ -274,37 +213,7 @@ def app():
     # df = df.drop_duplicates(subset=['name','variant'])
 
     st.header("Select baseline (for normalized graphs)")
-    baseline_container = st.columns(3)
-    baseline_host = baseline_container[0].selectbox(
-        "hostname",
-        selected_benches.structure.keys(),
-        key="B0_" + benches.config["bench_type"],
-    )
-    baseline_timestamp = baseline_container[1].selectbox(
-        "timestamp",
-        selected_benches.structure[baseline_host].keys(),
-        key="B1_" + benches.config["bench_type"],
-    )
-    baseline_commit_variants_tuples_lst = unzip_dict(
-        (selected_benches.structure[baseline_host][baseline_timestamp]).items()
-    )
-
-    fmtted_variants = [
-        fmt_variant(c, v) for c, v in baseline_commit_variants_tuples_lst
-    ]
-    fmtted_variants = set(flatten(fmtted_variants))
-    # st.write(fmtted_variants)
-    variant_val = baseline_container[2].selectbox(
-        "variant", fmtted_variants, key="B2_" + benches.config["bench_type"]
-    )
-    baseline_commit, baseline_variant = unfmt_variant(variant_val)
-
-    baseline_record = {
-        "host": baseline_host,
-        "timestamp": baseline_timestamp,
-        "commit": baseline_commit,
-        "variant": baseline_variant,
-    }
+    baseline_record = get_selected_values(1, selected_benches, key_prefix="B")[0]
 
     # FIXME : coq fails to build on domains
     # df = df[(df.name != 'coq.BasicSyntax.v') & (df.name != 'coq.AbstractInterpretation.v')]
