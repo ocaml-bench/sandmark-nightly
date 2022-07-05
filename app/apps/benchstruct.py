@@ -8,15 +8,16 @@ from dataclasses import dataclass
 
 @dataclass
 class BenchRun:
+    type: str
     host: str
     timestamp: str
     commit: str
     variant: str
 
-    def filepath(self, artifacts_dir, bench_type):
+    def filepath(self, artifacts_dir):
         return os.path.join(
             artifacts_dir,
-            bench_type,
+            self.type,
             self.host,
             self.timestamp,
             self.commit,
@@ -24,7 +25,10 @@ class BenchRun:
         )
 
     def __repr__(self):
-        return f"+{self.commit}_".join(self.variant.rsplit("_", 1))
+        prefix, _ = self.variant.rsplit("_", 1)
+        variant = prefix.rstrip(f"+{self.type}")
+        hash_ = self.commit[:7]
+        return f"{variant}+{hash_}"
 
 
 class BenchStruct:
@@ -37,7 +41,13 @@ class BenchStruct:
         self.config["bench_stem"] = bench_stem
 
     def add(self, host, timestamp, commit, variant):
-        run = BenchRun(host=host, timestamp=timestamp, commit=commit, variant=variant)
+        run = BenchRun(
+            type=self.config["bench_type"],
+            host=host,
+            timestamp=timestamp,
+            commit=commit,
+            variant=variant,
+        )
         self.structure[host][timestamp].append(run)
 
     def add_files(self, files):
@@ -46,10 +56,7 @@ class BenchStruct:
 
     def to_filepath(self):
         return [
-            run.filepath(
-                self.config["artifacts_dir"],
-                self.config["bench_type"],
-            )
+            run.filepath(self.config["artifacts_dir"])
             for _, runs in self.structure.items_flat()
             for run in runs
         ]
