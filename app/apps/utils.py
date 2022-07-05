@@ -43,11 +43,10 @@ def get_selected_values(n, benches):
             benches.structure[host_val].keys(),
             key=f"{i}1_{benches.config['bench_type']}",
         )
-        commit_variant_tuple_lst = unzip_dict(
-            (benches.structure[host_val][timestamp_val]).items()
-        )
-        fmtted_variants = [fmt_variants(c, v) for c, v in commit_variant_tuple_lst]
-        fmtted_variants = flatten(fmtted_variants)
+        commit_variants = benches.structure[host_val][timestamp_val].items()
+        fmtted_variants = [
+            c_v for c, vs in commit_variants for c_v in fmt_variants(c, vs)
+        ]
         variant_val = containers[i][2].selectbox(
             "variant", fmtted_variants, key=f"{i}2_{benches.config['bench_type']}"
         )
