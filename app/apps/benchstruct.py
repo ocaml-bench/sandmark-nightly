@@ -31,14 +31,14 @@ class BenchStruct:
     config = {}
 
     def __init__(self, bench_type, artifacts_dir, bench_stem):
-        self.structure = nested_dict(3, list)
+        self.structure = nested_dict(2, list)
         self.config["bench_type"] = bench_type
         self.config["artifacts_dir"] = artifacts_dir
         self.config["bench_stem"] = bench_stem
 
     def add(self, host, timestamp, commit, variant):
         run = BenchRun(host=host, timestamp=timestamp, commit=commit, variant=variant)
-        self.structure[host][timestamp][commit].append(run)
+        self.structure[host][timestamp].append(run)
 
     def add_files(self, files):
         for relative_path in files:
