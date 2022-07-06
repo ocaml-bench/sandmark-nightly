@@ -24,13 +24,6 @@ class BenchRun:
             self.variant,
         )
 
-    def __repr__(self):
-        prefix, _ = self.variant.rsplit("_", 1)
-        variant = prefix.rstrip(f"+{self.type}")
-        hash_ = self.commit[:7]
-        date, time = self.timestamp.split("_", 1)
-        return f"{variant}+{hash_}+{time}"
-
 
 class BenchStruct:
     config = {}

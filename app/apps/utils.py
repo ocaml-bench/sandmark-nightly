@@ -6,6 +6,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ARTIFACTS_DIR = os.path.join(HERE, "..", "..")
 
 
+def format_bench_run(run):
+    prefix, _ = run.variant.rsplit("_", 1)
+    variant = prefix.rstrip(f"+{run.type}")
+    hash_ = run.commit[:7]
+    date, time = run.timestamp.split("_", 1)
+    return f"{variant}+{hash_}+{time}"
+
+
 def get_selected_values(n, benches, key_prefix=""):
     containers = [st.columns([1, 1, 4]) for i in range(n)]
     selections = []
@@ -24,7 +32,10 @@ def get_selected_values(n, benches, key_prefix=""):
         )
         runs = [run for run in benches.structure[host_val][date_val]]
         selection = containers[i][2].selectbox(
-            "variant", runs, key=f"{prefix}2_{benches.config['bench_type']}"
+            "variant",
+            runs,
+            key=f"{prefix}2_{benches.config['bench_type']}",
+            format_func=format_bench_run,
         )
         selections.append(
             {
