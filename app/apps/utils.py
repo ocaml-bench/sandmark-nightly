@@ -37,12 +37,5 @@ def get_selected_values(n, benches, key_prefix=""):
             key=f"{prefix}2_{benches.config['bench_type']}",
             format_func=format_bench_run,
         )
-        selections.append(
-            {
-                "host": selection.host,
-                "timestamp": selection.timestamp,
-                "commit": selection.commit,
-                "variant": selection.variant,
-            }
-        )
+        selections.append(selection)
     return selections

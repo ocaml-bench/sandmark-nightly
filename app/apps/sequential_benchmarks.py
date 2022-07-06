@@ -70,7 +70,7 @@ def app():
         "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
     for f in get_selected_values(n, benches):
-        selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])
+        selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
 
     # Expander for showing bench files
     st.subheader("Benchmarks Selected")
@@ -131,10 +131,10 @@ def app():
         return graph
 
     def fmt_baseline(record):
-        date = record["timestamp"].split("_")[0]
-        commit = record["commit"][:7]
-        variant = record["variant"].split("_")[0]
-        s = str(variant) + "_" + date + "_" + commit
+        date = record.timestamp.split("_")[0]
+        commit = record.commit[:7]
+        variant = record.variant.split("_")[0]
+        s = variant + "_" + date + "_" + commit
         return s
 
     def create_column(df, variant, metric):
