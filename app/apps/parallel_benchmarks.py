@@ -50,7 +50,7 @@ def app():
                 if "name" in temp:
                     data.append(temp)
             df = pd.json_normalize(data)
-            df["variant"] = format_variant(file, benches.config["bench_type"])
+            df["variant"] = format_variant(file)
         return df
 
     def get_dataframes_from_files(files):

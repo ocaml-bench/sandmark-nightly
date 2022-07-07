@@ -14,12 +14,12 @@ def format_bench_run(run):
     return f"{variant}+{hash_}+{time}"
 
 
-def format_variant(path, bench_type):
-    value = path.split("/" + bench_type + "/")[1]
-    date = value.split("/")[1].split("_")[0]
-    commit_id = value.split("/")[2][:7]
-    variant = value.split("/")[3].split("_", 1)[0]
-    return variant + "_" + date + "_" + commit_id
+def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
+    relpath = os.path.relpath(path, artifacts_dir)
+    _, _, timestamp, commit_id, variant = relpath.split("/")
+    date, _ = timestamp.split("_")
+    variant = variant.split("_", 1)[0]
+    return f"{variant}_{date}_{commit_id[:7]}"
 
 
 def get_selected_values(n, benches, key_prefix=""):
