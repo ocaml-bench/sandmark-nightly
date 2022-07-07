@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, ARTIFACTS_DIR
+from apps.utils import format_variant, get_selected_values, ARTIFACTS_DIR
 
 
 def app():
@@ -87,12 +87,6 @@ def app():
 
     selected_files = selected_benches.to_filepath()
 
-    def fmt_variant(file):
-        variant = file.split("/")[-1].split("_1")[0]
-        commit_id = file.split("/")[-2][:7]
-        date = file.split("/")[-3].split("_")[0]
-        return str(variant + "_" + date + "_" + commit_id)
-
     def get_dataframe(file):
         # json to dataframe
 
@@ -101,7 +95,7 @@ def app():
             for l in f:
                 data.append(json.loads(l))
             df = pdjson.json_normalize(data)
-        df["variant"] = fmt_variant(file)
+        df["variant"] = format_variant(file, artifacts_dir)
         return df
 
     def get_dataframes_from_files(files):
