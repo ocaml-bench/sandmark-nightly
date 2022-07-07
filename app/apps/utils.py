@@ -14,6 +14,14 @@ def format_bench_run(run):
     return f"{variant}+{hash_}+{time}"
 
 
+def format_variant(path, bench_type):
+    value = path.split("/" + bench_type + "/")[1]
+    date = value.split("/")[1].split("_")[0]
+    commit_id = value.split("/")[2][:7]
+    variant = value.split("/")[3].split("_", 1)[0]
+    return variant + "_" + date + "_" + commit_id
+
+
 def get_selected_values(n, benches, key_prefix=""):
     containers = [st.columns([1, 1, 4]) for i in range(n)]
     selections = []

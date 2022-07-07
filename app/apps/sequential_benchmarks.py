@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, ARTIFACTS_DIR
+from apps.utils import get_selected_values, format_variant, ARTIFACTS_DIR
 
 
 def app():
@@ -108,11 +108,7 @@ def app():
                 if "name" in temp:
                     data.append(temp)
             df = pd.json_normalize(data)
-            value = file.split("/" + benches.config["bench_type"] + "/")[1]
-            date = value.split("/")[1].split("_")[0]
-            commit_id = value.split("/")[2][:7]
-            variant = value.split("/")[3].split("_")[0]
-            df["variant"] = variant + "_" + date + "_" + commit_id
+            df["variant"] = format_variant(file, benches.config["bench_type"])
         return df
 
     def get_dataframes_from_files(files):
@@ -133,7 +129,7 @@ def app():
     def fmt_baseline(record):
         date = record.timestamp.split("_")[0]
         commit = record.commit[:7]
-        variant = record.variant.split("_")[0]
+        variant = record.variant.rsplit("_", 1)[0]
         s = variant + "_" + date + "_" + commit
         return s
 
