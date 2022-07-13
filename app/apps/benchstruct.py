@@ -24,13 +24,6 @@ class BenchRun:
             self.variant,
         )
 
-    def __repr__(self):
-        prefix, _ = self.variant.rsplit("_", 1)
-        variant = prefix.rstrip(f"+{self.type}")
-        hash_ = self.commit[:7]
-        date, time = self.timestamp.split("_", 1)
-        return f"{variant}+{hash_}+{time}"
-
 
 class BenchStruct:
     config = {}
@@ -65,10 +58,15 @@ class BenchStruct:
 
     def get_bench_files(self):
         root_dir = f"{self.config['artifacts_dir']}/{self.config['bench_type']}"
-        pattern = f"{root_dir}/**/*{self.config['bench_stem']}"
-        bench_files = glob.glob(pattern, recursive=True)
-        n = len(root_dir) + 1  # root_dir path + '/'
-        return [path[n:] for path in bench_files]
+        files = []
+        bench_stem = self.config["bench_stem"]
+        stems = [bench_stem] if isinstance(bench_stem, str) else bench_stem
+        for stem in stems:
+            pattern = f"{root_dir}/**/*{stem}"
+            bench_files = glob.glob(pattern, recursive=True)
+            n = len(root_dir) + 1  # root_dir path + '/'
+            files.extend([path[n:] for path in bench_files])
+        return files
 
     def __repr__(self):
         return f"{self.structure}"

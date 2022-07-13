@@ -14,7 +14,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from multipledispatch import dispatch
+from apps.utils import format_variant, get_selected_values, ARTIFACTS_DIR
 
 
 def app():
@@ -62,29 +62,9 @@ def app():
     # ....
     # <host n>
 
-    # This idea is only for sandmark nightly
+    artifacts_dir = os.path.join(ARTIFACTS_DIR, "pausetimes")
 
-    class BenchStruct(benchstruct.BenchStruct):
-        def get_bench_files(self):
-            bench_files = []
-
-            # Loads file metadata
-            for root, dirs, files in os.walk(
-                self.config["artifacts_dir"] + "/" + self.config["bench_type"]
-            ):
-                for file in files:
-                    if file.endswith(self.config["bench_stem"]):
-                        f = root.split("/" + self.config["bench_type"])
-                        bench_files.append((os.path.join(root, file)))
-
-            return bench_files
-
-    current = os.getcwd().split("/")
-    current.pop()
-    artifacts_dir = "/".join(current) + "/sandmark-nightly" + "/pausetimes"
-    # print(artifacts_dir)
-
-    benches = BenchStruct(
+    benches = benchstruct.BenchStruct(
         "parallel", artifacts_dir, "_1.pausetimes_multicore.summary.bench"
     )
     benches.add_files(benches.get_bench_files())
@@ -93,106 +73,16 @@ def app():
     st.header("Select variants")
     n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
 
-    containers = [st.columns(3) for i in range(n)]
-
-    # [[a11, a12 ... a1n], [a21, a22 ... a2n], ... [am1, am2 ... amn]] => [a11]
-    def flatten(lst):
-        return reduce(lambda a, b: a + b, lst)
-
-    # [(a1, b1), (a2, b2) ... (an, bn)] => ([a1, a2, ... an], [b1, b2, ... bn])
-    def unzip(lst):
-        return list(zip(*lst))
-
-    def unzip_dict(d):
-        a = unzip(list(d))
-        # st.write(a)
-        (x, y) = a[0], flatten(a[1])
-        return (x, y)
-
-    @dispatch(str)
-    def fmt_variant(file):
-        variant = file.split("/")[-1].split("_1")[0]
-        commit_id = file.split("/")[-2][:7]
-        date = file.split("/")[-3].split("_")[0]
-        return str(variant + "_" + date + "_" + commit_id)
-
-    @dispatch(str, str)
-    def fmt_variant(commit, variant):
-        # st.write(variant.split('_'))
-        return (
-            variant.split("_")[0]
-            + "+"
-            + str(commit)
-            + "_"
-            + variant.split("_")[1]
-            + "_"
-            + variant.split("_")[2]
-        )
-
-    def unfmt_variant(variant):
-        commit = variant.split("_")[0].split("+")[-1]
-        variant_root = variant.split("_")[1] + "_" + variant.split("_")[2]
-        # st.write(variant_root)
-        variant_stem = variant.split("_")[0].split("+")
-        variant_stem.pop()
-        variant_stem = reduce(
-            lambda a, b: b if a == "" else a + "+" + b, variant_stem, ""
-        )
-        new_variant = variant_stem + "_" + variant_root
-        # st.write(new_variant)
-        return (commit, new_variant)
-
-    def get_selected_values(n):
-        lst = []
-        for i in range(n):
-            # create the selectbox in columns
-            host_val = containers[i][0].selectbox(
-                "hostname",
-                benches.structure.keys(),
-                key=str(i) + "0_" + benches.config["bench_type"],
-            )
-            timestamp_val = containers[i][1].selectbox(
-                "timestamp",
-                benches.structure[host_val].keys(),
-                key=str(i) + "1_" + benches.config["bench_type"],
-            )
-            # st.write((benches.structure[host_val][timestamp_val]).items())
-            if (benches.structure[host_val][timestamp_val]).items():
-                commits, variants = unzip_dict(
-                    (benches.structure[host_val][timestamp_val]).items()
-                )
-                # st.write(variants)
-                fmtted_variants = [fmt_variant(c, v) for c, v in zip(commits, variants)]
-                # st.write(fmtted_variants)
-                variant_val = containers[i][2].selectbox(
-                    "variant",
-                    fmtted_variants,
-                    key=str(i) + "2_" + benches.config["bench_type"],
-                )
-                selected_commit, selected_variant = unfmt_variant(variant_val)
-                lst.append(
-                    {
-                        "host": host_val,
-                        "timestamp": timestamp_val,
-                        "commit": selected_commit,
-                        "variant": selected_variant,
-                    }
-                )
-
-        return lst
-
-    selected_benches = BenchStruct(
+    selected_benches = benchstruct.BenchStruct(
         "parallel", artifacts_dir, "_1.pausetimes_multicore.summary.bench"
     )
-    _ = [
-        selected_benches.add(f["host"], f["timestamp"], f["commit"], f["variant"])
-        for f in get_selected_values(n)
-    ]
+    for f in get_selected_values(n, benches):
+        selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
     selected_benches.sort()
 
     # Expander for showing bench files
     with st.expander("Show metadata of selected benchmarks"):
-        st.write(selected_benches.structure)
+        st.write(selected_benches.display())
 
     selected_files = selected_benches.to_filepath()
 
@@ -204,7 +94,7 @@ def app():
             for l in f:
                 data.append(json.loads(l))
             df = pdjson.json_normalize(data)
-        df["variant"] = fmt_variant(file)
+        df["variant"] = format_variant(file, artifacts_dir)
 
         return df
 
