@@ -1,0 +1,26 @@
+# Workflow to copy successful builds to main branch
+---
+on:
+  # Triggers the workflow on push to testing branch, containing bench files
+  push:
+    branches:
+      - 'testing'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  copy_successful_builds:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        # FIXME: Can use this when the script is merged to main
+        # with:
+        #   ref: 'main'
+
+      - name: Run script to copy successful builds
+        env:
+          SLACK_API_URL: ${{ secrets.SLACK_API_URL }}
+        run: ./scripts/copy-successful-builds.sh
