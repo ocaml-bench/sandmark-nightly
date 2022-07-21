@@ -43,6 +43,9 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     git diff --name-only --cached | grep -qoP "." && \
         git commit -m "Automated commit for successful benchmarks in ${TESTING_COMMIT}"
     git push "${GIT_REMOTE}" main
+    MAIN_COMMIT=$(git rev-parse HEAD)
 fi
 
 git checkout "${CURRENT_BRANCH}"
+
+"$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}"

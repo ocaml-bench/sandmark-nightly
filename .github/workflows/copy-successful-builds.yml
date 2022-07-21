@@ -21,4 +21,6 @@ jobs:
         #   ref: 'main'
 
       - name: Run script to copy successful builds
+        env:
+          SLACK_API_URL: ${{ secrets.SLACK_API_URL }}
         run: ./scripts/copy-successful-builds.sh
