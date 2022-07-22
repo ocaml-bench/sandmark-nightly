@@ -10,8 +10,7 @@ def format_bench_run(run):
     prefix, _ = run.variant.rsplit("_", 1)
     variant = prefix.rstrip(f"+{run.type}")
     hash_ = run.commit[:7]
-    date, time = run.timestamp.split("_", 1)
-    return f"{variant}+{hash_}+{time}"
+    return f"{variant}+{hash_}+{run.timestamp}"
 
 
 def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
