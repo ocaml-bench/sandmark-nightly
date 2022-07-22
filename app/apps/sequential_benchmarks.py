@@ -69,7 +69,8 @@ def app():
     selected_benches = benchstruct.BenchStruct(
         "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
-    for f in get_selected_values(n, benches):
+    by = st.radio("Find Benchmark By", options=["variant", "hostname"], horizontal=True)
+    for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
 
     # Expander for showing bench files
