@@ -30,6 +30,7 @@ class BenchStruct:
 
     def __init__(self, bench_type, artifacts_dir, bench_stem):
         self.structure = nested_dict(2, list)
+        self.structure_by_variant = nested_dict(2, list)
         self.config["bench_type"] = bench_type
         self.config["artifacts_dir"] = artifacts_dir
         self.config["bench_stem"] = bench_stem
@@ -44,6 +45,8 @@ class BenchStruct:
         )
         date, _ = timestamp.split("_", 1)
         self.structure[host][date].append(run)
+        v = variant.rsplit("_", 1)[0]
+        self.structure_by_variant[v][date].append(run)
 
     def add_files(self, files):
         for relative_path in files:
