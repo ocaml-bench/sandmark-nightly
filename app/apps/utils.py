@@ -36,8 +36,9 @@ def get_selected_values(n, benches, key_prefix=""):
             labels[col], sorted(structure.keys()), key=f"{prefix}{col}_{type_}"
         )
         col = 1
+        dates = structure[first_val].keys()
         date_val = containers[row][col].selectbox(
-            labels[col], structure[first_val].keys(), key=f"{prefix}{col}_{type_}"
+            labels[col], dates, key=f"{prefix}{col}_{type_}", disabled=len(dates) <= 1
         )
         col = 2
         runs = [run for run in structure[first_val][date_val]]
