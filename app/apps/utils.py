@@ -22,27 +22,30 @@ def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
 
 
 def get_selected_values(n, benches, key_prefix=""):
-    containers = [st.columns([1, 1, 4]) for i in range(n)]
+    structure = benches.structure
+    format_func = format_bench_run
+    type_ = benches.config["bench_type"]
     selections = []
-    for i in range(n):
+    labels = ["hostname", "date", "variant"]
+    containers = [st.columns([1, 1, 4]) for i in range(n)]
+    for row in range(n):
         # create the selectbox in columns
-        prefix = key_prefix or str(i)
-        host_val = containers[i][0].selectbox(
-            "hostname",
-            benches.structure.keys(),
-            key=f"{prefix}0_{benches.config['bench_type']}",
+        prefix = key_prefix or str(row)
+        col = 0
+        first_val = containers[row][col].selectbox(
+            labels[col], sorted(structure.keys()), key=f"{prefix}{col}_{type_}"
         )
-        date_val = containers[i][1].selectbox(
-            "date",
-            benches.structure[host_val].keys(),
-            key=f"{prefix}1_{benches.config['bench_type']}",
+        col = 1
+        date_val = containers[row][col].selectbox(
+            labels[col], structure[first_val].keys(), key=f"{prefix}{col}_{type_}"
         )
-        runs = [run for run in benches.structure[host_val][date_val]]
-        selection = containers[i][2].selectbox(
-            "variant",
+        col = 2
+        runs = [run for run in structure[first_val][date_val]]
+        selection = containers[row][col].selectbox(
+            labels[col],
             runs,
-            key=f"{prefix}2_{benches.config['bench_type']}",
-            format_func=format_bench_run,
+            key=f"{prefix}{col}_{type_}",
+            format_func=format_func,
             disabled=len(runs) <= 1,
         )
         selections.append(selection)
