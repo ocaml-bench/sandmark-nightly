@@ -31,7 +31,8 @@ def app():
     selected_benches = benchstruct.BenchStruct(
         "parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench"
     )
-    for f in get_selected_values(n, benches):
+    by = st.radio("Find Benchmark By", options=["variant", "hostname"], horizontal=True)
+    for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
     selected_benches.sort()
 
