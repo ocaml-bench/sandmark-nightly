@@ -40,6 +40,8 @@ TESTING_COMMIT=$(git rev-parse "${GIT_REMOTE}/testing")
 if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     # Try to commit only if files have been staged. No files are staged, if the
     # files are already on main branch.
+    git config user.email "puneeth+sandmark@tarides.com"
+    git config user.name "Sandmark Nightly Bot"
     git diff --name-only --cached | grep -qoP "." && \
         git commit -m "Automated commit for successful benchmarks in ${TESTING_COMMIT}"
     git push "${GIT_REMOTE}" main
