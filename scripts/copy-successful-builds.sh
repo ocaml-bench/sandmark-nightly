@@ -48,6 +48,8 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     MAIN_COMMIT=$(git rev-parse HEAD)
 fi
 
-git checkout "${CURRENT_BRANCH}"
+git checkout "${GIT_REMOTE}/testing"
 
 "$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}"
+
+git checkout "${CURRENT_BRANCH}"
