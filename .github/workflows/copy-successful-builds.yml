@@ -16,9 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        # FIXME: Can use this when the script is merged to main
-        # with:
-        #   ref: 'main'
+        with:
+          fetch-depth: 0
 
       - name: Run script to copy successful builds
         env:

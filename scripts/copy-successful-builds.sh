@@ -40,12 +40,16 @@ TESTING_COMMIT=$(git rev-parse "${GIT_REMOTE}/testing")
 if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     # Try to commit only if files have been staged. No files are staged, if the
     # files are already on main branch.
+    git config user.email "puneeth+sandmark@tarides.com"
+    git config user.name "Sandmark Nightly Bot"
     git diff --name-only --cached | grep -qoP "." && \
         git commit -m "Automated commit for successful benchmarks in ${TESTING_COMMIT}"
     git push "${GIT_REMOTE}" main
     MAIN_COMMIT=$(git rev-parse HEAD)
 fi
 
-git checkout "${CURRENT_BRANCH}"
+git checkout "${GIT_REMOTE}/testing"
 
 "$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}"
+
+git checkout "${CURRENT_BRANCH}"
