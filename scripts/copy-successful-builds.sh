@@ -15,6 +15,11 @@ git fetch "${GIT_REMOTE}" main
 
 LAST_COMMIT_FILES=$(git diff-tree --no-commit-id --name-only -r "${GIT_REMOTE}/testing" --diff-filter=d)
 
+if ! echo "${LAST_COMMIT_FILES}" | grep -qoP ".*\.log$"; then
+    echo "The last commit on testing is not an benchmark results commit."
+    exit 1
+fi
+
 HOSTNAME=$(echo "${LAST_COMMIT_FILES}" | cut -d "/" -f 2 | sort -u | head -n 1)
 
 CHANGED_DIRS=$(for each in ${LAST_COMMIT_FILES}; do
