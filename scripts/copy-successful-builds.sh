@@ -15,6 +15,8 @@ git fetch "${GIT_REMOTE}" main
 
 LAST_COMMIT_FILES=$(git diff-tree --no-commit-id --name-only -r "${GIT_REMOTE}/testing" --diff-filter=d)
 
+HOSTNAME=$(echo "${LAST_COMMIT_FILES}" | cut -d "/" -f 2 | sort -u | head -n 1)
+
 CHANGED_DIRS=$(for each in ${LAST_COMMIT_FILES}; do
                    dirname "${each}"
                done | sort -u)
@@ -43,13 +45,12 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     git config user.email "puneeth+sandmark@tarides.com"
     git config user.name "Sandmark Nightly Bot"
     git diff --name-only --cached | grep -qoP "." && \
-        git commit -m "Automated commit for successful benchmarks in ${TESTING_COMMIT}"
-    git push "${GIT_REMOTE}" main
+        git commit -m "Auto-copy successful results from ${TESTING_COMMIT} (${HOSTNAME})"
     MAIN_COMMIT=$(git rev-parse HEAD)
 fi
 
 git checkout "${GIT_REMOTE}/testing"
 
-"$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}"
+"$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}" "${HOSTNAME}"
 
 git checkout "${CURRENT_BRANCH}"
