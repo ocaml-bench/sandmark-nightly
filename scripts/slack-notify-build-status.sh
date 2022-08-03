@@ -10,6 +10,7 @@ function commit_url {
 CHANGED_DIRS=$1
 TESTING_COMMIT=$2
 MAIN_COMMIT=$3
+HOSTNAME=$4
 
 for dir in ${CHANGED_DIRS}; do
     BENCH_FILE=$(find "${dir}" -name "*.summary.bench" -type f | head -n 1)
@@ -26,7 +27,7 @@ if [ -n "${PASSED_BUILDS:-}" ]; then
                         \"type\": \"header\",
                         \"text\": {
                                 \"type\": \"plain_text\",
-                                \"text\": \"Successful builds\"
+                                \"text\": \"Successful builds on ${HOSTNAME}\"
                         }
                 },
                 {
@@ -50,7 +51,7 @@ if [ -n "${FAILED_BUILDS:-}" ]; then
                         \"type\": \"header\",
                         \"text\": {
                                 \"type\": \"plain_text\",
-                                \"text\": \"Failed builds\"
+                                \"text\": \"Failed builds on ${HOSTNAME}\"
                         }
                 },
                 {
