@@ -17,7 +17,7 @@ LAST_COMMIT_FILES=$(git diff-tree --no-commit-id --name-only -r "${GIT_REMOTE}/t
 
 if ! echo "${LAST_COMMIT_FILES}" | grep -qoP ".*\.log$"; then
     echo "The last commit on testing is not an benchmark results commit."
-    exit 1
+    exit 0
 fi
 
 HOSTNAME=$(echo "${LAST_COMMIT_FILES}" | cut -d "/" -f 2 | sort -u | head -n 1)
