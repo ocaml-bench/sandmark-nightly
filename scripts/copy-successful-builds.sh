@@ -51,6 +51,7 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     git config user.name "Sandmark Nightly Bot"
     git diff --name-only --cached | grep -qoP "." && \
         git commit -m "Auto-copy successful results from ${TESTING_COMMIT} (${HOSTNAME})"
+    git push "${GIT_REMOTE}" main
     MAIN_COMMIT=$(git rev-parse HEAD)
 fi
 
