@@ -28,6 +28,14 @@ def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
     return f"{host}_{variant}_{date}_{commit_id[:7]}"
 
 
+def fmt_baseline(record):
+    date = record.timestamp.split("_")[0]
+    commit = record.commit[:7]
+    variant = record.variant.rsplit("_", 1)[0]
+    host = record.host
+    return f"{host}_{variant}_{date}_{commit}"
+
+
 def get_selected_values(n, benches, key_prefix="", by="host"):
     if by == "variant":
         labels = ["variant", "date", "host"]
