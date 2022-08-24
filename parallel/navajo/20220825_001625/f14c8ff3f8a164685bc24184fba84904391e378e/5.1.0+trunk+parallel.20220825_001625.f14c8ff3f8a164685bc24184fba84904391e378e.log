@@ -1,0 +1,689 @@
+System load detected, waiting to run bench (retrying in 5 minutes)
+Loadavg: 77
+ intervaltree is not installed.  Install using pip3 install.
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.1.0+stable
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+stable
+mkdir -p dependencies/packages/ocaml/ocaml.5.1.0+stable
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.1.0+stable/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+stable
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+stable/
+{	if [ "https://github.com/ocaml/ocaml/archive/trunk.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.1.0+stable.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/trunk.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+stable/opam;
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.1.0+stable ocaml-base-compiler.5.1.0+stable
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.1.0+stable] downloaded from https://github.com/ocaml/ocaml/archive/trunk.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+∗ installed ocaml-base-compiler.5.1.0+stable
+∗ installed ocaml-config.1
+∗ installed ocaml.5.1.0+stable
+Done.
+# Run eval $(opam env) to update the current shell environment
+Package sexplib0 does not exist, create as a NEW package? [Y/n] y
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0: git]
+[sexplib0.v0.15.0] synchronised from git+https://github.com/shakthimaan/sexplib0.git#multicore
+sexplib0 is now pinned to git+https://github.com/shakthimaan/sexplib0.git#multicore (version v0.15.0)
+opam pin add -n --yes --switch 5.1.0+stable base.v0.14.3 https://github.com/janestreet/base.git#v0.14.3
+Package base does not exist, create as a NEW package? [Y/n] y
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3: git]
+[base.v0.14.3] synchronised from git+https://github.com/janestreet/base.git#v0.14.3
+base is now pinned to git+https://github.com/janestreet/base.git#v0.14.3 (version v0.14.3)
+opam pin add -n --yes --switch 5.1.0+stable coq-core https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-core does not exist, create as a NEW package? [Y/n] y
+[coq-core.~dev: http]
+[coq-core.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-core is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.1.0+stable coq-stdlib https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-stdlib does not exist, create as a NEW package? [Y/n] y
+[coq-stdlib.~dev: http]
+[coq-stdlib.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-stdlib is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.1.0+stable ocamlfind https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+Package ocamlfind does not exist, create as a NEW package? [Y/n] y
+[ocamlfind.~dev: http]
+[ocamlfind.~dev] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlfind is now pinned to https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz (version 1.9.3.git)
+Using default dune.2.9.0
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1
+Linking to system dune files found at: /home/sandmark/.opam/ocaml-base-compiler.4.13.1
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune --version = n/a
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune /tmp/sandmark/_opam/sys_dune/bin/dune
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/jbuilder /tmp/sandmark/_opam/sys_dune/bin/jbuilder
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/lib/dune /tmp/sandmark/_opam/sys_dune/lib/dune
+opam install --switch=5.1.0+stable --yes "dune.2.9.0" "dune-configurator.2.9.0"
+The following actions will be performed:
+  ∗ install dune              2.9.0
+  ∗ install result            1.5   [required by dune-configurator]
+  ∗ install csexp             1.3.2 [required by dune-configurator]
+  ∗ install dune-configurator 2.9.0
+===== ∗ 4 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[result.1.5] downloaded from cache at https://opam.ocaml.org/cache/
+[csexp.1.3.2] downloaded from cache at https://opam.ocaml.org/cache/
+[dune-configurator.2.9.0] downloaded from cache at https://opam.ocaml.org/cache/
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed dune.2.9.0
+∗ installed result.1.5
+∗ installed csexp.1.3.2
+∗ installed dune-configurator.2.9.0
+Done.
+# Run eval $(opam env) to update the current shell environment
+opam repo add upstream "https://opam.ocaml.org" --on-switch=5.1.0+stable --rank 2
+[upstream] Initialised
+cp dependencies/template/dev.opam /tmp/sandmark/_opam/5.1.0+stable/share/dev.opam
+opam update --switch=5.1.0+stable
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] no changes from file:///tmp/sandmark/dependencies
+[upstream] no changes from https://opam.ocaml.org
+
+<><> Synchronising development packages <><><><><><><><><><><><><><><><><><><><>
+[base.v0.14.3] no changes from git+https://github.com/janestreet/base.git#v0.14.3
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+[sexplib0.v0.15.0] no changes from git+https://github.com/shakthimaan/sexplib0.git#multicore
+[coq-stdlib.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[coq-core.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+;; Adapted from OCamlPro's ocamlbench-repo
+;; See https://github.com/OCamlPro/ocamlbench-repo
+
+; (alias (name buildbench) (deps metro_geo.pdf PDFReference16.pdf_toobig))The following actions will be performed:
+  ∗ install conf-gmp           1
+  ∗ install conf-pkg-config    1.2
+  ∗ install conf-findutils     1
+  ∗ install conf-m4            1
+  ∗ install ocaml-syntax-shims 1.0.0
+  ∗ install stdlib-shims       0.1.0
+  ∗ install ocamlfind          1.9.3.git*
+  ∗ install optint             0.0.4
+  ∗ install domainslib         0.4.2
+  ∗ install stringext          1.6.0
+  ∗ install menhirSdk          20200612
+  ∗ install menhirLib          20200612
+  ∗ install cmdliner           1.1.1
+  ∗ install bigarray-compat    1.1.0
+  ∗ install seq                base
+  ∗ install conf-perl          1
+  ∗ install cppo               1.6.7
+  ∗ install ocamlbuild         0.14.1
+  ∗ install sexplib0           v0.15.0*
+  ∗ install minilight          1.6
+  ∗ install camlp-streams      5.0
+  ∗ install conf-which         1
+  ∗ install either             1.0.0
+  ∗ install conf-zlib          1
+  ∗ install conf-libdw         1
+  ∗ install ocamlgraph         2.0.0
+  ∗ install num                1.3
+  ∗ install base-bytes         base
+  ∗ install menhir             20200612
+  ∗ install mmap               1.2.0
+  ∗ install bigstringaf        0.6.1
+  ∗ install re                 1.10.4
+  ∗ install zarith             1.10
+  ∗ install yojson             2.0.2
+  ∗ install uchar              0.0.2
+  ∗ install topkg              1.0.3
+  ∗ install nbcodec            20151119
+  ∗ install kcas               0.1.4
+  ∗ install conf-autoconf      0.1
+  ∗ install camlzip            1.11
+  ∗ install cubicle            1.1.2
+  ∗ install ocplib-endian      1.2
+  ∗ install checkseum          0.2.1
+  ∗ install base64             3.4.0
+  ∗ install angstrom           0.15.0
+  ∗ install rungen             0.0.1
+  ∗ install orun               0.0.1
+  ∗ install uutf               1.0.3
+  ∗ install uuidm              0.9.8
+  ∗ install rresult            0.6.0
+  ∗ install react              1.2.2
+  ∗ install mtime              1.2.0
+  ∗ install fmt                0.9.0
+  ∗ install astring            0.8.5
+  ∗ install lockfree           0.1.3
+  ∗ install psmt2-frontend     0.2
+  ∗ install ocplib-simplex     0.4
+  ∗ install lwt                5.4.0
+  ∗ install decompress         1.1.0
+  ∗ install uri                4.1.0
+  ∗ install jsonm              1.0.1
+  ∗ install cstruct            6.1.1
+  ∗ install alt-ergo-lib       2.3.2
+  ∗ install logs               0.7.0
+  ∗ install repr               0.2.1
+  ∗ install eqaf               0.9
+  ∗ install alt-ergo-parsers   2.3.2
+  ∗ install digestif           1.0.0
+  ∗ install alt-ergo           2.3.2
+===== ∗ 69 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[alt-ergo.2.3.2] downloaded from cache at https://opam.ocaml.org/cache
+[angstrom.0.15.0] downloaded from cache at https://opam.ocaml.org/cache/
+[astring.0.8.5] downloaded from cache at https://opam.ocaml.org/cache
+[alt-ergo-lib.2.3.2] downloaded from cache at https://opam.ocaml.org/cache
+[base64.3.4.0] downloaded from cache at https://opam.ocaml.org/cache
+[bigarray-compat.1.1.0] downloaded from cache at https://opam.ocaml.org/cache
+[bigstringaf.0.6.1] downloaded from cache at https://opam.ocaml.org/cache
+[camlp-streams.5.0] downloaded from cache at https://opam.ocaml.org/cache
+[camlzip.1.11] downloaded from cache at https://opam.ocaml.org/cache
+[alt-ergo-parsers.2.3.2] downloaded from cache at https://opam.ocaml.org/cache
+[checkseum.0.2.1] downloaded from cache at https://opam.ocaml.org/cache
+[cmdliner.1.1.1] downloaded from cache at https://opam.ocaml.org/cache
+[cppo.1.6.7] downloaded from cache at https://opam.ocaml.org/cache/
+[cstruct.6.1.1] downloaded from cache at https://opam.ocaml.org/cache
+[cubicle.1.1.2] downloaded from cache at https://opam.ocaml.org/cache/
+[domainslib.0.4.2] downloaded from cache at https://opam.ocaml.org/cache/
+[decompress.1.1.0] downloaded from cache at https://opam.ocaml.org/cache
+[either.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[eqaf.0.9] downloaded from cache at https://opam.ocaml.org/cache
+[fmt.0.9.0] downloaded from cache at https://opam.ocaml.org/cache
+[jsonm.1.0.1] downloaded from cache at https://opam.ocaml.org/cache
+[digestif.1.0.0] downloaded from cache at https://opam.ocaml.org/cache
+[kcas.0.1.4] downloaded from https://github.com/ocaml-multicore/kcas/archive/0.1.4.zip
+[lockfree.0.1.3] downloaded from https://github.com/ocaml-multicore/lockfree/archive/0.1.3.zip
+[logs.0.7.0] downloaded from cache at https://opam.ocaml.org/cache
+[lwt.5.4.0] downloaded from cache at https://opam.ocaml.org/cache/
+[menhir.20200612] downloaded from cache at https://opam.ocaml.org/cache
+[menhirSdk.20200612] found in cache
+[minilight.1.6] downloaded from cache at https://opam.ocaml.org/cache
+[mmap.1.2.0] downloaded from cache at https://opam.ocaml.org/cache
+[mtime.1.2.0] downloaded from cache at https://opam.ocaml.org/cache/
+[num.1.3] downloaded from cache at https://opam.ocaml.org/cache
+[nbcodec.20151119] downloaded from https://github.com/dbuenzli/nbcodec/archive/54ede66d0f552628625c9e0599df592bda63ab2e.tar.gz
+[menhirLib.20200612] downloaded from cache at https://opam.ocaml.org/cache
+[ocaml-syntax-shims.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[ocamlbuild.0.14.1] downloaded from cache at https://opam.ocaml.org/cache
+[ocplib-endian.1.2] downloaded from cache at https://opam.ocaml.org/cache
+[ocamlgraph.2.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[ocplib-simplex.0.4] downloaded from cache at https://opam.ocaml.org/cache
+[optint.0.0.4] downloaded from cache at https://opam.ocaml.org/cache
+[orun.0.0.1] downloaded from cache at https://opam.ocaml.org/cache
+[psmt2-frontend.0.2] downloaded from cache at https://opam.ocaml.org/cache
+[re.1.10.4] downloaded from cache at https://opam.ocaml.org/cache
+[rresult.0.6.0] downloaded from cache at https://opam.ocaml.org/cache
+[repr.0.2.1] downloaded from cache at https://opam.ocaml.org/cache/
+[react.1.2.2] downloaded from cache at https://opam.ocaml.org/cache
+[rungen.0.0.1] downloaded from cache at https://opam.ocaml.org/cache
+[stdlib-shims.0.1.0] downloaded from cache at https://opam.ocaml.org/cache
+[stringext.1.6.0] downloaded from cache at https://opam.ocaml.org/cache
+[sexplib0.v0.15.0] synchronised from git+https://github.com/shakthimaan/sexplib0.git#multicore
+[uchar.0.0.2] downloaded from cache at https://opam.ocaml.org/cache
+[topkg.1.0.3] downloaded from cache at https://opam.ocaml.org/cache
+[uri.4.1.0] downloaded from cache at https://opam.ocaml.org/cache/
+[uuidm.0.9.8] downloaded from cache at https://opam.ocaml.org/cache
+[uutf.1.0.3] downloaded from cache at https://opam.ocaml.org/cache
+[yojson.2.0.2] downloaded from cache at https://opam.ocaml.org/cache
+[zarith.1.10] downloaded from cache at https://opam.ocaml.org/cache
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed seq.base
+∗ installed bigarray-compat.1.1.0
+∗ installed camlp-streams.5.0
+∗ installed conf-findutils.1
+∗ installed conf-gmp.1
+∗ installed conf-m4.1
+∗ installed conf-perl.1
+∗ installed conf-pkg-config.1.2
+∗ installed conf-which.1
+∗ installed cppo.1.6.7
+∗ installed domainslib.0.4.2
+∗ installed cmdliner.1.1.1
+∗ installed bigstringaf.0.6.1
+∗ installed conf-autoconf.0.1
+∗ installed conf-libdw.1
+∗ installed conf-zlib.1
+∗ installed either.1.0.0
+∗ installed menhirLib.20200612
+∗ installed menhirSdk.20200612
+∗ installed minilight.1.6
+∗ installed mmap.1.2.0
+∗ installed ocaml-syntax-shims.1.0.0
+∗ installed optint.0.0.4
+∗ installed re.1.10.4
+∗ installed sexplib0.v0.15.0
+∗ installed stdlib-shims.0.1.0
+∗ installed stringext.1.6.0
+∗ installed yojson.2.0.2
+∗ installed ocamlbuild.0.14.1
+∗ installed menhir.20200612
+∗ installed angstrom.0.15.0
+∗ installed ocamlgraph.2.0.0
+∗ installed orun.0.0.1
+∗ installed rungen.0.0.1
+∗ installed ocamlfind.1.9.3.git
+∗ installed base-bytes.base
+∗ installed uchar.0.0.2
+[ERROR] The compilation of checkseum failed at "/tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p checkseum -j 127".
+[ERROR] The compilation of ocplib-endian failed at "/tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p ocplib-endian -j 127 @install".
+∗ installed camlzip.1.11
+∗ installed kcas.0.1.4
+[ERROR] The compilation of nbcodec failed at "/tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/nbcodec.20151119/./build setrip.native".
+[ERROR] The compilation of num failed at "/usr/bin/make".
+[ERROR] The compilation of lockfree failed at "/tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p lockfree".
+[ERROR] The compilation of psmt2-frontend failed at "/usr/bin/make".
+[ERROR] The compilation of topkg failed at "/tmp/sandmark/_opam/5.1.0+stable/bin/ocaml pkg/pkg.ml build --pkg-name topkg --dev-pkg false".
+[ERROR] The compilation of zarith failed at "/usr/bin/make".
+
+#=== ERROR while installing uri.4.1.0 =========================================#
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/uri.4.1.0
+# command              /usr/bin/install -m 0644 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/uri.4.1.0/_build/install/default/lib/uri/services_full/uri_services_full.cmt /tmp/sandmark/_opam/5.1.0+stable/lib/uri/services_full/uri_services_full.cmt
+# exit-code            1
+# env-file             /tmp/sandmark/_opam/log/log-950881-2bfeb4.env
+# output-file          /tmp/sandmark/_opam/log/log-950881-2bfeb4.out
+
+
+#=== ERROR while installing base64.3.4.0 ======================================#
+"install": command not found.
+
+#=== ERROR while compiling zarith.1.10 ========================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/zarith.1.10
+# command              /usr/bin/make
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/zarith-950881-fe73e5.env
+# output-file          /tmp/sandmark/_opam/log/zarith-950881-fe73e5.out
+### output ###
+# 171 |         (Z.of_substring s (i+1) (String.length s-i-1))
+# [...]
+# Warning 6 [labels-omitted]: labels pos, len were omitted in the application of this function.
+# ocamlc -I +compiler-libs -bin-annot  -c big_int_Z.mli
+# ocamlc -I +compiler-libs -bin-annot  -c big_int_Z.ml
+# ocamlmklib -failsafe -o zarith z.cmo q.cmo big_int_Z.cmo -lgmp
+# gcc -DZ_OCAML_HASH -DZ_OCAML_COMPARE_EXT -DHAS_GMP -DZ_ELF -DZ_DOT_LABEL_PREFIX     -c -o caml_z_x86_64.o caml_z_x86_64.S
+# ocamlc -ccopt "-I/tmp/sandmark/_opam/5.1.0+stable/lib/ocaml  -DZ_OCAML_HASH -DZ_OCAML_COMPARE_EXT -DHAS_GMP -DZ_ELF -DZ_DOT_LABEL_PREFIX  -O3 -Wall -Wextra " -c caml_z.c
+# caml_z.c:3330:1: fatal error: error writing to /tmp/cclMGFyb.s: No space left on device
+#  3330 | }
+#       | ^
+# compilation terminated.
+# make: *** [project.mak:142: caml_z.o] Error 2
+
+
+#=== ERROR while compiling topkg.1.0.3 ========================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/topkg.1.0.3
+# command              /tmp/sandmark/_opam/5.1.0+stable/bin/ocaml pkg/pkg.ml build --pkg-name topkg --dev-pkg false
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/topkg-950881-82f957.env
+# output-file          /tmp/sandmark/_opam/log/topkg-950881-82f957.out
+### output ###
+# pkg.ml: [ERROR] cmd ['ocamlbuild' '-use-ocamlfind' '-classic-display' '-j' '4' '-tag' 'debug'
+# [...]
+#      'src/topkg_vcs.cmx' 'src/topkg_test.cmx' 'src/topkg_string.cmx'
+#      'src/topkg_result.cmx' 'src/topkg_publish.cmx' 'src/topkg_pkg.cmx'
+#      'src/topkg_os.cmx' 'src/topkg_opam.cmx' 'src/topkg_main.cmx'
+#      'src/topkg_log.cmx' 'src/topkg_ipc.cmx' 'src/topkg_install.cmx'
+#      'src/topkg_fpath.cmx' 'src/topkg_fexts.cmx' 'src/topkg_distrib.cmx'
+#      'src/topkg_conf.cmx' 'src/topkg_codec.cmx' 'src/topkg_cmd.cmx'
+#      'src/topkg_build.cmx' 'src/topkg.cmx' 'src/topkg.cmi' 'src/topkg.mli']: exited with 2
+# Exception: Sys_error "No space left on device".
+# File "./pkg/pkg.ml", line 1:
+# Error: I/O error: No space left on device
+# Fatal error: exception Sys_error("No space left on device")
+
+
+#=== ERROR while compiling psmt2-frontend.0.2 =================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/psmt2-frontend.0.2
+# command              /usr/bin/make
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/psmt2-frontend-950881-477f54.env
+# output-file          /tmp/sandmark/_opam/log/psmt2-frontend-950881-477f54.out
+### output ###
+# menhir -v src/smtlib_parser.mly
+# Note: the nonterminal symbol option (from src/smtlib_parser.mly) is renamed src_smtlib_parser_option.
+# Warning: 22 states have an end-of-stream conflict.
+# File "<standard.mly>", line 209, characters 16-16:
+# Warning: production list(term) -> is never reduced.
+# Warning: in total, 1 production is never reduced.
+# ocamllex.opt src/smtlib_lexer.mll > /dev/null
+# Fatal error: exception Sys_error("No space left on device")
+# Makefile:174: .depend: No such file or directory
+# make: *** [Makefile:149: src/smtlib_lexer.ml] Error 2
+
+
+#=== ERROR while compiling ocplib-endian.1.2 ==================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/ocplib-endian.1.2
+# command              /tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p ocplib-endian -j 127 @install
+# exit-code            1
+# env-file             /tmp/sandmark/_opam/log/ocplib-endian-950881-9b088b.env
+# output-file          /tmp/sandmark/_opam/log/ocplib-endian-950881-9b088b.out
+### output ###
+#     ocamlopt src/ocplib_endian_bigstring.cmxs (exit 2)
+# (cd _build/default && /tmp/sandmark/_opam/5.1.0+stable/bin/ocamlopt.opt -w -40 -g -inline 1000 -shared -linkall -I src -o src/ocplib_endian_bigstring.cmxs src/ocplib_endian_bigstring.cmxa)
+# File "caml_startup", line 1:
+# Error: Assembler error, input left in file /tmp/build9d5b8d.dune/camlstartup034b59.s
+
+
+#=== ERROR while compiling num.1.3 ============================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/num.1.3
+# command              /usr/bin/make
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/num-950881-ecfa18.env
+# output-file          /tmp/sandmark/_opam/log/num-950881-ecfa18.out
+### output ###
+# [...]
+# ocamlc -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c arith_status.ml
+# ocamlmklib -o nums -oc nums -linkall int_misc.cmo nat.cmo big_int.cmo arith_flags.cmo ratio.cmo num.cmo arith_status.cmo
+# ocamlopt -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c int_misc.ml
+# ocamlopt -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c nat.ml
+# ocamlopt -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c big_int.ml
+# ocamlopt -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c arith_flags.ml
+# ocamlopt -w +a-4-9-41-42-44-45-48 -warn-error A -bin-annot -g -safe-string -strict-sequence -strict-formats -c ratio.ml
+# File "ratio.ml", line 1:
+# Error: I/O error: No space left on device
+# make[1]: *** [Makefile:66: ratio.cmx] Error 2
+# make[1]: Leaving directory '/tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/num.1.3/src'
+# make: *** [Makefile:2: all] Error 2
+
+
+#=== ERROR while compiling nbcodec.20151119 ===================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | file:///tmp/sandmark/dependencies
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/nbcodec.20151119
+# command              /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/nbcodec.20151119/./build setrip.native
+# exit-code            10
+# env-file             /tmp/sandmark/_opam/log/nbcodec-950881-e7f0ea.env
+# output-file          /tmp/sandmark/_opam/log/nbcodec-950881-e7f0ea.out
+### output ###
+# [...]
+# + ocamlfind ocamlopt -linkpkg unix.cmxa -g -I src -I test src/se.cmx test/setrip.cmx -o test/setrip.native
+# File "_none_", line 1:
+# Alert ocaml_deprecated_auto_include: 
+# OCaml's lib directory layout changed in 5.0. The unix subdirectory has been
+# automatically added to the search path, but you should add -I +unix to the
+# command-line to silence this alert (e.g. by adding unix to the list of
+# libraries in your dune file, or adding use_unix to your _tags file for
+# ocamlbuild, or using -package unix for ocamlfind).
+# collect2: error: ld returned 1 exit status
+# File "caml_startup", line 1:
+# Error: Error during linking (exit code 1)
+# Command exited with code 2.
+
+
+#=== ERROR while compiling lockfree.0.1.3 =====================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | file:///tmp/sandmark/dependencies
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/lockfree.0.1.3
+# command              /tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p lockfree
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/lockfree-950881-79f3db.env
+# output-file          /tmp/sandmark/_opam/log/lockfree-950881-79f3db.out
+### output ###
+# { exns =
+# [...]
+#            Called from Dune_engine__cached_digest.dump in file \"src/dune_engine/cached_digest.ml\", line 65, characters 4-33\n\
+#            Called from Stdune__exn_with_backtrace.try_with in file \"src/stdune/exn_with_backtrace.ml\", line 9, characters 8-12\n\
+#            "
+#       }
+#     ]
+# })
+# Raised at Stdune__code_error.raise in file "src/stdune/code_error.ml", line 9, characters 30-62
+# Called from Stdlib.at_exit.new_exit in file "stdlib.ml", line 560, characters 59-63
+# Called from Stdlib.do_at_exit in file "stdlib.ml" (inlined), line 566, characters 20-61
+# Called from Stdlib.exit in file "stdlib.ml", line 569, characters 2-15
+# Called from Main in file "bin/main.ml", line 269, characters 4-10
+
+
+#=== ERROR while compiling checkseum.0.2.1 ====================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+stable | https://opam.ocaml.org#e0a0c048
+# path                 /tmp/sandmark/_opam/5.1.0+stable/.opam-switch/build/checkseum.0.2.1
+# command              /tmp/sandmark/_opam/5.1.0+stable/bin/dune build -p checkseum -j 127
+# exit-code            1
+# env-file             /tmp/sandmark/_opam/log/checkseum-950881-c5cac5.env
+# output-file          /tmp/sandmark/_opam/log/checkseum-950881-c5cac5.out
+### output ###
+#     ocamlopt conf/check.exe (exit 2)
+# (cd _build/default && /tmp/sandmark/_opam/5.1.0+stable/bin/ocamlopt.opt -w -40 -g -o conf/check.exe /tmp/sandmark/_opam/5.1.0+stable/lib/ocaml/unix/unix.cmxa /tmp/sandmark/_opam/5.1.0+stable/lib/result/result.cmxa /tmp/sandmark/_opam/5.1.0+stable/lib/csexp/csexp.cmxa /tmp/sandmark/_opam/5.1.0+stable/lib/dune-configurator/configurator.cmxa conf/.check.eobjs/native/dune__exe__Check.cmx)
+# collect2: error: ld returned 1 exit status
+# File "caml_startup", line 1:
+# Error: Error during linking (exit code 1)
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+┌─ The following actions failed
+│ λ build   checkseum      0.2.1
+│ λ build   lockfree       0.1.3
+│ λ build   nbcodec        20151119
+│ λ build   num            1.3
+│ λ build   ocplib-endian  1.2
+│ λ build   psmt2-frontend 0.2
+│ λ build   topkg          1.0.3
+│ λ build   zarith         1.10
+│ ∗ install base64         3.4.0
+│ ∗ install uri            4.1.0
+└─ 
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install angstrom           0.15.0
+│ ∗ install base-bytes         base
+│ ∗ install bigarray-compat    1.1.0
+│ ∗ install bigstringaf        0.6.1
+│ ∗ install camlp-streams      5.0
+│ ∗ install camlzip            1.11
+│ ∗ install cmdliner           1.1.1
+│ ∗ install conf-autoconf      0.1
+│ ∗ install conf-findutils     1
+│ ∗ install conf-gmp           1
+│ ∗ install conf-libdw         1
+│ ∗ install conf-m4            1
+│ ∗ install conf-perl          1
+│ ∗ install conf-pkg-config    1.2
+│ ∗ install conf-which         1
+│ ∗ install conf-zlib          1
+│ ∗ install cppo               1.6.7
+│ ∗ install domainslib         0.4.2
+│ ∗ install either             1.0.0
+│ ∗ install kcas               0.1.4
+│ ∗ install menhir             20200612
+│ ∗ install menhirLib          20200612
+│ ∗ install menhirSdk          20200612
+│ ∗ install minilight          1.6
+│ ∗ install mmap               1.2.0
+│ ∗ install ocaml-syntax-shims 1.0.0
+│ ∗ install ocamlbuild         0.14.1
+│ ∗ install ocamlfind          1.9.3.git
+│ ∗ install ocamlgraph         2.0.0
+│ ∗ install optint             0.0.4
+│ ∗ install orun               0.0.1
+│ ∗ install re                 1.10.4
+│ ∗ install rungen             0.0.1
+│ ∗ install seq                base
+│ ∗ install sexplib0           v0.15.0
+│ ∗ install stdlib-shims       0.1.0
+│ ∗ install stringext          1.6.0
+│ ∗ install uchar              0.0.2
+│ ∗ install yojson             2.0.2
+└─ 
+# Run eval $(opam env) to update the current shell environment
+
+The former state can be restored with:
+    opam switch import "/tmp/sandmark/_opam/5.1.0+stable/.opam-switch/backup/state-20220824232610.export"
+# Packages matching: installed
+# Name              # Installed  # Synopsis
+angstrom            0.15.0       Parser combinators built for speed and memory-efficiency
+base-bigarray       base
+base-bytes          base         Bytes library distributed with the OCaml compiler
+base-threads        base
+base-unix           base
+bigarray-compat     1.1.0        Compatibility library to use Stdlib.Bigarray when possible
+bigstringaf         0.6.1        Bigstring intrinsics and fast blits based on memcpy/memmove
+camlp-streams       5.0          The Stream and Genlex libraries for use with Camlp4 and Camlp5
+camlzip             1.11         Accessing compressed files in ZIP, GZIP and JAR format
+cmdliner            1.1.1        Declarative definition of command line interfaces for OCaml
+conf-autoconf       0.1          Virtual package relying on autoconf installation
+conf-findutils      1            Virtual package relying on findutils
+conf-gmp            1            Virtual package relying on a GMP lib system installation
+conf-libdw          1            Virtual package relying on libdw
+conf-m4             1            Virtual package relying on m4
+conf-perl           1            Virtual package relying on perl
+conf-pkg-config     1.2          Virtual package relying on pkg-config installation
+conf-which          1            Virtual package relying on which
+conf-zlib           1            Virtual package relying on zlib
+cppo                1.6.7        Code preprocessor like cpp for OCaml
+csexp               1.3.2        Parsing and printing of S-expressions in Canonical form
+domainslib          0.4.2        Parallel Structures over Domains for Multicore OCaml
+dune                2.9.0        Fast, portable, and opinionated build system
+dune-configurator   2.9.0        Helper library for gathering system configuration
+either              1.0.0        Compatibility Either module
+kcas                0.1.4        Multi-word compare-and-swap library
+menhir              20200612     An LR(1) parser generator
+menhirLib           20200612     Runtime support library for parsers generated by Menhir
+menhirSdk           20200612     Compile-time library for auxiliary tools related to Menhir
+minilight           1.6          Minimal global illumination renderer.
+mmap                1.2.0        File mapping functionality
+ocaml               5.1.0+stable The OCaml compiler (virtual package)
+ocaml-base-compiler 5.1.0+stable OCaml compiler
+ocaml-config        1            OCaml Switch Configuration
+ocaml-syntax-shims  1.0.0        Backport new syntax to older OCaml versions
+ocamlbuild          0.14.1       OCamlbuild is a build system with builtin rules to easily build most OCaml projects
+ocamlfind           1.9.3.git    pinned to version 1.9.3.git at https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlgraph          2.0.0        A generic graph library for OCaml
+optint              0.0.4        Abstract type on integer between x64 and x86 architecture
+orun                0.0.1        Run benchmarks and measure performance
+re                  1.10.4       RE is a regular expression library for OCaml
+result              1.5          Compatibility Result module
+rungen              0.0.1        Generates dune files to run benchmarks from centralised config
+seq                 base         Compatibility package for OCaml's standard iterator type starting from 4.07.
+sexplib0            v0.15.0      pinned to version v0.15.0 at git+https://github.com/shakthimaan/sexplib0.git#multicore
+stdlib-shims        0.1.0        Backport some of the new stdlib features to older compiler
+stringext           1.6.0        Extra string functions for OCaml
+uchar               0.0.2        Compatibility library for OCaml's Uchar module
+yojson              2.0.2        Yojson is an optimized parsing and printing library for the JSON format
+git log -n 1
+commit c6b4d24b8c09b5af4ba1877743da79f149d3d5d0
+Merge: 5ec1eaf 926f639
+Author: Sudha Parimala <sudharg247@gmail.com>
+Date:   Wed Aug 24 23:00:19 2022 +0530
+
+    Merge pull request #384 from moazzammoriani/fannkuchredux
+    
+    Add new version of fannkuchredux and a multicore version
+opam exec --switch 5.1.0+stable -- rungen _build/5.1.0+stable_1 multicore_parallel_navajo_run_config_filtered.json > runs_dune.inc
+opam exec --switch 5.1.0+stable -- dune build --profile=release --workspace=ocaml-versions/.workspace.5.1.0+stable @multibench_parallel;
+File "benchmarks/decompress/dune", line 5, characters 41-54:
+5 |   (libraries bigstringaf checkseum.ocaml decompress.zl))
+                                             ^^^^^^^^^^^^^
+Error: Library "decompress.zl" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/decompress/dune", line 10, characters 41-54:
+10 |   (libraries bigstringaf checkseum.ocaml decompress.zl domainslib))
+                                              ^^^^^^^^^^^^^
+Error: Library "decompress.zl" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/graph500par/dune", line 23, characters 24-32:
+23 |   (libraries graphTypes lockfree)
+                             ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/bag-dune.inc", line 4, characters 12-20:
+4 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/bag-dune.inc", line 9, characters 12-20:
+9 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/hash-dune.inc", line 4, characters 12-20:
+4 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/hash-dune.inc", line 9, characters 12-20:
+9 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/list-dune.inc", line 4, characters 12-20:
+4 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/list-dune.inc", line 9, characters 12-20:
+9 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/msqueue-dune.inc", line 4, characters 12-20:
+4 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/msqueue-dune.inc", line 9, characters 12-20:
+9 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/wsqueue-dune.inc", line 4, characters 12-20:
+4 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/multicore-lockfree/wsqueue-dune.inc", line 9, characters 12-20:
+9 | 	(libraries lockfree))
+                ^^^^^^^^
+Error: Library "lockfree" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+File "benchmarks/benchmarksgame/dune", line 8, characters 33-39:
+8 |              (libraries unix str zarith))
+                                     ^^^^^^
+Error: Library "zarith" not found.
+Hint: try:
+  dune external-lib-deps --missing --profile release --workspace ocaml-versions/.workspace.5.1.0+stable @multibench_parallel
+make: *** [Makefile:222: ocaml-versions/5.1.0+stable.bench] Error 1
