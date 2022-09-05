@@ -86,8 +86,9 @@ def app():
         for g in mdf.groupby("name"):
             (n, d) = g
             n = n.replace("_multicore", "")
-            d["n" + topic] = 1 / d[topic].div(fastest_sequential[n], axis=0)
-            d["b" + topic] = int(fastest_sequential[n])
+            if n in fastest_sequential:
+                d["n" + topic] = 1 / d[topic].div(fastest_sequential[n], axis=0)
+                d["b" + topic] = int(fastest_sequential[n])
             frames.append(d)
         return pd.concat(frames, ignore_index=True)
 
