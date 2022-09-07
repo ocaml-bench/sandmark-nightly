@@ -22,10 +22,10 @@ def format_bench_run_by_variant(run):
 
 def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
     relpath = os.path.relpath(path, artifacts_dir)
-    _, _, timestamp, commit_id, variant = relpath.split("/")
+    _, host, timestamp, commit_id, variant = relpath.split("/")
     date, _ = timestamp.split("_")
     variant = variant.split("_", 1)[0]
-    return f"{variant}_{date}_{commit_id[:7]}"
+    return f"{host}_{variant}_{date}_{commit_id[:7]}"
 
 
 def get_selected_values(n, benches, key_prefix="", by="host"):
