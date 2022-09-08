@@ -131,7 +131,8 @@ def app():
         date = record.timestamp.split("_")[0]
         commit = record.commit[:7]
         variant = record.variant.rsplit("_", 1)[0]
-        s = variant + "_" + date + "_" + commit
+        host = record.host
+        s = f"{host}_{variant}_{date}_{commit}"
         return s
 
     def add_display_name(df, variant, metric):
