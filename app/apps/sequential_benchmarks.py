@@ -131,25 +131,16 @@ def app():
         date = record.timestamp.split("_")[0]
         commit = record.commit[:7]
         variant = record.variant.rsplit("_", 1)[0]
-        s = variant + "_" + date + "_" + commit
+        host = record.host
+        s = f"{host}_{variant}_{date}_{commit}"
         return s
 
-    def create_column(df, variant, metric):
-        df = pd.DataFrame.copy(df)
-        variant_metric_name = list(
-            [
-                zip(df[metric], df[x], df["name"])
-                for x in df.columns.array
-                if x == "variant"
-            ][0]
-        )
-        # st.write(df)
-        # st.write(variant)
-        name_metric = {n: t for (t, v, n) in variant_metric_name if v == variant}
-        return name_metric
-
     def add_display_name(df, variant, metric):
-        name_metric = create_column(pd.DataFrame.copy(df), variant, metric)
+        name_metric = {
+            n: t
+            for (t, v, n) in zip(df[metric], df["variant"], df["name"])
+            if v == variant
+        }
         disp_name = [
             name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
         ]
