@@ -13,7 +13,7 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, format_variant, ARTIFACTS_DIR
+from apps.utils import get_selected_values, format_variant, fmt_baseline, ARTIFACTS_DIR
 
 
 def app():
@@ -126,14 +126,6 @@ def app():
         )
         graph.set_xticklabels(rotation=90)
         return graph
-
-    def fmt_baseline(record):
-        date = record.timestamp.split("_")[0]
-        commit = record.commit[:7]
-        variant = record.variant.rsplit("_", 1)[0]
-        host = record.host
-        s = f"{host}_{variant}_{date}_{commit}"
-        return s
 
     def add_display_name(df, variant, metric):
         name_metric = {
