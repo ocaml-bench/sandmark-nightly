@@ -13,7 +13,13 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, format_variant, fmt_baseline, ARTIFACTS_DIR
+from apps.utils import (
+    add_display_name,
+    get_selected_values,
+    format_variant,
+    fmt_baseline,
+    ARTIFACTS_DIR,
+)
 
 
 def app():
@@ -126,18 +132,6 @@ def app():
         )
         graph.set_xticklabels(rotation=90)
         return graph
-
-    def add_display_name(df, variant, metric):
-        name_metric = {
-            n: t
-            for (t, v, n) in zip(df[metric], df["variant"], df["name"])
-            if v == variant
-        }
-        disp_name = [
-            name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
-        ]
-        df["display_name"] = pd.Series(disp_name, index=df.index)
-        return df
 
     def normalise(df, baseline, topic, normalization_state, additionalTopics=[]):
         if not normalization_state:
