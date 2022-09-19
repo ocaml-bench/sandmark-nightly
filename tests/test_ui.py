@@ -23,3 +23,14 @@ def test_sequential_benchmarks_page(sb):
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
     sb.assert_text_not_visible("Traceback:", timeout=1)
+
+
+def test_perfstat_benchmarks_page(sb):
+    sb.open("http://localhost:8501")
+    sb.click('label:contains("Perfstat Output")')
+    sb.click(".stSelectbox div")
+    sb.click("li[role=option]:nth-child(2)")
+    time.sleep(2)
+    sb.wait_for_text_not_visible("Running...")
+    time.sleep(2)
+    sb.assert_text_not_visible("Traceback:", timeout=1)
