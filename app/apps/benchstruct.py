@@ -15,13 +15,15 @@ class BenchRun:
     variant: str
 
     def filepath(self, artifacts_dir):
-        return os.path.join(
-            artifacts_dir,
-            self.type,
-            self.host,
-            self.timestamp,
-            self.commit,
-            self.variant,
+        return os.path.abspath(
+            os.path.join(
+                artifacts_dir,
+                self.type,
+                self.host,
+                self.timestamp,
+                self.commit,
+                self.variant,
+            )
         )
 
 

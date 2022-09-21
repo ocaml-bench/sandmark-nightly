@@ -5,7 +5,13 @@ import seaborn as sns
 import streamlit as st
 
 from apps import benchstruct
-from apps.utils import get_selected_values, format_variant, fmt_baseline, ARTIFACTS_DIR
+from apps.utils import (
+    add_display_name,
+    get_selected_values,
+    format_variant,
+    fmt_baseline,
+    ARTIFACTS_DIR,
+)
 
 
 def normalise_name(row):
@@ -53,28 +59,6 @@ def extract(field, line, row):
     m = re.search("\s*(.*)\s*" + field, line)
     if m:
         row[field] = int(m.group(1).replace(",", "").replace(" ", ""))
-
-
-def create_column(df, variant, metric):
-    df = pd.DataFrame.copy(df)
-    variant_metric_name = list(
-        [
-            zip(df[metric], df[x], df["name"])
-            for x in df.columns.array
-            if x == "variant"
-        ][0]
-    )
-    name_metric = {n: t for (t, v, n) in variant_metric_name if v == variant}
-    return name_metric
-
-
-def add_display_name(df, variant, metric):
-    name_metric = create_column(pd.DataFrame.copy(df), variant, metric)
-    disp_name = [
-        name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
-    ]
-    df["display_name"] = pd.Series(disp_name, index=df.index)
-    return df
 
 
 def normalise(df, variant, topic, additionalTopics=[]):

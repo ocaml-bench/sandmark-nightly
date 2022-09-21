@@ -1,5 +1,7 @@
-import os
 from functools import reduce
+import os
+
+import pandas as pd
 import streamlit as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -75,3 +77,14 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         )
         selections.append(selection)
     return selections
+
+
+def add_display_name(df, variant, metric):
+    name_metric = {
+        n: t for (t, v, n) in zip(df[metric], df["variant"], df["name"]) if v == variant
+    }
+    disp_name = [
+        name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
+    ]
+    df["display_name"] = pd.Series(disp_name, index=df.index)
+    return df
