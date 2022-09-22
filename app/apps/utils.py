@@ -5,7 +5,9 @@ import pandas as pd
 import streamlit as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ARTIFACTS_DIR = os.path.join(HERE, "..", "..")
+ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
+USE_TEST_ARTIFACTS = bool(os.getenv("USE_TEST_ARTIFACTS"))
+ARTIFACTS_DIR = ROOT if not USE_TEST_ARTIFACTS else os.path.join(ROOT, "tests", "data")
 
 
 def format_bench_run_by_host(run):
