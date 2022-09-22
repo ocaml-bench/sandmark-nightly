@@ -3,8 +3,6 @@ from pathlib import Path
 from apps.utils import format_variant, fmt_baseline, ARTIFACTS_DIR
 from apps.benchstruct import BenchRun
 
-from . import ROOT_DIR
-
 RUN = BenchRun(
     type="sequential",
     host="turing",
@@ -17,7 +15,7 @@ FORMATTED_RUN = "turing_4.12.0+domains+effects_20210608_06d5aa0"
 
 
 def test_format_variant():
-    path = ROOT_DIR.joinpath(
+    path = Path(ARTIFACTS_DIR).joinpath(
         "sequential/turing/20210608_141854/06d5aa0bf63778de509a7eee129bb5f31508466f"
     )
     bench_file = path.joinpath("4.12.0+domains+effects_1.orun.summary.bench")

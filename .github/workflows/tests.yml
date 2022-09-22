@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      USE_TEST_ARTIFACTS: 1
     steps:
       - uses: actions/checkout@v2
       - name: Install Python 3
@@ -21,6 +23,6 @@ jobs:
           sbase get chromedriver
       - name: Start Streamlit app
         run: |
-          streamlit run app/app.py &
+          streamlit run app/app.py --server.headless true &
       - name: Run tests with pytest
         run: pytest
