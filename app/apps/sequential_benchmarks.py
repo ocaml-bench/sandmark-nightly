@@ -199,65 +199,65 @@ def app():
     st.header("Time")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "time_secs"))
 
     ndf = normalise(df.copy(), baseline, "time_secs", normalization_state)
     st.header("Normalized Time")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ntime_secs")
         st.pyplot(g)
 
     st.header("Top heap words")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.top_heap_words"))
     ndf = normalise(df.copy(), baseline, "gc.top_heap_words", normalization_state)
     st.header("Normalized top heap words")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.top_heap_words")
         st.pyplot(g)
 
     st.header("Max RSS (KB)")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "maxrss_kB"))
     ndf = normalise(df.copy(), baseline, "maxrss_kB", normalization_state)
     st.header("Normalized Max RSS (KB)")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "nmaxrss_kB")
         st.pyplot(g)
 
     st.header("Major Collections")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.major_collections"))
     ndf = normalise(df.copy(), baseline, "gc.major_collections", normalization_state)
     st.header("Normalized major collections")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.major_collections")
         st.pyplot(g)
 
     st.header("Minor Collections")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.minor_collections"))
     ndf = normalise(df.copy(), baseline, "gc.minor_collections", normalization_state)
     st.header("Normalized minor collections")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.minor_collections")
         st.pyplot(g)
