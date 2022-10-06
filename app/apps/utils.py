@@ -61,6 +61,7 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         first_val = containers[row][col].selectbox(
             labels[col],
             sorted(structure.keys(), reverse=True),
+            index=row,
             key=f"{prefix}{col}_{type_}",
         )
         col = 1
