@@ -11,6 +11,7 @@ from apps.utils import (
     format_variant,
     fmt_baseline,
     ARTIFACTS_DIR,
+    normalise,
 )
 
 
@@ -59,33 +60,6 @@ def extract(field, line, row):
     m = re.search("\s*(.*)\s*" + field, line)
     if m:
         row[field] = int(m.group(1).replace(",", "").replace(" ", ""))
-
-
-def normalise(df, variant, topic, additionalTopics=[]):
-    df = add_display_name(df, variant, topic)
-    df = df.sort_values(["name", "variant"])
-    grouped = df.filter(
-        items=["name", topic, "variant", "display_name"] + additionalTopics
-    ).groupby("variant")
-    ndata_frames = []
-    for group in grouped:
-        (v, data) = group
-        if v != variant:
-            data["b" + topic] = grouped.get_group(variant)[topic].values
-            data[["n" + topic]] = data[[topic]].div(
-                grouped.get_group(variant)[topic].values, axis=0
-            )
-            for t in additionalTopics:
-                data[[t]] = grouped.get_group(variant)[t].values
-            ndata_frames.append(data)
-    if ndata_frames:
-        df = pd.concat(ndata_frames)
-        return df
-    else:
-        st.warning(
-            "Variants selected are the same, please select different variants to generate a normalized graph"
-        )
-        return pd.DataFrame()
 
 
 def plot_normalised(df, variant, topic):

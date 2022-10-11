@@ -82,12 +82,34 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
     return selections
 
 
+def get_display_name(row, metric):
+    name = row["name"]
+    value = row[metric]
+    return f"{name} ({value:.2f})"
+
+
 def add_display_name(df, variant, metric):
-    name_metric = {
-        n: t for (t, v, n) in zip(df[metric], df["variant"], df["name"]) if v == variant
-    }
-    disp_name = [
-        name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
-    ]
-    df["display_name"] = pd.Series(disp_name, index=df.index)
+    df["display_name"] = df.apply(get_display_name, axis=1, metric=metric)
     return df
+
+
+def normalise(df, baseline, topic, additionalTopics=[]):
+    df = add_display_name(df, baseline, topic)
+    items = ["name", topic, "variant", "display_name"] + additionalTopics
+    df_filtered = df.filter(items=items)
+    try:
+        df_pivot = df_filtered.reset_index().pivot(
+            index="name", columns="variant", values=[topic]
+        )
+    except ValueError:
+        st.warning(
+            "Variants selected are the same, please select different variants to generate a normalized graph"
+        )
+        return pd.DataFrame()
+    baseline_column = (topic, baseline)
+    select_columns = [c for c in df_pivot.columns if c != baseline_column]
+    normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+    normalised = normalised.melt(
+        col_level=1, ignore_index=False, value_name="n" + topic
+    ).reset_index()
+    return pd.merge(normalised, df_filtered, on=["name", "variant"])
