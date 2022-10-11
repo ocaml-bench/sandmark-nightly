@@ -82,12 +82,12 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
     return selections
 
 
+def get_display_name(row, metric):
+    name = row["name"]
+    value = row[metric]
+    return f"{name} ({value:.2f})"
+
+
 def add_display_name(df, variant, metric):
-    name_metric = {
-        n: t for (t, v, n) in zip(df[metric], df["variant"], df["name"]) if v == variant
-    }
-    disp_name = [
-        name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
-    ]
-    df["display_name"] = pd.Series(disp_name, index=df.index)
+    df["display_name"] = df.apply(get_display_name, axis=1, metric=metric)
     return df
