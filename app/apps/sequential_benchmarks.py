@@ -141,7 +141,6 @@ def app():
             return pd.DataFrame()
 
         else:
-            st.write(normalization_state)
             df = add_display_name(df, baseline, topic)
             items = ["name", topic, "variant", "display_name"] + additionalTopics
             df_filtered = df.filter(items=items)
