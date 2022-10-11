@@ -208,7 +208,8 @@ def app():
         st.write(ndf)
     with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ntime_secs")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Top heap words")
     with st.expander("Data"):
@@ -221,7 +222,8 @@ def app():
         st.write(ndf)
     with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.top_heap_words")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Max RSS (KB)")
     with st.expander("Data"):
@@ -234,7 +236,8 @@ def app():
         st.write(ndf)
     with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "nmaxrss_kB")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Major Collections")
     with st.expander("Data"):
@@ -247,7 +250,8 @@ def app():
         st.write(ndf)
     with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.major_collections")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Minor Collections")
     with st.expander("Data"):
@@ -260,4 +264,5 @@ def app():
         st.write(ndf)
     with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.minor_collections")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
