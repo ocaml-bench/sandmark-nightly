@@ -87,11 +87,6 @@ def app():
 
     unique_num_selected_files = len(set(selected_files))
 
-    normalization_state = True
-
-    if unique_num_selected_files < len(selected_files):
-        normalization_state = False
-
     def dataframe_intersection(data_frames):
         intersection_set_list = [set(df["name"]) for df in data_frames]
         list_diff = list(reduce(lambda x, y: x.intersection(y), intersection_set_list))
@@ -133,33 +128,26 @@ def app():
         graph.set_xticklabels(rotation=90)
         return graph
 
-    def normalise(df, baseline, topic, normalization_state, additionalTopics=[]):
-        if not normalization_state:
-            st.error(
-                "Redundant variants selected, please choose unique variants to compare"
+    def normalise(df, baseline, topic, additionalTopics=[]):
+        df = add_display_name(df, baseline, topic)
+        items = ["name", topic, "variant", "display_name"] + additionalTopics
+        df_filtered = df.filter(items=items)
+        try:
+            df_pivot = df_filtered.reset_index().pivot(
+                index="name", columns="variant", values=[topic]
+            )
+        except ValueError:
+            st.warning(
+                "Variants selected are the same, please select different variants to generate a normalized graph"
             )
             return pd.DataFrame()
-
-        else:
-            df = add_display_name(df, baseline, topic)
-            items = ["name", topic, "variant", "display_name"] + additionalTopics
-            df_filtered = df.filter(items=items)
-            try:
-                df_pivot = df_filtered.reset_index().pivot(
-                    index="name", columns="variant", values=[topic]
-                )
-            except ValueError:
-                st.warning(
-                    "Variants selected are the same, please select different variants to generate a normalized graph"
-                )
-                return pd.DataFrame()
-            baseline_column = (topic, baseline)
-            select_columns = [c for c in df_pivot.columns if c != baseline_column]
-            normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
-            normalised = normalised.melt(
-                col_level=1, ignore_index=False, value_name="n" + topic
-            ).reset_index()
-            return pd.merge(normalised, df_filtered, on=["name", "variant"])
+        baseline_column = (topic, baseline)
+        select_columns = [c for c in df_pivot.columns if c != baseline_column]
+        normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+        normalised = normalised.melt(
+            col_level=1, ignore_index=False, value_name="n" + topic
+        ).reset_index()
+        return pd.merge(normalised, df_filtered, on=["name", "variant"])
 
     def plot_normalised(baseline, df, topic):
         xlabel = "Benchmarks (baseline = " + baseline + ")"
@@ -201,7 +189,7 @@ def app():
     with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "time_secs"))
     st.header("Normalized Time")
-    ndf = normalise(df.copy(), baseline, "time_secs", normalization_state)
+    ndf = normalise(df.copy(), baseline, "time_secs")
     with st.expander("Data"):
         st.write(ndf)
     with st.expander("Graph", expanded=True):
@@ -215,7 +203,7 @@ def app():
     with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.top_heap_words"))
     st.header("Normalized top heap words")
-    ndf = normalise(df.copy(), baseline, "gc.top_heap_words", normalization_state)
+    ndf = normalise(df.copy(), baseline, "gc.top_heap_words")
     with st.expander("Data"):
         st.write(ndf)
     with st.expander("Graph", expanded=True):
@@ -229,7 +217,7 @@ def app():
     with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "maxrss_kB"))
     st.header("Normalized Max RSS (KB)")
-    ndf = normalise(df.copy(), baseline, "maxrss_kB", normalization_state)
+    ndf = normalise(df.copy(), baseline, "maxrss_kB")
     with st.expander("Data"):
         st.write(ndf)
     with st.expander("Graph", expanded=True):
@@ -243,7 +231,7 @@ def app():
     with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.major_collections"))
     st.header("Normalized major collections")
-    ndf = normalise(df.copy(), baseline, "gc.major_collections", normalization_state)
+    ndf = normalise(df.copy(), baseline, "gc.major_collections")
     with st.expander("Data"):
         st.write(ndf)
     with st.expander("Graph", expanded=True):
@@ -257,7 +245,7 @@ def app():
     with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.minor_collections"))
     st.header("Normalized minor collections")
-    ndf = normalise(df.copy(), baseline, "gc.minor_collections", normalization_state)
+    ndf = normalise(df.copy(), baseline, "gc.minor_collections")
     with st.expander("Data"):
         st.write(ndf)
     with st.expander("Graph", expanded=True):
