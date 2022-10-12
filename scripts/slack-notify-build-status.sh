@@ -2,6 +2,7 @@
 
 set -euxo pipefail
 
+source "$(dirname "${0}")/_helpers.sh"
 
 function commit_url {
     echo "https://github.com/ocaml-bench/sandmark-nightly/commit/${1}"
@@ -14,10 +15,13 @@ HOSTNAME=$4
 
 for dir in ${CHANGED_DIRS}; do
     BENCH_FILE=$(find "${dir}" -name "*.summary.bench" -type f | head -n 1)
-    if [ -n "${BENCH_FILE}" ]; then
+    LOG_FILE=$(find "${dir}" -name "*.log" -type f | head -n 1)
+    if [ -n "${BENCH_FILE}" ] && \
+           bench_file_has_content "${BENCH_FILE}" && \
+           log_has_no_errors "${LOG_FILE}";
+    then
         PASSED_BUILDS="${PASSED_BUILDS:-}\n- $(basename "${BENCH_FILE}")"
     else
-        LOG_FILE=$(find "${dir}" -name "*.log" -type f | head -n 1)
         FAILED_BUILDS="${FAILED_BUILDS:-}\n- $(basename "${LOG_FILE}")"
     fi
 done
