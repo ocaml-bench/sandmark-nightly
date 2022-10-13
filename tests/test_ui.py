@@ -35,7 +35,8 @@ def create_test_data():
 
 
 def test_index_page(sb, create_test_data):
-    sb.open("http://localhost:8501")
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
     sb.assert_exact_text("Sandmark info", "#sandmark-info")
     sb.assert_exact_text("Latest commit", "#latest-commit")
     for each in app.apps:
@@ -44,7 +45,8 @@ def test_index_page(sb, create_test_data):
 
 
 def test_sequential_benchmarks_page(sb, create_test_data):
-    sb.open("http://localhost:8501")
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
     sb.click('label:contains("Sequential Benchmarks")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
@@ -52,7 +54,8 @@ def test_sequential_benchmarks_page(sb, create_test_data):
 
 
 def test_parallel_benchmarks_page(sb, create_test_data):
-    sb.open("http://localhost:8501")
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
     sb.click('label:contains("Parallel Benchmarks")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
@@ -60,7 +63,8 @@ def test_parallel_benchmarks_page(sb, create_test_data):
 
 
 def test_perfstat_benchmarks_page(sb, create_test_data):
-    sb.open("http://localhost:8501")
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
     sb.click('label:contains("Perfstat Output")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
