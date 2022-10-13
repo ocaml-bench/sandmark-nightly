@@ -27,7 +27,7 @@ if [ -n "${PASSED_BUILDS:-}" ]; then
                         \"type\": \"header\",
                         \"text\": {
                                 \"type\": \"plain_text\",
-                                \"text\": \"Successful builds on ${HOSTNAME}\"
+                                \"text\": \":heavy_check_mark: Successful builds on ${HOSTNAME}\"
                         }
                 },
                 {
@@ -51,7 +51,7 @@ if [ -n "${FAILED_BUILDS:-}" ]; then
                         \"type\": \"header\",
                         \"text\": {
                                 \"type\": \"plain_text\",
-                                \"text\": \"Failed builds on ${HOSTNAME}\"
+                                \"text\": \":x: Failed builds on ${HOSTNAME} <!here>\"
                         }
                 },
                 {
