@@ -1,14 +1,18 @@
-# Workflow to Run Python tests
+# Workflow to Run UI Tests against production
 ---
-name: Run Python Tests
+name: Run UI Tests against production
 on:
-  push
+  schedule:
+    - cron: "0 7 * * *"  # Run at 7 AM UTC (nightly builds should be done!)
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      USE_TEST_ARTIFACTS: 1
+      PRODUCTION_URL: https://sandmark.tarides.com
     steps:
       - uses: actions/checkout@v2
       - name: Install Python 3
@@ -22,8 +26,5 @@ jobs:
           pip install -r requirements.txt
           pip install -r tests/requirements.txt
           sbase get chromedriver
-      - name: Start Streamlit app
-        run: |
-          streamlit run app/app.py --server.headless true &
       - name: Run tests with pytest
-        run: pytest
+        run: pytest --data "${PRODUCTION_URL}" -k test_ui
