@@ -108,7 +108,13 @@ def normalise(df, baseline, topic, additionalTopics=[]):
         return pd.DataFrame()
     baseline_column = (topic, baseline)
     select_columns = [c for c in df_pivot.columns if c != baseline_column]
-    normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+    try:
+        normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+    except KeyError:
+        st.error(
+            "Baseline data is empty, please select a different baseline to generate a normalized graph"
+        )
+        return pd.DataFrame()
     normalised = normalised.melt(
         col_level=1, ignore_index=False, value_name="n" + topic
     ).reset_index()
