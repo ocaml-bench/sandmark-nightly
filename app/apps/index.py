@@ -8,14 +8,13 @@ import streamlit as st
 import os, pathlib, re
 
 
-def get_commit_id(file):
-    file_ = open(file, "r")
-    for line in file_:
-        # commit keyword points to the latest commit of sandmark
-        if re.search("commit", line):
-            return line
-
-    file_.close()
+def get_commit_id(path):
+    with open(path, "r") as file_:
+        for line in file_:
+            # commit keyword points to the latest commit of sandmark
+            if re.search("commit", line):
+                return line
+    return "commit unknown"
 
 
 def get_the_latest_commits(machine_list):
@@ -37,7 +36,7 @@ def get_the_latest_commits(machine_list):
         logpath_list.append(first_log)
 
     commit_list = [
-        (logpath.split("/")[-4], get_commit_id(logpath).split(" ")[1].strip())
+        (logpath.split("/")[-4], get_commit_id(logpath).split()[1].strip())
         for logpath in logpath_list
     ]
     return commit_list

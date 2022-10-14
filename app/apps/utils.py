@@ -1,9 +1,13 @@
-import os
 from functools import reduce
+import os
+
+import pandas as pd
 import streamlit as st
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ARTIFACTS_DIR = os.path.join(HERE, "..", "..")
+ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
+USE_TEST_ARTIFACTS = bool(os.getenv("USE_TEST_ARTIFACTS"))
+ARTIFACTS_DIR = ROOT if not USE_TEST_ARTIFACTS else os.path.join(ROOT, "tests", "data")
 
 
 def format_bench_run_by_host(run):
@@ -22,10 +26,18 @@ def format_bench_run_by_variant(run):
 
 def format_variant(path, artifacts_dir=ARTIFACTS_DIR):
     relpath = os.path.relpath(path, artifacts_dir)
-    _, _, timestamp, commit_id, variant = relpath.split("/")
+    _, host, timestamp, commit_id, variant = relpath.split("/")
     date, _ = timestamp.split("_")
     variant = variant.split("_", 1)[0]
-    return f"{variant}_{date}_{commit_id[:7]}"
+    return f"{host}_{variant}_{date}_{commit_id[:7]}"
+
+
+def fmt_baseline(record):
+    date = record.timestamp.split("_")[0]
+    commit = record.commit[:7]
+    variant = record.variant.rsplit("_", 1)[0]
+    host = record.host
+    return f"{host}_{variant}_{date}_{commit}"
 
 
 def get_selected_values(n, benches, key_prefix="", by="host"):
@@ -49,6 +61,7 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         first_val = containers[row][col].selectbox(
             labels[col],
             sorted(structure.keys(), reverse=True),
+            index=row,
             key=f"{prefix}{col}_{type_}",
         )
         col = 1
@@ -67,3 +80,42 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         )
         selections.append(selection)
     return selections
+
+
+def get_display_name(row, metric):
+    name = row["name"]
+    value = row[metric]
+    return f"{name} ({value:.2f})"
+
+
+def add_display_name(df, variant, metric):
+    df["display_name"] = df.apply(get_display_name, axis=1, metric=metric)
+    return df
+
+
+def normalise(df, baseline, topic, additionalTopics=[]):
+    df = add_display_name(df, baseline, topic)
+    items = ["name", topic, "variant", "display_name"] + additionalTopics
+    df_filtered = df.filter(items=items)
+    try:
+        df_pivot = df_filtered.reset_index().pivot(
+            index="name", columns="variant", values=[topic]
+        )
+    except ValueError:
+        st.warning(
+            "Variants selected are the same, please select different variants to generate a normalized graph"
+        )
+        return pd.DataFrame()
+    baseline_column = (topic, baseline)
+    select_columns = [c for c in df_pivot.columns if c != baseline_column]
+    try:
+        normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
+    except KeyError:
+        st.error(
+            "Baseline data is empty, please select a different baseline to generate a normalized graph"
+        )
+        return pd.DataFrame()
+    normalised = normalised.melt(
+        col_level=1, ignore_index=False, value_name="n" + topic
+    ).reset_index()
+    return pd.merge(normalised, df_filtered, on=["name", "variant"])

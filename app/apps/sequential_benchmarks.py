@@ -13,7 +13,14 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, format_variant, ARTIFACTS_DIR
+from apps.utils import (
+    add_display_name,
+    get_selected_values,
+    format_variant,
+    fmt_baseline,
+    ARTIFACTS_DIR,
+    normalise,
+)
 
 
 def app():
@@ -81,11 +88,6 @@ def app():
 
     unique_num_selected_files = len(set(selected_files))
 
-    normalization_state = True
-
-    if unique_num_selected_files < len(selected_files):
-        normalization_state = False
-
     def dataframe_intersection(data_frames):
         intersection_set_list = [set(df["name"]) for df in data_frames]
         list_diff = list(reduce(lambda x, y: x.intersection(y), intersection_set_list))
@@ -127,64 +129,6 @@ def app():
         graph.set_xticklabels(rotation=90)
         return graph
 
-    def fmt_baseline(record):
-        date = record.timestamp.split("_")[0]
-        commit = record.commit[:7]
-        variant = record.variant.rsplit("_", 1)[0]
-        s = variant + "_" + date + "_" + commit
-        return s
-
-    def create_column(df, variant, metric):
-        df = pd.DataFrame.copy(df)
-        variant_metric_name = list(
-            [
-                zip(df[metric], df[x], df["name"])
-                for x in df.columns.array
-                if x == "variant"
-            ][0]
-        )
-        # st.write(df)
-        # st.write(variant)
-        name_metric = {n: t for (t, v, n) in variant_metric_name if v == variant}
-        return name_metric
-
-    def add_display_name(df, variant, metric):
-        name_metric = create_column(pd.DataFrame.copy(df), variant, metric)
-        disp_name = [
-            name + " (" + str(round(name_metric[name], 2)) + ")" for name in df["name"]
-        ]
-        df["display_name"] = pd.Series(disp_name, index=df.index)
-        return df
-
-    def normalise(df, baseline, topic, normalization_state, additionalTopics=[]):
-        if not normalization_state:
-            st.error(
-                "Redundant variants selected, please choose unique variants to compare"
-            )
-            return pd.DataFrame()
-
-        else:
-            st.write(normalization_state)
-            df = add_display_name(df, baseline, topic)
-            items = ["name", topic, "variant", "display_name"] + additionalTopics
-            df_filtered = df.filter(items=items)
-            try:
-                df_pivot = df_filtered.reset_index().pivot(
-                    index="name", columns="variant", values=[topic]
-                )
-            except ValueError:
-                st.warning(
-                    "Variants selected are the same, please select different variants to generate a normalized graph"
-                )
-                return pd.DataFrame()
-            baseline_column = (topic, baseline)
-            select_columns = [c for c in df_pivot.columns if c != baseline_column]
-            normalised = df_pivot.div(df_pivot[baseline_column], axis=0)[select_columns]
-            normalised = normalised.melt(
-                col_level=1, ignore_index=False, value_name="n" + topic
-            ).reset_index()
-            return pd.merge(normalised, df_filtered, on=["name", "variant"])
-
     def plot_normalised(baseline, df, topic):
         xlabel = "Benchmarks (baseline = " + baseline + ")"
         if not df.empty:
@@ -222,65 +166,69 @@ def app():
     st.header("Time")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "time_secs"))
-
-    ndf = normalise(df.copy(), baseline, "time_secs", normalization_state)
     st.header("Normalized Time")
+    ndf = normalise(df.copy(), baseline, "time_secs")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ntime_secs")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Top heap words")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.top_heap_words"))
-    ndf = normalise(df.copy(), baseline, "gc.top_heap_words", normalization_state)
     st.header("Normalized top heap words")
+    ndf = normalise(df.copy(), baseline, "gc.top_heap_words")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.top_heap_words")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Max RSS (KB)")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "maxrss_kB"))
-    ndf = normalise(df.copy(), baseline, "maxrss_kB", normalization_state)
     st.header("Normalized Max RSS (KB)")
+    ndf = normalise(df.copy(), baseline, "maxrss_kB")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "nmaxrss_kB")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Major Collections")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.major_collections"))
-    ndf = normalise(df.copy(), baseline, "gc.major_collections", normalization_state)
     st.header("Normalized major collections")
+    ndf = normalise(df.copy(), baseline, "gc.major_collections")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.major_collections")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
 
     st.header("Minor Collections")
     with st.expander("Data"):
         st.write(df)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         st.pyplot(plot(df.copy(), "gc.minor_collections"))
-    ndf = normalise(df.copy(), baseline, "gc.minor_collections", normalization_state)
     st.header("Normalized minor collections")
+    ndf = normalise(df.copy(), baseline, "gc.minor_collections")
     with st.expander("Data"):
         st.write(ndf)
-    with st.expander("Graph"):
+    with st.expander("Graph", expanded=True):
         g = plot_normalised(baseline, ndf, "ngc.minor_collections")
-        st.pyplot(g)
+        if g is not None:
+            st.pyplot(g)
