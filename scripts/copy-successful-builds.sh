@@ -2,6 +2,8 @@
 
 set -euxo pipefail
 
+source "$(dirname "${0}")/_helpers.sh"
+
 GIT_REMOTE="${1:-origin}"
 
 SUCCESSFUL_BUILDS=0
@@ -33,7 +35,12 @@ if [ "${CURRENT_BRANCH}" != "main" ]; then
 fi
 
 for dir in ${CHANGED_DIRS}; do
-    if echo "${LAST_COMMIT_FILES}" | grep -qoP "${dir}/.*.summary.bench"; then
+    BENCH_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.summary.bench" | head -n 1) || true
+    LOG_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.log" | head -n 1) || true
+    if [ -n "${BENCH_FILE}" ] && \
+           bench_file_has_content "${BENCH_FILE}" && \
+           log_has_no_errors "${LOG_FILE}";
+    then
         git checkout "${GIT_REMOTE}/testing" "${dir}"
         SUCCESSFUL_BUILDS=1
         echo "Copied ${dir}"
