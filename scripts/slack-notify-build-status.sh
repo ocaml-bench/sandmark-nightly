@@ -55,7 +55,7 @@ if [ -n "${FAILED_BUILDS:-}" ]; then
                         \"type\": \"header\",
                         \"text\": {
                                 \"type\": \"plain_text\",
-                                \"text\": \":x: Failed builds on ${HOSTNAME} <!here>\"
+                                \"text\": \":x: Failed builds on ${HOSTNAME}\"
                         }
                 },
                 {
@@ -69,7 +69,7 @@ if [ -n "${FAILED_BUILDS:-}" ]; then
                         \"type\": \"section\",
                         \"text\": {
                                 \"type\": \"mrkdwn\",
-                                \"text\": \"Click here to see the <$(commit_url ${TESTING_COMMIT})|commit> on testing\"
+                                \"text\": \"<!here> Click here to see the <$(commit_url ${TESTING_COMMIT})|commit> on testing\"
                         }
                 }"
 fi
