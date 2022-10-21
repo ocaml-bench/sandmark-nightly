@@ -2,8 +2,6 @@
 
 set -euxo pipefail
 
-source "$(dirname "${0}")/_helpers.sh"
-
 GIT_REMOTE="${1:-origin}"
 
 SUCCESSFUL_BUILDS=0
@@ -34,12 +32,12 @@ if [ "${CURRENT_BRANCH}" != "main" ]; then
     git checkout -B main "${GIT_REMOTE}/main"
 fi
 
+TMP_WORKTREE=$(mktemp -d --suffix=.sandmark.nightly)
+git --work-tree "${TMP_WORKTREE}" checkout "${GIT_REMOTE}/testing" -- .
+git reset
+
 for dir in ${CHANGED_DIRS}; do
-    BENCH_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.summary.bench" | head -n 1) || true
-    LOG_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.log" | head -n 1) || true
-    if [ -n "${BENCH_FILE}" ] && \
-           bench_file_has_content "${BENCH_FILE}" && \
-           log_has_no_errors "${LOG_FILE}";
+    if ./app/validate_run.py "${TMP_WORKTREE}/${dir}";
     then
         git checkout "${GIT_REMOTE}/testing" "${dir}"
         SUCCESSFUL_BUILDS=1
@@ -48,6 +46,8 @@ for dir in ${CHANGED_DIRS}; do
         echo "Failed build in ${dir}"
     fi
 done
+
+rm -r "${TMP_WORKTREE}"
 
 TESTING_COMMIT=$(git rev-parse "${GIT_REMOTE}/testing")
 
@@ -61,8 +61,6 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     git push "${GIT_REMOTE}" main
     MAIN_COMMIT=$(git rev-parse HEAD)
 fi
-
-git checkout "${GIT_REMOTE}/testing"
 
 "$(dirname "${0}")/slack-notify-build-status.sh" "${CHANGED_DIRS}" "${TESTING_COMMIT}" "${MAIN_COMMIT:-}" "${HOSTNAME}"
 
