@@ -2,8 +2,6 @@
 
 set -euxo pipefail
 
-source "$(dirname "${0}")/_helpers.sh"
-
 GIT_REMOTE="${1:-origin}"
 
 SUCCESSFUL_BUILDS=0
@@ -39,11 +37,7 @@ git --work-tree "${TMP_WORKTREE}" checkout "${GIT_REMOTE}/testing" -- .
 git reset
 
 for dir in ${CHANGED_DIRS}; do
-    BENCH_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.summary.bench" | head -n 1) || true
-    LOG_FILE=$(echo "${LAST_COMMIT_FILES}" | grep -oP "${dir}/.*.log" | head -n 1) || true
-    if [ -n "${BENCH_FILE}" ] && \
-           bench_file_has_content "${TMP_WORKTREE}/${BENCH_FILE}" && \
-           log_has_no_errors "${TMP_WORKTREE}/${LOG_FILE}";
+    if ./app/validate_run.py "${TMP_WORKTREE}/${dir}";
     then
         git checkout "${GIT_REMOTE}/testing" "${dir}"
         SUCCESSFUL_BUILDS=1

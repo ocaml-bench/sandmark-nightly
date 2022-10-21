@@ -2,8 +2,6 @@
 
 set -euxo pipefail
 
-source "$(dirname "${0}")/_helpers.sh"
-
 function commit_url {
     echo "https://github.com/ocaml-bench/sandmark-nightly/commit/${1}"
 }
@@ -18,15 +16,13 @@ git --work-tree "${TMP_WORKTREE}" checkout "${TESTING_COMMIT}" -- .
 git reset
 
 for dir in ${CHANGED_DIRS}; do
-    BENCH_FILE=$(find "${TMP_WORKTREE}/${dir}" -name "*.summary.bench" -type f | head -n 1)
-    LOG_FILE=$(find "${TMP_WORKTREE}/${dir}" -name "*.log" -type f | head -n 1)
-    if [ -n "${BENCH_FILE}" ] && \
-           bench_file_has_content "${BENCH_FILE}" && \
-           log_has_no_errors "${LOG_FILE}";
+    if dir_files=$(./app/validate_run.py "${TMP_WORKTREE}/${dir}");
     then
-        PASSED_BUILDS="${PASSED_BUILDS:-}\n- $(basename "${BENCH_FILE}")"
+        bench_file=$(echo "${dir_files}" | grep -oP "^bench: \K.*")
+        PASSED_BUILDS="${PASSED_BUILDS:-}\n- $(basename "${bench_file}")"
     else
-        FAILED_BUILDS="${FAILED_BUILDS:-}\n- $(basename "${LOG_FILE}")"
+        log_file=$(echo "${dir_files}" | grep -oP "^log: \K.*")
+        FAILED_BUILDS="${FAILED_BUILDS:-}\n- $(basename "${log_file}")"
     fi
 done
 
