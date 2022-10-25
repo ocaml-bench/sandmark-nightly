@@ -121,3 +121,13 @@ def normalise(df, baseline, topic, additionalTopics=[]):
         col_level=1, ignore_index=False, value_name="n" + topic
     ).reset_index()
     return pd.merge(normalised, df_filtered, on=["name", "variant"])
+
+
+def write_params_to_session(params):
+    for key, values in params.items():
+        st.session_state[key] = values
+
+
+def set_params_from_session():
+    params = {"app": [st.session_state.get("app", {}).get("title")]}
+    st.experimental_set_query_params(**params)
