@@ -40,6 +40,16 @@ def fmt_baseline(record):
     return f"{host}_{variant}_{date}_{commit}"
 
 
+def update_session_state_value(key, options, index=0):
+    value = st.session_state.get(key, [options[index]])
+    if isinstance(value, list):
+        value = value[0]
+    if value not in options:
+        value = options[0]
+    st.session_state[key] = value
+    set_params_from_session()
+
+
 def get_selected_values(n, benches, key_prefix="", by="host"):
     if by == "variant":
         labels = ["variant", "date", "host"]
@@ -58,27 +68,51 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         # create the selectbox in columns
         prefix = key_prefix or str(row)
         prefix = f"{type_}_{prefix}"
-
         col = 0
         options = sorted(structure.keys(), reverse=True)
         index = row % len(options)
         key = f"{prefix}{col}"
+        update_session_state_value(key, options, index)
         first_val = containers[row][col].selectbox(
-            labels[col], options, index=index, key=key
+            labels[col],
+            options,
+            index=index,
+            key=key,
+            on_change=set_params_from_session,
         )
 
         col = 1
         key = f"{prefix}{col}"
         dates = sorted(structure[first_val].keys(), reverse=True)
+        update_session_state_value(key, dates)
         date_val = containers[row][col].selectbox(
-            labels[col], dates, key=key, disabled=len(dates) <= 1
+            labels[col],
+            dates,
+            key=key,
+            disabled=len(dates) <= 1,
+            on_change=set_params_from_session,
         )
 
         col = 2
         key = f"{prefix}{col}"
         runs = [run for run in structure[first_val][date_val]]
+        state_run = st.session_state.get(key, [runs[0].variant])
+        if isinstance(state_run, list):
+            for run in runs:
+                if fmt_baseline(run) == state_run[0]:
+                    st.session_state[key] = run
+                    break
+            else:
+                st.session_state[key] = runs[0]
+                set_params_from_session()
+
         selection = containers[row][col].selectbox(
-            labels[col], runs, key=key, format_func=format_func, disabled=len(runs) <= 1
+            labels[col],
+            runs,
+            key=key,
+            format_func=format_func,
+            disabled=len(runs) <= 1,
+            on_change=set_params_from_session,
         )
         selections.append(selection)
     return selections
@@ -129,5 +163,21 @@ def write_params_to_session(params):
 
 
 def set_params_from_session():
-    params = {"app": [st.session_state.get("app", {}).get("title")]}
+    SESSION_KEYS = {"Sequential Benchmarks": ["app", "sequential_*"]}
+    app_name = st.session_state.get("app", {}).get("title")
+    keys = SESSION_KEYS.get(app_name, ["app"])
+    wildcards = tuple(key.strip("*") for key in keys if key.endswith("*"))
+    wildcard_keys = [key for key in st.session_state if key.startswith(wildcards)]
+    params = {}
+    for key in keys + wildcard_keys:
+        if key == "app":
+            value = app_name
+        else:
+            value = st.session_state.get(key)
+            if not value:
+                continue
+            if value.__class__.__name__ == "BenchRun":
+                value = fmt_baseline(value)
+        params[key] = [value]
+
     st.experimental_set_query_params(**params)
