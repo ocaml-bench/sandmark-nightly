@@ -163,7 +163,10 @@ def write_params_to_session(params):
 
 
 def set_params_from_session():
-    SESSION_KEYS = {"Sequential Benchmarks": ["app", "sequential_*"]}
+    SESSION_KEYS = {
+        "Sequential Benchmarks": ["app", "sequential_*"],
+        "Parallel Benchmarks": ["app", "parallel_*"],
+    }
     app_name = st.session_state.get("app", {}).get("title")
     keys = SESSION_KEYS.get(app_name, ["app"])
     wildcards = tuple(key.strip("*") for key in keys if key.endswith("*"))

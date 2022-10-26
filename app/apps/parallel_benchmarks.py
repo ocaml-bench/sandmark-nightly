@@ -13,7 +13,13 @@ import pandas as pd
 import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import get_selected_values, format_variant, ARTIFACTS_DIR
+from apps.utils import (
+    get_selected_values,
+    format_variant,
+    ARTIFACTS_DIR,
+    set_params_from_session,
+    update_session_state_value,
+)
 
 
 def app():
@@ -26,12 +32,33 @@ def app():
     benches.sort()
 
     st.header("Select variants")
-    n = st.number_input("Number of variants", min_value=1, max_value=5)
+    type_ = benches.config["bench_type"]
+
+    key = f"{type_}_num_variants"
+    value = st.session_state.get(key, [1])
+    if isinstance(value, list):
+        st.session_state[key] = int(value[0])
+    n = st.number_input(
+        "Number of variants",
+        min_value=1,
+        max_value=5,
+        key=key,
+        on_change=set_params_from_session,
+    )
 
     selected_benches = benchstruct.BenchStruct(
         "parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench"
     )
-    by = st.radio("Find Benchmark By", options=["variant", "hostname"], horizontal=True)
+    options = ["variant", "hostname"]
+    key = f"{type_}_find_by"
+    update_session_state_value(key, options)
+    by = st.radio(
+        "Find Benchmark By",
+        options=options,
+        key=key,
+        horizontal=True,
+        on_change=set_params_from_session,
+    )
     for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
     selected_benches.sort()
