@@ -57,28 +57,28 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
     for row in range(n):
         # create the selectbox in columns
         prefix = key_prefix or str(row)
+        prefix = f"{type_}_{prefix}"
+
         col = 0
         options = sorted(structure.keys(), reverse=True)
         index = row % len(options)
+        key = f"{prefix}{col}"
         first_val = containers[row][col].selectbox(
-            labels[col],
-            options,
-            index=index,
-            key=f"{prefix}{col}_{type_}",
+            labels[col], options, index=index, key=key
         )
+
         col = 1
+        key = f"{prefix}{col}"
         dates = sorted(structure[first_val].keys(), reverse=True)
         date_val = containers[row][col].selectbox(
-            labels[col], dates, key=f"{prefix}{col}_{type_}", disabled=len(dates) <= 1
+            labels[col], dates, key=key, disabled=len(dates) <= 1
         )
+
         col = 2
+        key = f"{prefix}{col}"
         runs = [run for run in structure[first_val][date_val]]
         selection = containers[row][col].selectbox(
-            labels[col],
-            runs,
-            key=f"{prefix}{col}_{type_}",
-            format_func=format_func,
-            disabled=len(runs) <= 1,
+            labels[col], runs, key=key, format_func=format_func, disabled=len(runs) <= 1
         )
         selections.append(selection)
     return selections
