@@ -122,7 +122,13 @@ def app():
     benches.sort()
 
     st.header("Select variants")
-    n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
+    n = st.number_input(
+        "Number of variants",
+        min_value=1,
+        max_value=5,
+        value=2,
+        key=benches.config["bench_type"],
+    )
 
     selected_benches = benchstruct.BenchStruct(
         "perfstat", ARTIFACTS_DIR, "_1.perfstat.summary.bench"
