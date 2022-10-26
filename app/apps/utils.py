@@ -166,6 +166,7 @@ def set_params_from_session():
     SESSION_KEYS = {
         "Sequential Benchmarks": ["app", "sequential_*"],
         "Parallel Benchmarks": ["app", "parallel_*"],
+        "Perfstat Output": ["app", "perfstat_*"],
     }
     app_name = st.session_state.get("app", {}).get("title")
     keys = SESSION_KEYS.get(app_name, ["app"])
