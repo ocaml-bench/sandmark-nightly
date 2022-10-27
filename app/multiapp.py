@@ -4,6 +4,8 @@
 """
 import streamlit as st
 
+from apps.utils import set_params_from_session
+
 
 class MultiApp:
     """Framework for combining multiple streamlit applications.
@@ -25,8 +27,9 @@ class MultiApp:
         app.run()
     """
 
-    def __init__(self):
+    def __init__(self, params):
         self.apps = []
+        self.params = params
 
     def add_app(self, title, func):
         """Adds a new application.
@@ -40,6 +43,19 @@ class MultiApp:
         self.apps.append({"title": title, "function": func})
 
     def run(self):
-        app = st.sidebar.radio("Go To", self.apps, format_func=lambda app: app["title"])
+        state_app = st.session_state.get("app", [""])
+        if isinstance(state_app, list):
+            for app in self.apps:
+                if app["title"] == state_app[0]:
+                    st.session_state["app"] = app
+                    break
+
+        app = st.sidebar.radio(
+            "Go To",
+            options=self.apps,
+            format_func=lambda app: app["title"],
+            key="app",
+            on_change=set_params_from_session,
+        )
 
         app["function"]()
