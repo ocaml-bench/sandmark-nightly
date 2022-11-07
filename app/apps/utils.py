@@ -69,7 +69,12 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
         prefix = key_prefix or str(row)
         prefix = f"{type_}_{prefix}"
         col = 0
-        options = sorted(structure.keys(), reverse=True)
+        options = sorted(
+            structure.keys(),
+            reverse=True,
+            # Sort latest version with fewest "+" in the variant name at top
+            key=lambda x: (x.split("+")[0], x.count("+") * -1, x),
+        )
         index = row % len(options)
         key = f"{prefix}{col}"
         update_session_state_value(key, options, index)
