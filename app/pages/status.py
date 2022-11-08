@@ -15,10 +15,10 @@ GLOB_PAT = "**/{date:%Y%m%d}_*/**/*.log"
 @st.cache(ttl=300)
 def checkout_testing_branch():
     path = "/tmp/sandmark-nightly-testing-branch"
+    branch = "testing"
     os.makedirs(path, exist_ok=True)
-    subprocess.check_call(
-        ["git", "--work-tree", str(path), "checkout", "testing", "--", "."]
-    )
+    subprocess.check_call(["git", "fetch", "--force", "origin", f"{branch}:{branch}"])
+    subprocess.check_call(["git", "--work-tree", path, "checkout", branch, "--", "."])
     subprocess.check_call(["git", "reset"])
     return path
 

@@ -69,3 +69,11 @@ def test_perfstat_benchmarks_page(sb, create_test_data):
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
     sb.assert_text_not_visible("Traceback:", timeout=1)
+
+
+def test_status_page(sb, create_test_data):
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(f"{url}/status")
+    sb.wait_for_text_not_visible("Running...")
+    time.sleep(2)
+    sb.assert_text_not_visible("Traceback:", timeout=1)
