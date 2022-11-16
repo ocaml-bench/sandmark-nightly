@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 
 
 def bench_file_has_content(path, n=1):
@@ -20,7 +21,7 @@ def log_has_no_errors(path):
     log_file = log_files[0]
     with open(log_file) as f:
         log_text = f.read()
-    return "Error:" not in log_text, log_file
+    return not re.search(r"\bError\b", log_text), log_file
 
 
 def is_valid(path):
@@ -32,8 +33,8 @@ def is_valid(path):
 
 if __name__ == "__main__":
     import argparse
-    from pathlib import Path
     import sys
+    from pathlib import Path
 
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="Path to a results directory")
