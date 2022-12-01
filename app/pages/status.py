@@ -52,8 +52,7 @@ def collect_run_statuses(root, start_date):
         values="status",
         aggfunc={"status": lambda x: x},
     )
-    validity.columns = sorted(validity.columns, reverse=True)
-    return validity
+    return validity.reindex(sorted(validity.columns, reverse=True), axis=1)
 
 
 def main():
