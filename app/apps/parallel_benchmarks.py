@@ -128,17 +128,6 @@ def app():
     mdf = normalize(sdf, mdf, "time_secs")
     with st.expander("Show Raw data (multicore runs)"):
         st.write(mdf)
-    # mdf.sort_values(['name','variant','num_domains'])
-
-    # mdf = mdf.sort_values(['name'])
-    # #mdf = mdf[~mdf.index.duplicated()]
-    # time_g = sns.relplot(x='num_domains', y = 'time_secs', hue='variant', col='name',
-    #        data=mdf, kind='line', style='variant', markers=True, col_wrap = 4,
-    #        lw=5, palette="muted")
-
-    # st.header("Time")
-    # st.pyplot(time_g)
-
     mdf = mdf.sort_values(["name"])
     with sns.plotting_context(
         rc={
