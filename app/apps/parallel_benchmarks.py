@@ -114,7 +114,6 @@ def app():
 
     # Sequential runs
     sdf = df.loc[~df["name"].str.contains("multicore", regex=False), :]
-    throughput_sdf = pd.DataFrame.copy(sdf)
     with st.expander("Show Raw data (sequential runs)"):
         st.write(sdf)
 
@@ -127,7 +126,6 @@ def app():
     mdf["name"] = mdf["name"].replace("\..*?_", ".", regex=True)
 
     mdf = normalize(sdf, mdf, "time_secs")
-    throughput_mdf = pd.DataFrame.copy(mdf)
     with st.expander("Show Raw data (multicore runs)"):
         st.write(mdf)
     # mdf.sort_values(['name','variant','num_domains'])
