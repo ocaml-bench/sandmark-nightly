@@ -1,22 +1,15 @@
-from re import U, split, sub
-import streamlit as st
-import numpy as np
-import pandas as pd
-
-from nested_dict import nested_dict
-from pprint import pprint
-
 import json
-import os
 import re
+
 import pandas as pd
-import pandas.io.json as pdjson
 import seaborn as sns
+import streamlit as st
+
 from apps import benchstruct
 from apps.utils import (
-    get_selected_values,
-    format_variant,
     ARTIFACTS_DIR,
+    format_variant,
+    get_selected_values,
     set_params_from_session,
     update_session_state_value,
 )
