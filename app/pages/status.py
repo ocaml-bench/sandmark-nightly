@@ -1,11 +1,10 @@
 import datetime
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-
 from validate_run import is_valid
 
 ROOT = Path(__file__).parent.parent.parent
@@ -44,15 +43,16 @@ def collect_run_statuses(root, start_date):
             run["host"] = "unknown"
 
     validity = pd.DataFrame(
-        validity, columns=["status", "date", "log_name", "host", "log_file", "variant"]
+        validity,
+        columns=["status_text", "date", "host", "log_file", "variant"],
     )
     hosts = sorted(set(validity["host"]))
     validity_data = {
         host: validity[validity["host"] == host].pivot_table(
             index=["variant"],
             columns=["date"],
-            values="status",
-            aggfunc={"status": lambda x: x},
+            values="status_text",
+            aggfunc={"status_text": lambda x: x},
         )
         for host in hosts
     }

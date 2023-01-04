@@ -19,7 +19,8 @@ for dir in ${CHANGED_DIRS}; do
     if dir_files=$(./app/validate_run.py "${TMP_WORKTREE}/${dir}");
     then
         bench_file=$(echo "${dir_files}" | grep -oP "^bench: \K.*")
-        PASSED_BUILDS="${PASSED_BUILDS:-}\n- $(basename "${bench_file}")"
+        count=$(echo "${dir_files}" | grep -oP "^count: \K.*")
+        PASSED_BUILDS="${PASSED_BUILDS:-}\n- $(basename "${bench_file}") (${count})"
     else
         log_file=$(echo "${dir_files}" | grep -oP "^log: \K.*")
         FAILED_BUILDS="${FAILED_BUILDS:-}\n- $(basename "${log_file}")"
