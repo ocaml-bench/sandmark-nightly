@@ -46,23 +46,29 @@ def collect_run_statuses(root, start_date):
     validity = pd.DataFrame(
         validity, columns=["status", "date", "log_name", "host", "log_file", "variant"]
     )
-    validity = validity.pivot_table(
-        index=["variant", "host"],
-        columns=["date"],
-        values="status",
-        aggfunc={"status": lambda x: x},
-    )
-    return validity.reindex(sorted(validity.columns, reverse=True), axis=1)
+    hosts = sorted(set(validity["host"]))
+    validity_data = {
+        host: validity[validity["host"] == host].pivot_table(
+            index=["variant"],
+            columns=["date"],
+            values="status",
+            aggfunc={"status": lambda x: x},
+        )
+        for host in hosts
+    }
+    return validity_data
 
 
 def main():
     title = "Sandmark Nightly Build Status"
     st.set_page_config(page_title=title, page_icon="🐫", layout="wide")
     st.title(title)
-
     date = datetime.date.today()
     path = checkout_testing_branch()
-    st.write(collect_run_statuses(Path(path), date))
+    validity_data = collect_run_statuses(Path(path), date)
+    for host, validity in validity_data.items():
+        st.header(host.capitalize())
+        st.write(validity.reindex(sorted(validity.columns, reverse=True), axis=1))
 
 
 if __name__ == "__main__":
