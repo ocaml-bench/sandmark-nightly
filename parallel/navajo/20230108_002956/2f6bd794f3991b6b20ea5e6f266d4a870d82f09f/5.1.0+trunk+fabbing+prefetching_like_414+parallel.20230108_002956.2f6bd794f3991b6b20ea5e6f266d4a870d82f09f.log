@@ -1,0 +1,38 @@
+ intervaltree is not installed.  Install using pip3 install.
+5.1.0
+Filtering some benchmarks for OCaml 5.1.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.1.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.1.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.1.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk/
+{	if [ "https://github.com/fabbing/ocaml/archive/refs/heads/prefetching_like_414.zip" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.1.0+trunk.json)"; \
+	else \
+		url="https://github.com/fabbing/ocaml/archive/refs/heads/prefetching_like_414.zip"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk/opam;
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.1.0+trunk ocaml-base-compiler.5.1.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ERROR] The sources of the following couldn't be obtained, aborting:
+          - ocaml-base-compiler.5.1.0+trunk: Curl failed
+
+Switch initialisation failed: clean up? ('n' will leave the switch partially installed) [Y/n] y
+make: *** [Makefile:133: _opam/5.1.0+trunk] Error 40
