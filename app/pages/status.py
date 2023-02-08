@@ -1,11 +1,10 @@
 import datetime
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-
 from validate_run import is_valid
 
 ROOT = Path(__file__).parent.parent.parent
@@ -44,25 +43,32 @@ def collect_run_statuses(root, start_date):
             run["host"] = "unknown"
 
     validity = pd.DataFrame(
-        validity, columns=["status", "date", "log_name", "host", "log_file", "variant"]
+        validity,
+        columns=["status_text", "date", "host", "log_file", "variant"],
     )
-    validity = validity.pivot_table(
-        index=["variant", "host"],
-        columns=["date"],
-        values="status",
-        aggfunc={"status": lambda x: x},
-    )
-    return validity.reindex(sorted(validity.columns, reverse=True), axis=1)
+    hosts = sorted(set(validity["host"]))
+    validity_data = {
+        host: validity[validity["host"] == host].pivot_table(
+            index=["variant"],
+            columns=["date"],
+            values="status_text",
+            aggfunc={"status_text": lambda x: x},
+        )
+        for host in hosts
+    }
+    return validity_data
 
 
 def main():
     title = "Sandmark Nightly Build Status"
     st.set_page_config(page_title=title, page_icon="🐫", layout="wide")
     st.title(title)
-
     date = datetime.date.today()
     path = checkout_testing_branch()
-    st.write(collect_run_statuses(Path(path), date))
+    validity_data = collect_run_statuses(Path(path), date)
+    for host, validity in validity_data.items():
+        st.header(host.capitalize())
+        st.write(validity.reindex(sorted(validity.columns, reverse=True), axis=1))
 
 
 if __name__ == "__main__":
