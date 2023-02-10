@@ -65,24 +65,6 @@ def app():
 
         Second part displays the [streamlit](https://streamlit.io/) app which from the info pushed to the github repo
 
-
-        #### There are 4 different sets of benchmarks present in the nightly runs
-        - Sequential Benchmarks :
-            - Variants :
-                - OCaml 5.0+trunk
-            - Metrics :
-                - Time
-                - Top Heap Words
-                - Max RSS (in kB)
-                - Major Collections
-                - Minor Collections
-
-        - Parallel Benchmarks :
-            - Variants :
-                - OCaml 5.0+trunk
-            - Metrics :
-                - Speedup
-
         ### Machines used for generating results
         - Turing :
             - Basic Hardware and Software Info :
