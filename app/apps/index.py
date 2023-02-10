@@ -1,11 +1,7 @@
-from logging import StringTemplateStyle
-from sre_constants import GROUPREF_EXISTS
-from unicodedata import name
-from git import Repo
-from itertools import chain
+import pathlib
+import re
 
 import streamlit as st
-import os, pathlib, re
 
 
 def get_commit_id(path):
