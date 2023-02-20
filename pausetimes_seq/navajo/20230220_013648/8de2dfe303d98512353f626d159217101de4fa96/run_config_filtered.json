@@ -1,0 +1,683 @@
+{
+  "wrappers": [
+    {
+      "name": "orun",
+      "command": "orun -o %{output} -- taskset --cpu-list 5 %{command}"
+    },
+    {
+      "name": "perfstat",
+      "command": "perf stat -o %{output} -- taskset --cpu-list 5 %{command}"
+    },
+    {
+      "name": "pausetimes",
+      "command": "%{dep:pausetimes/pausetimes} %{output} taskset --cpu-list 5 %{command}"
+    }
+  ],
+  "benchmarks": [
+    {
+      "executable": "benchmarks/graph500seq/kernel1_run.exe",
+      "name": "graph500_seq_kernel1",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "edges.data"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/decompress/test_decompress.exe",
+      "name": "test_decompress",
+      "tags": [
+        "1s_10s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": "64 524_288"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/yojson/ydump.exe",
+      "name": "yojson_ydump",
+      "tags": [
+        "lt_1s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": "-c sample.json",
+          "short_name": "sample.json"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/sequence/sequence_cps.exe",
+      "name": "sequence_cps",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "10000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/thread-lwt/thread_ring_lwt_mvar.exe",
+      "name": "thread_ring_lwt_mvar",
+      "tags": [
+        "1s_10s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": "20_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/thread-lwt/thread_ring_lwt_stream.exe",
+      "name": "thread_ring_lwt_stream",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "20_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/binarytrees5.exe",
+      "name": "binarytrees5",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "21"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/LU_decomposition.exe",
+      "name": "LU_decomposition",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "1024"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/floyd_warshall.exe",
+      "name": "floyd_warshall",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "512"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/game_of_life.exe",
+      "name": "game_of_life",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "256"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/evolutionary_algorithm.exe",
+      "name": "evolutionary_algorithm",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "10000 10000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/nqueens.exe",
+      "name": "nqueens",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "14"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/mergesort.exe",
+      "name": "mergesort",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "67108864"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-grammatrix/grammatrix.exe",
+      "name": "grammatrix",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/fannkuchredux.exe",
+      "name": "fannkuchredux",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "12"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/knucleotide.exe",
+      "name": "knucleotide",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/knucleotide3.exe",
+      "name": "knucleotide3",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/regexredux2.exe",
+      "name": "regexredux2",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/revcomp2.exe",
+      "name": "revcomp2",
+      "tags": [
+        "1s_10s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/fasta3.exe",
+      "name": "fasta3",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "25_000_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/fasta6.exe",
+      "name": "fasta6",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "25_000_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/mandelbrot6.exe",
+      "name": "mandelbrot6",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "16_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/matrix_multiplication.exe",
+      "name": "matrix_multiplication",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "1024"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/multicore-numerical/quicksort.exe",
+      "name": "quicksort",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "4000000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/nbody.exe",
+      "name": "nbody",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "50_000_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/pidigits5.exe",
+      "name": "pidigits5",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "10_000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/benchmarksgame/spectralnorm2.exe",
+      "name": "spectralnorm2",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "5_500"
+        }
+      ]
+    },
+    {
+      "executable": "minilight-ocaml",
+      "name": "minilight",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/minilight/roomfront.ml.txt",
+          "short_name": "roomfront"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/valet/test_lwt.exe",
+      "name": "test_lwt",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "200"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/bdd/bdd.exe",
+      "name": "bdd",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "26"
+        }
+      ]
+    },
+    {
+      "executable": "alt-ergo",
+      "name": "alt-ergo",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/alt-ergo/fill.why",
+          "short_name": "fill.why"
+        }
+      ]
+    },
+    {
+      "executable": "alt-ergo",
+      "name": "alt-ergo",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/alt-ergo/yyll.why",
+          "short_name": "yyll.why"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/lexifi-g2pp/main.exe",
+      "name": "lexifi-g2pp",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/kb/kb.exe",
+      "name": "kb",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/kb/kb_no_exc.exe",
+      "name": "kb_no_exc",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/zarith/zarith_pi.exe",
+      "name": "zarith_pi",
+      "tags": [
+        "1s_10s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": "10_000"
+        }
+      ]
+    },
+    {
+      "executable": "menhir",
+      "name": "menhir",
+      "tags": [
+        "gt_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/menhir/ocaml.mly --list-errors -la 2 --no-stdlib --lalr",
+          "short_name": "ocamly"
+        }
+      ]
+    },
+    {
+      "executable": "menhir",
+      "name": "menhir",
+      "tags": [
+        "1s_10s",
+        "macro_bench",
+        "run_in_ci"
+      ],
+      "runs": [
+        {
+          "params": "-v -t benchmarks/menhir/keywords.mly benchmarks/menhir/sql-parser.mly --base sql-parser",
+          "short_name": "sql-parser"
+        }
+      ]
+    },
+    {
+      "executable": "menhir",
+      "name": "menhir",
+      "tags": [
+        "10s_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "-v --table benchmarks/menhir/sysver.mly",
+          "short_name": "sysver"
+        }
+      ]
+    },
+    {
+      "executable": "cubicle",
+      "name": "cubicle",
+      "tags": [
+        "gt_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/cubicle/german_pfs.cub",
+          "short_name": "german_pfs.cub"
+        }
+      ]
+    },
+    {
+      "executable": "cubicle",
+      "name": "cubicle",
+      "tags": [
+        "gt_100s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "benchmarks/cubicle/szymanski_at.cub",
+          "short_name": "szymanski_at.cub"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/chameneos/chameneos_redux_lwt.exe",
+      "name": "chameneos_redux_lwt",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "600000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/durand_kerner_aberth.exe",
+      "name": "durand-kerner-aberth",
+      "tags": [
+        "lt_1s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/fft.exe",
+      "name": "fft",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/levinson_durbin.exe",
+      "name": "levinson-durbin",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/crout_decomposition.exe",
+      "name": "crout-decomposition",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/naive_multilayer.exe",
+      "name": "naive-multilayer",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/numerical-analysis/qr_decomposition.exe",
+      "name": "qr-decomposition",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": ""
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/soli/soli.exe",
+      "name": "soli",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "2000"
+        }
+      ]
+    },
+    {
+      "executable": "benchmarks/hamming/hamming.exe",
+      "name": "hamming",
+      "tags": [
+        "1s_10s",
+        "macro_bench"
+      ],
+      "runs": [
+        {
+          "params": "1_000_000"
+        }
+      ]
+    }
+  ]
+}
