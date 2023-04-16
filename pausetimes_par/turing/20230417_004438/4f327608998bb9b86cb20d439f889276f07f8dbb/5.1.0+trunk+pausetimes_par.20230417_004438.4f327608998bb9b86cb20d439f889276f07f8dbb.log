@@ -1,0 +1,71 @@
+System load detected, waiting to run bench (retrying in 5 minutes)
+Loadavg: 136
+ intervaltree is not installed.  Install using pip3 install.
+5.1.0
+Filtering some benchmarks for OCaml 5.1.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.1.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.1.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.1.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk/
+{	if [ "https://github.com/ocaml/ocaml/archive/trunk.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.1.0+trunk.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/trunk.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.1.0+trunk/opam;
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.1.0+trunk ocaml-base-compiler.5.1.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.1.0+trunk] downloaded from https://github.com/ocaml/ocaml/archive/trunk.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed base-bigarray.base
+-> installed base-threads.base
+-> installed base-unix.base
+-> installed ocaml-base-compiler.5.1.0+trunk
+-> installed ocaml-config.1
+[ERROR] The compilation of ocaml failed at "/tmp/sandmark/_opam/5.1.0+trunk/bin/ocaml /tmp/sandmark/_opam/5.1.0+trunk/share/ocaml-config/gen_ocaml_config.ml 5.1.0+trunk ocaml".
+
+#=== ERROR while compiling ocaml.5.1.0+trunk ==================================#
+# context              2.0.7 | linux/x86_64 | ocaml-base-compiler.5.1.0+trunk | file:///tmp/sandmark/dependencies
+# path                 /tmp/sandmark/_opam/5.1.0+trunk/.opam-switch/build/ocaml.5.1.0+trunk
+# command              /tmp/sandmark/_opam/5.1.0+trunk/bin/ocaml /tmp/sandmark/_opam/5.1.0+trunk/share/ocaml-config/gen_ocaml_config.ml 5.1.0+trunk ocaml
+# exit-code            1
+# env-file             /tmp/sandmark/_opam/log/ocaml-3649330-d4902a.env
+# output-file          /tmp/sandmark/_opam/log/ocaml-3649330-d4902a.out
+### output ###
+# OCaml version mismatch: 5.2.0, expected 5.1.0
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
++- The following actions failed
+| - build ocaml 5.1.0+trunk
++- 
++- The following changes have been performed
+| - install base-bigarray       base
+| - install base-threads        base
+| - install base-unix           base
+| - install ocaml-base-compiler 5.1.0+trunk
+| - install ocaml-config        1
++- 
+# Run eval $(opam env) to update the current shell environment
+Switch initialisation failed: clean up? ('n' will leave the switch partially installed) [Y/n] y
+make: *** [Makefile:133: _opam/5.1.0+trunk] Error 31
