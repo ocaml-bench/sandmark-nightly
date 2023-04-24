@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import pandas as pd
 import streamlit as st
 
@@ -122,14 +123,15 @@ def get_selected_values(n, benches, key_prefix="", by="host"):
     return selections
 
 
-def get_display_name(row, metric):
+def get_display_name(row, metric, baseline, df):
     name = row["name"]
-    value = row[metric]
+    baseline_row = df[(df["name"] == name) & (df["variant"] == baseline)].dropna()
+    value = np.nan if baseline_row.empty else baseline_row[metric].iloc[0]
     return f"{name} ({value:.2f})"
 
 
-def add_display_name(df, variant, metric):
-    df["display_name"] = df.apply(get_display_name, axis=1, metric=metric)
+def add_display_name(df, baseline, metric):
+    df["display_name"] = df.apply(get_display_name, axis=1, metric=metric, baseline=baseline, df=df)
     return df
 
 
