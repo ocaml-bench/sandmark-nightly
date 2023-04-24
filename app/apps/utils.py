@@ -127,7 +127,7 @@ def get_display_name(row, metric, baseline, df):
     name = row["name"]
     baseline_row = df[(df["name"] == name) & (df["variant"] == baseline)].dropna()
     value = np.nan if baseline_row.empty else baseline_row[metric].iloc[0]
-    return f"{name} ({value:.2f})"
+    return f"{name} ({value:.2f})" if isinstance(value, np.floating) else f"{name} ({value})"
 
 
 def add_display_name(df, baseline, metric):
