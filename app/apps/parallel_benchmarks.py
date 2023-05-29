@@ -1,4 +1,3 @@
-import json
 import re
 
 import pandas as pd
@@ -8,7 +7,7 @@ import streamlit as st
 from apps import benchstruct
 from apps.utils import (
     ARTIFACTS_DIR,
-    format_variant,
+    get_dataframe,
     get_selected_values,
     set_params_from_session,
     update_session_state_value,
@@ -61,18 +60,6 @@ def app():
     st.write(selected_benches.display())
 
     selected_files = selected_benches.to_filepath()
-
-    def get_dataframe(file):
-        # json to dataframe
-        with open(file) as f:
-            data = []
-            for l in f:
-                temp = json.loads(l)
-                if "name" in temp:
-                    data.append(temp)
-            df = pd.json_normalize(data)
-            df["variant"] = format_variant(file)
-        return df
 
     def get_dataframes_from_files(files):
         data_frames = [get_dataframe(file) for file in files]

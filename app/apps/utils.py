@@ -1,3 +1,4 @@
+import json
 import os
 
 import numpy as np
@@ -191,3 +192,20 @@ def set_params_from_session():
         params[key] = [value]
 
     st.experimental_set_query_params(**params)
+
+
+def get_dataframe(file):
+    """Read a bench JSON file as a Pandas dataframe."""
+
+    with open(file) as f:
+        data = []
+        for l in f:
+            temp = json.loads(l)
+            # check if the benchmark json contains name field
+            # avoids crashing if the entry doesn't contain a benchmark
+            if "name" in temp:
+                data.append(temp)
+        df = pd.json_normalize(data)
+        df["variant"] = format_variant(file)
+
+    return df

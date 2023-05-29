@@ -14,9 +14,8 @@ import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
 from apps.utils import (
-    add_display_name,
+    get_dataframe,
     get_selected_values,
-    format_variant,
     fmt_baseline,
     ARTIFACTS_DIR,
     normalise,
@@ -122,21 +121,6 @@ def app():
         list_diff.sort()
         # st.write(list_diff)
         return new_data_frames
-
-    def get_dataframe(file):
-        # json to dataframe
-        # st.write(file)
-        with open(file) as f:
-            data = []
-            for l in f:
-                temp = json.loads(l)
-                # check if the benchmark json contains name field
-                # avoids crashing if the entry doesn't contain a benchmark
-                if "name" in temp:
-                    data.append(temp)
-            df = pd.json_normalize(data)
-            df["variant"] = format_variant(file)
-        return df
 
     def get_dataframes_from_files(files):
         data_frames = [get_dataframe(file) for file in files]

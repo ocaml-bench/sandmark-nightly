@@ -7,13 +7,11 @@ from functools import reduce
 from nested_dict import nested_dict
 from pprint import pprint
 
-import json
 import os
 import pandas as pd
-import pandas.io.json as pdjson
 import seaborn as sns
 from apps import benchstruct
-from apps.utils import format_variant, get_selected_values, ARTIFACTS_DIR
+from apps.utils import get_selected_values, ARTIFACTS_DIR, get_dataframe
 
 
 def app():
@@ -86,17 +84,6 @@ def app():
         st.write(selected_benches.display())
 
     selected_files = selected_benches.to_filepath()
-
-    def get_dataframe(file):
-        # json to dataframe
-
-        with open(file) as f:
-            data = []
-            for l in f:
-                data.append(json.loads(l))
-            df = pdjson.json_normalize(data)
-        df["variant"] = format_variant(file, artifacts_dir)
-        return df
 
     def get_dataframes_from_files(files):
         data_frames = [get_dataframe(file) for file in files]
