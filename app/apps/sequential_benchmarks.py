@@ -20,6 +20,8 @@ from apps.utils import (
     fmt_baseline,
     ARTIFACTS_DIR,
     normalise,
+    set_params_from_session,
+    update_session_state_value,
 )
 
 
@@ -71,12 +73,34 @@ def app():
     benches.sort()
 
     st.header("Select variants")
-    n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
+    type_ = benches.config["bench_type"]
+
+    key = f"{type_}_num_variants"
+    value = st.session_state.get(key, [2])
+    if isinstance(value, list):
+        st.session_state[key] = int(value[0])
+    n = st.number_input(
+        "Number of variants",
+        min_value=1,
+        max_value=5,
+        key=key,
+        on_change=set_params_from_session,
+    )
 
     selected_benches = benchstruct.BenchStruct(
         "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
     )
-    by = st.radio("Find Benchmark By", options=["variant", "hostname"], horizontal=True)
+
+    options = ["variant", "hostname"]
+    key = f"{type_}_find_by"
+    update_session_state_value(key, options)
+    by = st.radio(
+        "Find Benchmark By",
+        options=options,
+        horizontal=True,
+        key=key,
+        on_change=set_params_from_session,
+    )
     for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
 
