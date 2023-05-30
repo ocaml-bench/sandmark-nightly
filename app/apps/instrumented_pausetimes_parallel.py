@@ -64,7 +64,6 @@ def app():
     )
     for f in get_selected_values(n, benches):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
-    selected_benches.sort()
 
     st.subheader("Benchmarks Selected")
     st.write(selected_benches.display())
