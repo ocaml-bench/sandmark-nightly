@@ -1,23 +1,15 @@
-import streamlit as st
-from re import U, split, sub
-import numpy as np
-import pandas as pd
 from functools import reduce
 
-from nested_dict import nested_dict
-from pprint import pprint
-
-import json
-import os
 import pandas as pd
-import pandas.io.json as pdjson
 import seaborn as sns
+import streamlit as st
+
 from apps import benchstruct
 from apps.utils import (
+    ARTIFACTS_DIR,
+    fmt_baseline,
     get_dataframe,
     get_selected_values,
-    fmt_baseline,
-    ARTIFACTS_DIR,
     normalise,
     set_params_from_session,
     update_session_state_value,
