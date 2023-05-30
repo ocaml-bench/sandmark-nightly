@@ -3,7 +3,13 @@ import seaborn as sns
 import streamlit as st
 
 from apps import benchstruct
-from apps.utils import ARTIFACTS_DIR, get_dataframe, get_selected_values
+from apps.utils import (
+    ARTIFACTS_DIR,
+    get_dataframe,
+    get_selected_values,
+    set_params_from_session,
+    update_session_state_value,
+)
 
 
 def app():
@@ -53,13 +59,36 @@ def app():
     benches.add_files(benches.get_bench_files())
     benches.sort()
 
+    type_ = benches.config["bench_type"]
+
     st.header("Select variants")
-    n = int(st.text_input("Number of variants", "2", key=benches.config["bench_type"]))
+    key = f"{type_}_num_variants"
+    value = st.session_state.get(key, [2])
+    if isinstance(value, list):
+        st.session_state[key] = int(value[0])
+    n = st.number_input(
+        "Number of variants",
+        min_value=1,
+        max_value=5,
+        key=key,
+        on_change=set_params_from_session,
+    )
 
     selected_benches = benchstruct.BenchStruct(
         "pausetimes_seq", ARTIFACTS_DIR, "_1.pausetimes.summary.bench"
     )
-    for f in get_selected_values(n, benches):
+
+    options = ["variant", "hostname"]
+    key = f"{type_}_find_by"
+    update_session_state_value(key, options)
+    by = st.radio(
+        "Find Benchmark By",
+        options=options,
+        horizontal=True,
+        key=key,
+        on_change=set_params_from_session,
+    )
+    for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
 
     st.subheader("Benchmarks Selected")
