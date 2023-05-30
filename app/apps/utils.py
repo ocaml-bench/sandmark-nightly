@@ -142,9 +142,7 @@ def normalise(df, baseline, topic, additionalTopics=[]):
     items = ["name", topic, "variant", "display_name"] + additionalTopics
     df_filtered = df.filter(items=items)
     try:
-        df_pivot = df_filtered.reset_index().pivot(
-            index="name", columns="variant", values=[topic]
-        )
+        df_pivot = df_filtered.reset_index().pivot(index="name", columns="variant", values=[topic])
     except ValueError:
         st.warning(
             "Variants selected are the same, please select different variants to generate a normalized graph"

@@ -57,9 +57,7 @@ def app():
     # ....
     # <host n>
 
-    benches = benchstruct.BenchStruct(
-        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
-    )
+    benches = benchstruct.BenchStruct("sequential", ARTIFACTS_DIR, "_1.orun.summary.bench")
     benches.add_files(benches.get_bench_files())
     benches.sort()
 
@@ -78,9 +76,7 @@ def app():
         on_change=set_params_from_session,
     )
 
-    selected_benches = benchstruct.BenchStruct(
-        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
-    )
+    selected_benches = benchstruct.BenchStruct("sequential", ARTIFACTS_DIR, "_1.orun.summary.bench")
 
     options = ["variant", "hostname"]
     key = f"{type_}_find_by"
@@ -100,8 +96,6 @@ def app():
     st.write(selected_benches.display())
 
     selected_files = selected_benches.to_filepath()
-
-    unique_num_selected_files = len(set(selected_files))
 
     def dataframe_intersection(data_frames):
         intersection_set_list = [set(df["name"]) for df in data_frames]
@@ -123,9 +117,7 @@ def app():
         return df
 
     def plot(df, y_axis):
-        graph = sns.catplot(
-            x="name", y=y_axis, hue="variant", data=df, kind="bar", aspect=4
-        )
+        graph = sns.catplot(x="name", y=y_axis, hue="variant", data=df, kind="bar", aspect=4)
         graph.set_xticklabels(rotation=90)
         return graph
 

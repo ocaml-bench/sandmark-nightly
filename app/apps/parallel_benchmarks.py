@@ -17,9 +17,7 @@ from apps.utils import (
 def app():
     st.title("Parallel Benchmarks")
 
-    benches = benchstruct.BenchStruct(
-        "parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench"
-    )
+    benches = benchstruct.BenchStruct("parallel", ARTIFACTS_DIR, "_1.orunchrt.summary.bench")
     benches.add_files(benches.get_bench_files())
     benches.sort()
 
@@ -107,9 +105,7 @@ def app():
     # Multicore runs
     mdf = df.loc[df["name"].str.contains("multicore", regex=False), :]
     mdf["name"] = mdf["name"].str.replace("-ndomains_", "", regex=False)
-    mdf["num_domains"] = (
-        mdf["name"].str.split(".", expand=True)[1].str.split("_", expand=True)[0]
-    )
+    mdf["num_domains"] = mdf["name"].str.split(".", expand=True)[1].str.split("_", expand=True)[0]
     mdf["num_domains"] = pd.to_numeric(mdf["num_domains"])
     mdf["name"] = mdf["name"].replace("\..*?_", ".", regex=True)
 
