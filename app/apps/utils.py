@@ -4,6 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 import streamlit as st
+from config import config
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -170,15 +171,8 @@ def write_params_to_session(params):
 
 
 def set_params_from_session():
-    SESSION_KEYS = {
-        "Sequential Benchmarks": ["app", "sequential_*"],
-        "Parallel Benchmarks": ["app", "parallel_*"],
-        "Perfstat Output": ["app", "perfstat_*"],
-        "Instrumented Pausetimes Sequential": ["app", "pausetimes_seq_*"],
-        "Instrumented Pausetimes Parallel": ["app", "pausetimes_par_*"],
-    }
     app_name = st.session_state.get("app", {}).get("title")
-    keys = SESSION_KEYS.get(app_name, ["app"])
+    keys = config[app_name]["saved_session_keys"]
     wildcards = tuple(key.strip("*") for key in keys if key.endswith("*"))
     wildcard_keys = [key for key in st.session_state if key.startswith(wildcards)]
     params = {}
