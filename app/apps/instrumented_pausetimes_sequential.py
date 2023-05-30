@@ -63,9 +63,8 @@ def app():
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
     selected_benches.sort()
 
-    # Expander for showing bench files
-    with st.expander("Show metadata of selected benchmarks"):
-        st.write(selected_benches.display())
+    st.subheader("Benchmarks Selected")
+    st.write(selected_benches.display())
 
     selected_files = selected_benches.to_filepath()
 
