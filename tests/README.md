@@ -69,4 +69,4 @@ UI tests can be added to the `test_ui.py`.
 If new pages/apps are added, and the apps use benchmark files different from
 those used by the existing apps, ensure that there are benchmark files copied
 to the sanitized test artifacts directory too, when `USE_TEST_ARTIFACTS` is
-set. See `tests.test_ui.create_test_data`.
+set. See `tests.test_ui.maybe_copy_test_artifacts`.

@@ -7,25 +7,38 @@ from app import app
 from apps.utils import ARTIFACTS_DIR, ROOT
 
 
-@pytest.fixture
-def create_test_data():
-    if ROOT != ARTIFACTS_DIR:
-        paths = [
-            "sequential/turing/20220322_001002/7130374bc80ac322e8f5158255b0d1bcd20190a4/5.0.0+trunk+sequential_1.orun.summary.bench",
-            "sequential/navajo/20220822_001002/c716850acaa4859048e8c041e5c7342dc675ec13/5.1.0+trunk+sequential_1.orun.summary.bench",
-            "parallel/turing/20220322_015642/7130374bc80ac322e8f5158255b0d1bcd20190a4/5.0.0+trunk+parallel_1.orunchrt.summary.bench",
-            "parallel/navajo/20220822_004325/c716850acaa4859048e8c041e5c7342dc675ec13/5.1.0+trunk+parallel_1.orunchrt.summary.bench",
-            "perfstat/turing/20220912_015102/5cce2cc6d14cee01b0c43c9090a14d29e26bf5a7/5.1.0+trunk+perfstat_1.perfstat.summary.bench",
-            "perfstat/turing/20220912_041325/head/5.1.0+trunk+gadmm+pr11307+perfstat_1.perfstat.summary.bench",
-        ]
-        for path in paths:
-            src = os.path.join(ROOT, path)
-            dst = os.path.join(ARTIFACTS_DIR, path)
-            if os.path.exists(dst):
-                continue
-            os.makedirs(os.path.dirname(dst), exist_ok=True)
-            os.link(src, dst)
+def maybe_copy_test_artifacts():
+    """Copy artifacts to test directory, if required.
 
+    NOTE: Test artifacts are only copied when USE_TEST_ARTIFACTS environment
+    variable is set and ROOT != ARTIFACTS_DIR. See tests/README.md
+    """
+
+    if ROOT == ARTIFACTS_DIR:
+        print(f"NOTE: Not copying test artifacts; Using committed artifact from the {ROOT}")
+        return
+
+    paths = [
+        "sequential/turing/20220322_001002/7130374bc80ac322e8f5158255b0d1bcd20190a4/5.0.0+trunk+sequential_1.orun.summary.bench",
+        "sequential/navajo/20220822_001002/c716850acaa4859048e8c041e5c7342dc675ec13/5.1.0+trunk+sequential_1.orun.summary.bench",
+        "parallel/turing/20220322_015642/7130374bc80ac322e8f5158255b0d1bcd20190a4/5.0.0+trunk+parallel_1.orunchrt.summary.bench",
+        "parallel/navajo/20220822_004325/c716850acaa4859048e8c041e5c7342dc675ec13/5.1.0+trunk+parallel_1.orunchrt.summary.bench",
+        "perfstat/turing/20220912_015102/5cce2cc6d14cee01b0c43c9090a14d29e26bf5a7/5.1.0+trunk+perfstat_1.perfstat.summary.bench",
+        "perfstat/turing/20220912_041325/head/5.1.0+trunk+gadmm+pr11307+perfstat_1.perfstat.summary.bench",
+    ]
+    for path in paths:
+        src = os.path.join(ROOT, path)
+        dst = os.path.join(ARTIFACTS_DIR, path)
+        if os.path.exists(dst):
+            continue
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        os.link(src, dst)
+
+
+@pytest.fixture
+def create_test_data(capsys):
+    with capsys.disabled():
+        maybe_copy_test_artifacts()
     yield
 
     if ROOT != ARTIFACTS_DIR:
