@@ -25,6 +25,10 @@ def maybe_copy_test_artifacts():
         "parallel/navajo/20220822_004325/c716850acaa4859048e8c041e5c7342dc675ec13/5.1.0+trunk+parallel_1.orunchrt.summary.bench",
         "perfstat/turing/20220912_015102/5cce2cc6d14cee01b0c43c9090a14d29e26bf5a7/5.1.0+trunk+perfstat_1.perfstat.summary.bench",
         "perfstat/turing/20220912_041325/head/5.1.0+trunk+gadmm+pr11307+perfstat_1.perfstat.summary.bench",
+        "pausetimes_seq/navajo/20230531_074102/224c14c41089c12c2f2c1c2f91e88915f62604f5/5.2.0+trunk+pausetimes_seq_1.pausetimes.summary.bench",
+        "pausetimes_seq/navajo/20230601_054256/224c14c41089c12c2f2c1c2f91e88915f62604f5/5.2.0+trunk+pausetimes_seq_1.pausetimes.summary.bench",
+        "pausetimes_par/turing/20230601_032816/224c14c41089c12c2f2c1c2f91e88915f62604f5/5.2.0+trunk+pausetimes_par_1.pausetimes.summary.bench",
+        "pausetimes_par/turing/20230531_032355/224c14c41089c12c2f2c1c2f91e88915f62604f5/5.2.0+trunk+pausetimes_par_1.pausetimes.summary.bench",
     ]
     for path in paths:
         src = os.path.join(ROOT, path)
@@ -64,10 +68,28 @@ def test_sequential_benchmarks_page(sb, create_test_data):
     sb.assert_text_not_visible("Traceback:", timeout=1)
 
 
+def test_sequential_latency_benchmarks_page(sb, create_test_data):
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
+    sb.click('label:contains("Sequential - latency")')
+    sb.wait_for_text_not_visible("Running...")
+    time.sleep(2)
+    sb.assert_text_not_visible("Traceback:", timeout=1)
+
+
 def test_parallel_benchmarks_page(sb, create_test_data):
     url = "http://localhost:8501" if sb.data is None else sb.data
     sb.open(url)
     sb.click('label:contains("Parallel - throughput")')
+    sb.wait_for_text_not_visible("Running...")
+    time.sleep(2)
+    sb.assert_text_not_visible("Traceback:", timeout=1)
+
+
+def test_parallel_latency_benchmarks_page(sb, create_test_data):
+    url = "http://localhost:8501" if sb.data is None else sb.data
+    sb.open(url)
+    sb.click('label:contains("Parallel - latency")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
     sb.assert_text_not_visible("Traceback:", timeout=1)
