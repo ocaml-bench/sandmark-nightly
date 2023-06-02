@@ -31,7 +31,7 @@ class MultiApp:
         self.apps = []
         self.params = params
 
-    def add_app(self, title, func):
+    def add_app(self, slug, title, func):
         """Adds a new application.
         Parameters
         ----------
@@ -39,14 +39,16 @@ class MultiApp:
             the python function to render this app.
         title:
             title of the app. Appears in the dropdown in the sidebar.
+        slug:
+            slug of the app. Appears in the url query params
         """
-        self.apps.append({"title": title, "function": func})
+        self.apps.append({"title": title, "function": func, "slug": slug})
 
     def run(self):
         state_app = st.session_state.get("app", [""])
         if isinstance(state_app, list):
             for app in self.apps:
-                if app["title"] == state_app[0]:
+                if app["slug"] == state_app[0]:
                     st.session_state["app"] = app
                     break
 

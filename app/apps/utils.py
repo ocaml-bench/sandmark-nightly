@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 import numpy as np
 import pandas as pd
@@ -163,20 +164,37 @@ def normalise(df, baseline, topic, additionalTopics=[]):
     return pd.merge(normalised, df_filtered, on=["name", "variant"])
 
 
+def slugify(value):
+    """Convert a string title into a "slug".
+
+    - remove non-word characters
+    - convert spaces to hyphens.
+    - lowercase
+
+    """
+
+    value = re.sub(r"[^\w\s-]", "", value)
+    return re.sub(r"[-\s]+", "-", value).strip().lower()
+
+
 def write_params_to_session(params):
     for key, values in params.items():
+        if key == "app":
+            # NOTE: We slugify the app names from query params to keep URLs in
+            # the wild still functional
+            values = [slugify(value) for value in values]
         st.session_state[key] = values
 
 
 def set_params_from_session():
-    app_name = st.session_state.get("app", {}).get("title")
-    keys = config[app_name]["saved_session_keys"]
+    app_slug = st.session_state.get("app", {})["slug"]
+    keys = config[app_slug]["saved_session_keys"]
     wildcards = tuple(key.strip("*") for key in keys if key.endswith("*"))
     wildcard_keys = [key for key in st.session_state if key.startswith(wildcards)]
     params = {}
     for key in keys + wildcard_keys:
         if key == "app":
-            value = app_name
+            value = app_slug
         else:
             value = st.session_state.get(key)
             if not value:

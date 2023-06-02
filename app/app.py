@@ -11,10 +11,11 @@ st.set_page_config(page_title="Sandmark Nightly", page_icon="🐫", layout="wide
 params = st.experimental_get_query_params()
 app = MultiApp(params)
 
-for title, data in config.items():
+for slug, data in config.items():
     name = data["module"]
     module = importlib.import_module(f"apps.{name}")
-    app.add_app(title, module.app)
+    title = data["title"]
+    app.add_app(slug, title, module.app)
 
 # The main app
 params = st.experimental_get_query_params()
