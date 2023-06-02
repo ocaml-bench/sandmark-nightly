@@ -13,7 +13,7 @@ from apps.utils import (
 
 
 def app():
-    st.title("Instrumented Pausetimes (sequential)")
+    st.title("Sequential Latency Benchmarks")
     # Problem : right now the structure is a nested dict of
     #     `(hostname * (timestamp * (variants list)) dict ) dict`
     # and this nested structure although works but it is a bit difficult to work with

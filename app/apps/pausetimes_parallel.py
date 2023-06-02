@@ -15,7 +15,7 @@ from apps.utils import (
 
 
 def app():
-    st.title("Instrumented Pausetimes (parallel)")
+    st.title("Parallel Latency Benchmarks")
 
     # Problem : right now the structure is a nested dict of
     #     `(hostname * (timestamp * (variants list)) dict ) dict`

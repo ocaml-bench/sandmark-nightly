@@ -3,10 +3,8 @@ import shutil
 import time
 
 import pytest
-from seleniumbase import BaseCase
-
 from app import app
-from apps.utils import ROOT, ARTIFACTS_DIR
+from apps.utils import ARTIFACTS_DIR, ROOT
 
 
 @pytest.fixture
@@ -47,7 +45,7 @@ def test_index_page(sb, create_test_data):
 def test_sequential_benchmarks_page(sb, create_test_data):
     url = "http://localhost:8501" if sb.data is None else sb.data
     sb.open(url)
-    sb.click('label:contains("Sequential Benchmarks")')
+    sb.click('label:contains("Sequential - throughput")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
     sb.assert_text_not_visible("Traceback:", timeout=1)
@@ -56,7 +54,7 @@ def test_sequential_benchmarks_page(sb, create_test_data):
 def test_parallel_benchmarks_page(sb, create_test_data):
     url = "http://localhost:8501" if sb.data is None else sb.data
     sb.open(url)
-    sb.click('label:contains("Parallel Benchmarks")')
+    sb.click('label:contains("Parallel - throughput")')
     sb.wait_for_text_not_visible("Running...")
     time.sleep(2)
     sb.assert_text_not_visible("Traceback:", timeout=1)
