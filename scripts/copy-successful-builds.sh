@@ -52,6 +52,16 @@ rm -r "${TMP_WORKTREE}"
 TESTING_COMMIT=$(git rev-parse "${GIT_REMOTE}/testing")
 
 if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
+
+    # Fix-up any pausetimes output files.
+
+    # NOTE: This is required because we cannot yet run the latest version of
+    # runtime_events_tools in Sandmark, because `ppxlib` (a dependency) doesn't
+    # work on OCaml 5.1 and 5.2.  This can be removed once we are able to run
+    # the latest version of runtime_events_tools in Sandmark
+    "$(dirname "${0}")/slack-notify-build-status.sh" "pausetimes_seq"
+    "$(dirname "${0}")/cleanup-pausetimes-bench.sh" "pausetimes_par"
+
     # Try to commit only if files have been staged. No files are staged, if the
     # files are already on main branch.
     git config user.email "puneeth+sandmark@tarides.com"
