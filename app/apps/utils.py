@@ -1,8 +1,11 @@
+import json
 import os
+import re
 
 import numpy as np
 import pandas as pd
 import streamlit as st
+from config import config
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -140,9 +143,7 @@ def normalise(df, baseline, topic, additionalTopics=[]):
     items = ["name", topic, "variant", "display_name"] + additionalTopics
     df_filtered = df.filter(items=items)
     try:
-        df_pivot = df_filtered.reset_index().pivot(
-            index="name", columns="variant", values=[topic]
-        )
+        df_pivot = df_filtered.reset_index().pivot(index="name", columns="variant", values=[topic])
     except ValueError:
         st.warning(
             "Variants selected are the same, please select different variants to generate a normalized graph"
@@ -163,25 +164,37 @@ def normalise(df, baseline, topic, additionalTopics=[]):
     return pd.merge(normalised, df_filtered, on=["name", "variant"])
 
 
+def slugify(value):
+    """Convert a string title into a "slug".
+
+    - remove non-word characters
+    - convert spaces to hyphens.
+    - lowercase
+
+    """
+
+    value = re.sub(r"[^\w\s-]", "", value)
+    return re.sub(r"[-\s]+", "-", value).strip().lower()
+
+
 def write_params_to_session(params):
     for key, values in params.items():
+        if key == "app":
+            # NOTE: We slugify the app names from query params to keep URLs in
+            # the wild still functional
+            values = [slugify(value) for value in values]
         st.session_state[key] = values
 
 
 def set_params_from_session():
-    SESSION_KEYS = {
-        "Sequential Benchmarks": ["app", "sequential_*"],
-        "Parallel Benchmarks": ["app", "parallel_*"],
-        "Perfstat Output": ["app", "perfstat_*"],
-    }
-    app_name = st.session_state.get("app", {}).get("title")
-    keys = SESSION_KEYS.get(app_name, ["app"])
+    app_slug = st.session_state.get("app", {})["slug"]
+    keys = config[app_slug]["saved_session_keys"]
     wildcards = tuple(key.strip("*") for key in keys if key.endswith("*"))
     wildcard_keys = [key for key in st.session_state if key.startswith(wildcards)]
     params = {}
     for key in keys + wildcard_keys:
         if key == "app":
-            value = app_name
+            value = app_slug
         else:
             value = st.session_state.get(key)
             if not value:
@@ -191,3 +204,20 @@ def set_params_from_session():
         params[key] = [value]
 
     st.experimental_set_query_params(**params)
+
+
+def get_dataframe(file):
+    """Read a bench JSON file as a Pandas dataframe."""
+
+    with open(file) as f:
+        data = []
+        for l in f:
+            temp = json.loads(l)
+            # check if the benchmark json contains name field
+            # avoids crashing if the entry doesn't contain a benchmark
+            if "name" in temp:
+                data.append(temp)
+        df = pd.json_normalize(data)
+        df["variant"] = format_variant(file)
+
+    return df

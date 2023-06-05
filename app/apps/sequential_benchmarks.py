@@ -1,24 +1,15 @@
-import streamlit as st
-from re import U, split, sub
-import numpy as np
-import pandas as pd
 from functools import reduce
 
-from nested_dict import nested_dict
-from pprint import pprint
-
-import json
-import os
 import pandas as pd
-import pandas.io.json as pdjson
 import seaborn as sns
+import streamlit as st
+
 from apps import benchstruct
 from apps.utils import (
-    add_display_name,
-    get_selected_values,
-    format_variant,
-    fmt_baseline,
     ARTIFACTS_DIR,
+    fmt_baseline,
+    get_dataframe,
+    get_selected_values,
     normalise,
     set_params_from_session,
     update_session_state_value,
@@ -66,9 +57,7 @@ def app():
     # ....
     # <host n>
 
-    benches = benchstruct.BenchStruct(
-        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
-    )
+    benches = benchstruct.BenchStruct("sequential", ARTIFACTS_DIR, "_1.orun.summary.bench")
     benches.add_files(benches.get_bench_files())
     benches.sort()
 
@@ -87,9 +76,7 @@ def app():
         on_change=set_params_from_session,
     )
 
-    selected_benches = benchstruct.BenchStruct(
-        "sequential", ARTIFACTS_DIR, "_1.orun.summary.bench"
-    )
+    selected_benches = benchstruct.BenchStruct("sequential", ARTIFACTS_DIR, "_1.orun.summary.bench")
 
     options = ["variant", "hostname"]
     key = f"{type_}_find_by"
@@ -110,8 +97,6 @@ def app():
 
     selected_files = selected_benches.to_filepath()
 
-    unique_num_selected_files = len(set(selected_files))
-
     def dataframe_intersection(data_frames):
         intersection_set_list = [set(df["name"]) for df in data_frames]
         list_diff = list(reduce(lambda x, y: x.intersection(y), intersection_set_list))
@@ -123,21 +108,6 @@ def app():
         # st.write(list_diff)
         return new_data_frames
 
-    def get_dataframe(file):
-        # json to dataframe
-        # st.write(file)
-        with open(file) as f:
-            data = []
-            for l in f:
-                temp = json.loads(l)
-                # check if the benchmark json contains name field
-                # avoids crashing if the entry doesn't contain a benchmark
-                if "name" in temp:
-                    data.append(temp)
-            df = pd.json_normalize(data)
-            df["variant"] = format_variant(file)
-        return df
-
     def get_dataframes_from_files(files):
         data_frames = [get_dataframe(file) for file in files]
         new_data_frames = dataframe_intersection(data_frames=data_frames)
@@ -147,9 +117,7 @@ def app():
         return df
 
     def plot(df, y_axis):
-        graph = sns.catplot(
-            x="name", y=y_axis, hue="variant", data=df, kind="bar", aspect=4
-        )
+        graph = sns.catplot(x="name", y=y_axis, hue="variant", data=df, kind="bar", aspect=4)
         graph.set_xticklabels(rotation=90)
         return graph
 
