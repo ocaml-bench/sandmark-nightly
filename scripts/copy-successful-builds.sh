@@ -62,6 +62,8 @@ if [ ${SUCCESSFUL_BUILDS} -ge 1 ]; then
     "$(dirname "${0}")/cleanup-pausetimes-bench.sh" "pausetimes_seq"
     "$(dirname "${0}")/cleanup-pausetimes-bench.sh" "pausetimes_par"
 
+    git add pausetimes_seq pausetimes_par
+
     # Try to commit only if files have been staged. No files are staged, if the
     # files are already on main branch.
     git config user.email "puneeth+sandmark@tarides.com"
