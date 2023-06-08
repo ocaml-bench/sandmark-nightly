@@ -11,7 +11,7 @@ ROOT = Path(__file__).parent.parent.parent
 GLOB_PAT = "**/{date:%Y%m%d}_*/**/*.log"
 
 
-@st.cache(ttl=300)
+@st.cache_data(ttl=300)
 def checkout_testing_branch():
     path = "/tmp/sandmark-nightly-testing-branch"
     branch = "testing"
