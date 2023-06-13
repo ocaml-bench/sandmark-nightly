@@ -92,7 +92,7 @@ def app():
         on_change=set_params_from_session,
     )
 
-    for f in get_selected_values(n, benches):
+    for f in get_selected_values(n, benches, by=by):
         selected_benches.add(f.host, f.timestamp, f.commit, f.variant)
 
     st.subheader("Benchmarks Selected")
