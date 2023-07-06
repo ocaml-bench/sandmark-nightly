@@ -127,6 +127,10 @@ def app():
                     1:  22  10
                 ```
     """
+        ### Reporting issues
+        
+        Please report any issues with the Sandmark Nightly Service at [ocaml/infrastructure](https://github.com/ocaml/infrastructure/issues)
+
     )
     st.header("Sandmark info")
     st.subheader("Latest commit")
