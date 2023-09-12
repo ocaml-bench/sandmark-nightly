@@ -1,0 +1,87 @@
+System load detected, waiting to run bench (retrying in 5 minutes)
+Loadavg: 179
+ intervaltree is not installed.  Install using pip3 install.
+5.2.0
+Filtering some benchmarks for OCaml 5.2.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.2.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.2.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.2.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.2.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.2.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.2.0+trunk/
+{	if [ "https://github.com/eutro/ocaml/archive/refs/heads/tsdnr-barriers.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.2.0+trunk.json)"; \
+	else \
+		url="https://github.com/eutro/ocaml/archive/refs/heads/tsdnr-barriers.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.2.0+trunk/opam;
+# Read OCAML_CONFIG_OPTION from the ocaml-version/5.2.0+trunk.json file if env
+# variable is not set already.  The variable is read even if the
+# environment variable is set to be empty. `run_all_custom.sh` always
+# sets the OCAML_CONFIG_OPTION -- it is empty if no "configure" key is
+# present in the sandmark nightly config file.
+# Read OCAML_RUN_PARAM from the ocaml-version/5.2.0+trunk.json file if env
+# variable is not set already. See comment above for
+# OCAML_CONFIG_OPTION.
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.2.0+trunk ocaml-base-compiler.5.2.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.2.0+trunk] downloaded from https://github.com/eutro/ocaml/archive/refs/heads/tsdnr-barriers.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+[ERROR] The compilation of ocaml-base-compiler failed at "/usr/bin/make -j 127 world".
+
+#=== ERROR while compiling ocaml-base-compiler.5.2.0+trunk ====================#
+# context              2.0.7 | linux/x86_64 |  | file:///tmp/sandmark/dependencies
+# path                 /tmp/sandmark/_opam/5.2.0+trunk/.opam-switch/build/ocaml-base-compiler.5.2.0+trunk
+# command              /usr/bin/make -j 127 world
+# exit-code            2
+# env-file             /tmp/sandmark/_opam/log/ocaml-base-compiler-2267266-a71bb4.env
+# output-file          /tmp/sandmark/_opam/log/ocaml-base-compiler-2267266-a71bb4.out
+### output ###
+# runtime/major_gc.c:1340:3: note: in expansion of macro ‘Caml_global_barrier_if_final’
+# [...]
+#   CC runtime/weak.bpic.o
+#   CC runtime/backtrace_byt.bpic.o
+#   CC runtime/fail_byt.bpic.o
+#   CC runtime/fix_code.bpic.o
+#   CC runtime/interp.bpic.o
+#   CC runtime/startup_byt.bpic.o
+# cc1: all warnings being treated as errors
+# make[1]: *** [Makefile:994: runtime/major_gc.bd.o] Error 1
+# make[1]: *** Waiting for unfinished jobs....
+# make[1]: Leaving directory '/tmp/sandmark/_opam/5.2.0+trunk/.opam-switch/build/ocaml-base-compiler.5.2.0+trunk'
+# make: *** [Makefile:375: world] Error 2
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+┌─ The following actions failed
+│ λ build ocaml-base-compiler 5.2.0+trunk
+└─ 
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install base-bigarray base
+│ ∗ install base-threads  base
+│ ∗ install base-unix     base
+└─ 
+# Run eval $(opam env) to update the current shell environment
+Switch initialisation failed: clean up? ('n' will leave the switch partially installed) [Y/n] y
+make: *** [Makefile:141: _opam/5.2.0+trunk] Error 31
