@@ -1,5 +1,4 @@
 import pathlib
-import re
 
 import streamlit as st
 
@@ -8,7 +7,7 @@ def get_commit_id(path):
     with open(path, "rb") as file_:
         for line in file_:
             # commit keyword points to the latest commit of sandmark
-            if re.search(b"commit", line):
+            if line.startswith(b"commit"):
                 return line.decode("utf8")
     return "commit unknown"
 
