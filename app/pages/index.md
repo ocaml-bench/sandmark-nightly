@@ -39,7 +39,7 @@ branch](https://github.com/ocaml-bench/sandmark-nightly/commits/testing).
   - Basic Hardware and Software Info :
 
     ```bash
-        OS: Ubuntu 20.04.3 LTS x86_64
+        OS: Ubuntu 22.04.3 LTS x86_64
         Host: Precision 7820 Tower
         Kernel: 5.4.0-91-generic
         Shell: bash 5.0.17
@@ -65,7 +65,7 @@ branch](https://github.com/ocaml-bench/sandmark-nightly/commits/testing).
 - Navajo :
   - Basic Hardware and Software Info :
     ```bash
-        OS: Ubuntu 20.04.1 LTS x86_64
+        OS: Ubuntu 22.04.3 LTS x86_64
         Host: PowerEdge R7425
         Kernel: 5.4.0-92-generic
         Shell: sh
@@ -87,6 +87,8 @@ branch](https://github.com/ocaml-bench/sandmark-nightly/commits/testing).
         0:  10  22
         1:  22  10
     ```
+
+You can find the most updated information about these benchmarking machines [here](http://infra.ocaml.org/by-use/benchmarking)
 
 ### Reporting issues
 
