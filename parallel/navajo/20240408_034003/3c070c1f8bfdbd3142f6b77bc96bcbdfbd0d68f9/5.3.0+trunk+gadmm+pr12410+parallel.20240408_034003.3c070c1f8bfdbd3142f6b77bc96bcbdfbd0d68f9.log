@@ -1,0 +1,1914 @@
+5.3.0
+Filtering some benchmarks for OCaml 5.3.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.3.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.3.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.3.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk/
+{	if [ "https://github.com/ocaml/ocaml/archive/refs/pull/12410/head.zip" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.3.0+trunk.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/refs/pull/12410/head.zip"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk/opam;
+# Read OCAML_CONFIG_OPTION from the ocaml-version/5.3.0+trunk.json file if env
+# variable is not set already.  The variable is read even if the
+# environment variable is set to be empty. `run_all_custom.sh` always
+# sets the OCAML_CONFIG_OPTION -- it is empty if no "configure" key is
+# present in the sandmark nightly config file.
+# Read OCAML_RUN_PARAM from the ocaml-version/5.3.0+trunk.json file if env
+# variable is not set already. See comment above for
+# OCAML_CONFIG_OPTION.
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.3.0+trunk ocaml-base-compiler.5.3.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.3.0+trunk] downloaded from https://github.com/ocaml/ocaml/archive/refs/pull/12410/head.zip
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+∗ installed ocaml-base-compiler.5.3.0+trunk
+∗ installed ocaml-config.1
+∗ installed ocaml.5.3.0+trunk
+Done.
+# Run eval $(opam env) to update the current shell environment
+# TODO remove pin when a new orun version is released on opam
+opam pin add -n --yes --switch 5.3.0+trunk orun https://github.com/ocaml-bench/orun.git
+Package orun does not exist, create as a NEW package? [Y/n] y
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev] synchronised from git+https://github.com/ocaml-bench/orun.git
+orun is now pinned to git+https://github.com/ocaml-bench/orun.git (version 0.1)
+# TODO remove pin when a new runtime_events_tools is released on opam
+opam pin add -n --yes --switch 5.3.0+trunk runtime_events_tools https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+Package runtime_events_tools does not exist, create as a NEW package? [Y/n] y
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev] synchronised from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+runtime_events_tools is now pinned to git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25 (version ~dev)
+opam pin add -n --yes --switch 5.3.0+trunk ocamlfind https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+Package ocamlfind does not exist, create as a NEW package? [Y/n] y
+[ocamlfind.~dev: http]
+[ocamlfind.~dev] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlfind is now pinned to https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz (version 1.9.3.git)
+opam pin add -n --yes --switch 5.3.0+trunk coq-core https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-core does not exist, create as a NEW package? [Y/n] y
+[coq-core.~dev: http]
+[coq-core.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-core is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.3.0+trunk coq-stdlib https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-stdlib does not exist, create as a NEW package? [Y/n] y
+[coq-stdlib.~dev: http]
+[coq-stdlib.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-stdlib is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+Using default dune.3.5.0
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1
+Linking to system dune files found at: /home/sandmark/.opam/ocaml-base-compiler.4.13.1
+/home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune --version = n/a
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/dune /tmp/sandmark/_opam/sys_dune/bin/dune
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/bin/jbuilder /tmp/sandmark/_opam/sys_dune/bin/jbuilder
+ln -s /home/sandmark/.opam/ocaml-base-compiler.4.13.1/lib/dune /tmp/sandmark/_opam/sys_dune/lib/dune
+opam repo add upstream "git+https://github.com/ocaml/opam-repository.git" --on-switch=5.3.0+trunk --rank 2
+[upstream] Initialised
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+opam install --switch=5.3.0+trunk --yes ocamlfind
+
+<><> Synchronising pinned packages ><><><><><><><><><><><><><><><><><><><><><><>
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+
+The following actions will be performed:
+  ∗ install ocamlfind 1.9.3.git*
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed ocamlfind.1.9.3.git
+Done.
+# Run eval $(opam env) to update the current shell environment
+opam install --switch=5.3.0+trunk --yes "dune.3.5.0" "dune-configurator.3.5.0"
+The following actions will be performed:
+  ∗ install dune              3.5.0
+  ∗ install csexp             1.5.2 [required by dune-configurator]
+  ∗ install dune-configurator 3.5.0
+===== ∗ 3 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[csexp.1.5.2] downloaded from https://github.com/ocaml-dune/csexp/releases/download/1.5.2/csexp-1.5.2.tbz
+[dune.3.5.0] downloaded from https://github.com/ocaml/dune/releases/download/3.5.0/dune-3.5.0.tbz
+[dune-configurator.3.5.0] downloaded from https://github.com/ocaml/dune/releases/download/3.5.0/dune-3.5.0.tbz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed dune.3.5.0
+∗ installed csexp.1.5.2
+∗ installed dune-configurator.3.5.0
+Done.
+# Run eval $(opam env) to update the current shell environment
+# Pin the version so it doesn't change when installing packages
+opam pin add --switch=5.3.0+trunk --yes -n dune "3.5.0"
+dune is now pinned to version 3.5.0
+# Retrieve set of version constraints for chosen OCaml version
+Using template/dev-5.x.opam
+# Conditionally install runtime_events_tools for olly (pausetimes)
+Enabling pausetimes for OCaml >= 5
+opam repo add alpha git+https://github.com/kit-ty-kate/opam-alpha-repository.git --on-switch=5.3.0+trunk --rank 2
+[alpha] Initialised
+opam exec --switch 5.3.0+trunk -- opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] no changes from file:///tmp/sandmark/dependencies
+[alpha] no changes from git+https://github.com/kit-ty-kate/opam-alpha-repository.git
+[upstream] no changes from git+https://github.com/ocaml/opam-repository.git
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+
+<><> Synchronising development packages <><><><><><><><><><><><><><><><><><><><>
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+[coq-stdlib.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[coq-core.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[orun.0.1] no changes from git+https://github.com/ocaml-bench/orun.git
+[runtime_events_tools.~dev] no changes from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+opam install --switch=5.3.0+trunk --yes "lru" "psq"
+The following actions will be performed:
+  ∗ install seq base  [required by psq]
+  ∗ install psq 0.2.1
+  ∗ install lru 0.3.1
+===== ∗ 3 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[psq.0.2.1] downloaded from https://github.com/pqwy/psq/releases/download/v0.2.1/psq-0.2.1.tbz
+[lru.0.3.1] downloaded from https://github.com/pqwy/lru/releases/download/v0.3.1/lru-0.3.1.tbz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed seq.base
+∗ installed psq.0.2.1
+∗ installed lru.0.3.1
+Done.
+# Run eval $(opam env) to update the current shell environment
+opam exec --switch 5.3.0+trunk -- opam list
+# Packages matching: installed
+# Name              # Installed # Synopsis
+base-bigarray       base
+base-threads        base
+base-unix           base
+csexp               1.5.2       Parsing and printing of S-expressions in Canonical form
+dune                3.5.0       pinned to version 3.5.0
+dune-configurator   3.5.0       Helper library for gathering system configuration
+lru                 0.3.1       Scalable LRU caches
+ocaml               5.3.0+trunk The OCaml compiler (virtual package)
+ocaml-base-compiler 5.3.0+trunk OCaml compiler
+ocaml-config        1           OCaml Switch Configuration
+ocamlfind           1.9.3.git   pinned to version 1.9.3.git at https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+psq                 0.2.1       Functional Priority Search Queues
+seq                 base        Compatibility package for OCaml's standard iterator type starting from 4.07.
+opam update --switch=5.3.0+trunk
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] no changes from file:///tmp/sandmark/dependencies
+[alpha] no changes from git+https://github.com/kit-ty-kate/opam-alpha-repository.git
+[upstream] no changes from git+https://github.com/ocaml/opam-repository.git
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+
+<><> Synchronising development packages <><><><><><><><><><><><><><><><><><><><>
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+[coq-core.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[coq-stdlib.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[orun.0.1] no changes from git+https://github.com/ocaml-bench/orun.git
+[runtime_events_tools.~dev] no changes from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+The following actions will be performed:
+  ∗ install conf-gmp             1
+  ∗ install conf-bash            1
+  ∗ install cmdliner             1.2.0
+  ∗ install conf-pkg-config      1.2
+  ∗ install conf-findutils       1
+  ∗ install conf-m4              1
+  ∗ install thread-table         1.0.0
+  ∗ install ocaml-syntax-shims   1.0.0
+  ∗ install re                   1.11.0
+  ∗ install conf-cmake           1
+  ∗ install stdlib-shims         0.1.0
+  ∗ install either               1.0.0
+  ∗ install menhirLib            20200612
+  ∗ install stringext            1.6.0
+  ∗ install menhirSdk            20200612
+  ∗ install sexplib0             v0.16.0
+  ∗ install ocamlbuild           0.14.3
+  ∗ install conf-openblas        0.2.2
+  ∗ install bigarray-compat      1.1.0
+  ∗ install base-bytes           base
+  ∗ install conf-perl            1
+  ∗ install cppo                 1.6.7
+  ∗ install minilight            1.6
+  ∗ install owl-base             1.1
+  ∗ install num                  1.3
+  ∗ install camlp-streams        5.0
+  ∗ install optint               0.3.0
+  ∗ install result               1.5
+  ∗ install conf-which           1
+  ∗ install domain_shims         0.1.0
+  ∗ install conf-zlib            1
+  ∗ install conf-libffi          2.0.0
+  ∗ install domain-local-await   1.0.0
+  ∗ install ocamlgraph           2.0.0
+  ∗ install integers             0.7.0
+  ∗ install menhir               20200612
+  ∗ install base                 v0.16.3
+  ∗ install topkg                1.0.7
+  ∗ install nbcodec              20151119
+  ∗ install bigstringaf          0.6.1
+  ∗ install base64               3.4.0
+  ∗ install zarith               1.10
+  ∗ install yojson               2.1.2
+  ∗ install ocplib-endian        1.2
+  ∗ install cubicle              1.2.0
+  ∗ install checkseum            0.3.4
+  ∗ install conf-autoconf        0.1
+  ∗ install saturn_lockfree      0.4.0
+  ∗ install camlzip              1.11
+  ∗ install ctypes               0.22.0
+  ∗ install psmt2-frontend       0.4.0
+  ∗ install stdio                v0.16.0
+  ∗ install uutf                 1.0.3
+  ∗ install uuidm                0.9.8
+  ∗ install rresult              0.6.0
+  ∗ install react                1.2.2
+  ∗ install mtime                1.2.0
+  ∗ install fmt                  0.9.0
+  ∗ install astring              0.8.5
+  ∗ install angstrom             0.16.0
+  ∗ install rungen               0.0.1
+  ∗ install orun                 0.1*
+  ∗ install lwt                  5.7.0
+  ∗ install decompress           1.1.0
+  ∗ install ocplib-simplex       0.4.1
+  ∗ install saturn               0.4.0
+  ∗ install npy                  0.0.9
+  ∗ install ctypes-foreign       0.22.0
+  ∗ install jsonm                1.0.2
+  ∗ install cstruct              6.2.0
+  ∗ install uri                  4.1.0
+  ∗ install logs                 0.7.0
+  ∗ install alt-ergo-lib         2.4.2
+  ∗ install domainslib           0.5.1
+  ∗ install owl                  1.1
+  ∗ install hdr_histogram        0.0.2
+  ∗ install repr                 0.6.0
+  ∗ install eqaf                 0.9
+  ∗ install alt-ergo-parsers     2.4.2
+  ∗ install runtime_events_tools ~dev*
+  ∗ install digestif             1.0.0
+  ∗ install alt-ergo             2.4.2
+===== ∗ 82 =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[alt-ergo-parsers.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[alt-ergo.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[alt-ergo-lib.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[astring.0.8.5] downloaded from https://erratique.ch/software/astring/releases/astring-0.8.5.tbz
+[angstrom.0.16.0] downloaded from https://github.com/inhabitedtype/angstrom/archive/0.16.0.tar.gz
+[base.v0.16.3] downloaded from https://github.com/janestreet/base/archive/refs/tags/v0.16.3.tar.gz
+[base64.3.4.0] downloaded from https://github.com/mirage/ocaml-base64/releases/download/v3.4.0/base64-v3.4.0.tbz
+[bigarray-compat.1.1.0] downloaded from https://github.com/mirage/bigarray-compat/releases/download/v1.1.0/bigarray-compat-1.1.0.tbz
+[bigstringaf.0.6.1] downloaded from https://github.com/inhabitedtype/bigstringaf/archive/0.6.1.tar.gz
+[camlp-streams.5.0] downloaded from https://github.com/ocaml/camlp-streams/archive/refs/tags/v5.0.tar.gz
+[camlzip.1.11] downloaded from https://github.com/xavierleroy/camlzip/archive/rel111.tar.gz
+[checkseum.0.3.4] downloaded from https://github.com/mirage/checkseum/releases/download/v0.3.4/checkseum-0.3.4.tbz
+[cmdliner.1.2.0] downloaded from https://erratique.ch/software/cmdliner/releases/cmdliner-1.2.0.tbz
+[cppo.1.6.7] downloaded from cache at https://opam.ocaml.org/cache/
+[cstruct.6.2.0] downloaded from https://github.com/mirage/ocaml-cstruct/releases/download/v6.2.0/cstruct-6.2.0.tbz
+[ctypes.0.22.0] downloaded from https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.22.0.tar.gz
+[ctypes-foreign.0.22.0] downloaded from https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.22.0.tar.gz
+[cubicle.1.2.0] downloaded from https://github.com/cubicle-model-checker/cubicle/releases/download/1.2.0/cubicle-1.2.0.tar.gz
+[decompress.1.1.0] downloaded from https://github.com/mirage/decompress/releases/download/v1.1.0/decompress-v1.1.0.tbz
+[digestif.1.0.0] downloaded from https://github.com/mirage/digestif/releases/download/v1.0.0/digestif-v1.0.0.tbz
+[domain-local-await.1.0.0] downloaded from https://github.com/ocaml-multicore/domain-local-await/releases/download/1.0.0/domain-local-await-1.0.0.tbz
+[domain_shims.0.1.0] downloaded from https://gitlab.com/gasche/domain-shims/-/archive/0.1.0/domain-shims-0.1.0.tar.gz
+[either.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[domainslib.0.5.1] downloaded from https://github.com/ocaml-multicore/domainslib/releases/download/0.5.1/domainslib-0.5.1.tbz
+[eqaf.0.9] downloaded from https://github.com/mirage/eqaf/releases/download/v0.9/eqaf-0.9.tbz
+[fmt.0.9.0] downloaded from https://erratique.ch/software/fmt/releases/fmt-0.9.0.tbz
+[jsonm.1.0.2] downloaded from https://erratique.ch/software/jsonm/releases/jsonm-1.0.2.tbz
+[integers.0.7.0] downloaded from https://github.com/yallop/ocaml-integers/archive/0.7.0.tar.gz
+[hdr_histogram.0.0.2] downloaded from https://github.com/ocaml-multicore/hdr_histogram_ocaml/releases/download/v0.0.2/hdr_histogram-0.0.2.tbz
+[logs.0.7.0] downloaded from https://erratique.ch/software/logs/releases/logs-0.7.0.tbz
+[menhir.20200612] downloaded from https://gitlab.inria.fr/fpottier/menhir/-/archive/20200612/archive.tar.gz
+[lwt.5.7.0] downloaded from https://github.com/ocsigen/lwt/archive/refs/tags/5.7.0.tar.gz
+[menhirLib.20200612] downloaded from https://gitlab.inria.fr/fpottier/menhir/-/archive/20200612/archive.tar.gz
+[menhirSdk.20200612] found in cache
+[mtime.1.2.0] downloaded from cache at https://opam.ocaml.org/cache/
+[minilight.1.6] downloaded from http://www.hxa.name/minilight/minilight16ocaml.tar.gz
+[nbcodec.20151119] downloaded from https://github.com/dbuenzli/nbcodec/archive/54ede66d0f552628625c9e0599df592bda63ab2e.tar.gz
+[npy.0.0.9] downloaded from https://github.com/LaurentMazare/npy-ocaml/archive/0.0.9.tar.gz
+[num.1.3] downloaded from https://github.com/ocaml/num/archive/v1.3.tar.gz
+[ocaml-syntax-shims.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[ocamlgraph.2.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[ocamlbuild.0.14.3] downloaded from https://github.com/ocaml/ocamlbuild/archive/refs/tags/0.14.3.tar.gz
+[ocplib-endian.1.2] downloaded from https://github.com/OCamlPro/ocplib-endian/archive/refs/tags/1.2.tar.gz
+[ocplib-simplex.0.4.1] downloaded from https://github.com/OCamlPro/ocplib-simplex/archive/refs/tags/v0.4.1.tar.gz
+[optint.0.3.0] downloaded from https://github.com/mirage/optint/releases/download/v0.3.0/optint-0.3.0.tbz
+[owl.1.1] downloaded from https://github.com/owlbarn/owl/releases/download/1.1/owl-1.1.tbz
+[owl-base.1.1] downloaded from https://github.com/owlbarn/owl/releases/download/1.1/owl-1.1.tbz
+[psmt2-frontend.0.4.0] downloaded from https://github.com/OCamlPro-Coquera/psmt2-frontend/archive/0.4.0.tar.gz
+[re.1.11.0] downloaded from https://github.com/ocaml/ocaml-re/releases/download/1.11.0/re-1.11.0.tbz
+[react.1.2.2] downloaded from https://erratique.ch/software/react/releases/react-1.2.2.tbz
+[repr.0.6.0] downloaded from https://github.com/mirage/repr/releases/download/0.6.0/repr-fuzz-0.6.0.tbz
+[result.1.5] downloaded from cache at https://opam.ocaml.org/cache/
+[rresult.0.6.0] downloaded from http://erratique.ch/software/rresult/releases/rresult-0.6.0.tbz
+[rungen.0.0.1] downloaded from https://github.com/shakthimaan/rungen/releases/download/v0.0.1/rungen-v0.0.1.tbz
+[saturn.0.4.0] downloaded from https://github.com/ocaml-multicore/saturn/releases/download/0.4.0/saturn-0.4.0.tbz
+[saturn_lockfree.0.4.0] found in cache
+[runtime_events_tools.~dev] synchronised from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+[sexplib0.v0.16.0] downloaded from https://ocaml.janestreet.com/ocaml-core/v0.16/files/sexplib0-v0.16.0.tar.gz
+[stdio.v0.16.0] downloaded from https://ocaml.janestreet.com/ocaml-core/v0.16/files/stdio-v0.16.0.tar.gz
+[stdlib-shims.0.1.0] downloaded from https://github.com/ocaml/stdlib-shims/releases/download/0.1.0/stdlib-shims-0.1.0.tbz
+[topkg.1.0.7] downloaded from https://erratique.ch/software/topkg/releases/topkg-1.0.7.tbz
+[stringext.1.6.0] downloaded from https://github.com/rgrinberg/stringext/releases/download/1.6.0/stringext-1.6.0.tbz
+[thread-table.1.0.0] downloaded from https://github.com/ocaml-multicore/thread-table/releases/download/1.0.0/thread-table-1.0.0.tbz
+[uuidm.0.9.8] downloaded from https://erratique.ch/software/uuidm/releases/uuidm-0.9.8.tbz
+[uri.4.1.0] downloaded from cache at https://opam.ocaml.org/cache/
+[uutf.1.0.3] downloaded from https://erratique.ch/software/uutf/releases/uutf-1.0.3.tbz
+[zarith.1.10] downloaded from https://github.com/ocaml/Zarith/archive/release-1.10.tar.gz
+[yojson.2.1.2] downloaded from https://github.com/ocaml-community/yojson/releases/download/2.1.2/yojson-2.1.2.tbz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bytes.base
+∗ installed bigarray-compat.1.1.0
+∗ installed camlp-streams.5.0
+∗ installed cmdliner.1.2.0
+∗ installed bigstringaf.0.6.1
+∗ installed conf-bash.1
+∗ installed conf-cmake.1
+∗ installed conf-findutils.1
+∗ installed conf-gmp.1
+∗ installed conf-m4.1
+∗ installed conf-openblas.0.2.2
+∗ installed conf-perl.1
+∗ installed conf-pkg-config.1.2
+∗ installed conf-which.1
+∗ installed cppo.1.6.7
+∗ installed domain_shims.0.1.0
+∗ installed either.1.0.0
+∗ installed menhirLib.20200612
+∗ installed menhirSdk.20200612
+∗ installed minilight.1.6
+∗ installed ocaml-syntax-shims.1.0.0
+∗ installed optint.0.3.0
+∗ installed re.1.11.0
+∗ installed result.1.5
+∗ installed sexplib0.v0.16.0
+∗ installed stdlib-shims.0.1.0
+∗ installed stringext.1.6.0
+∗ installed thread-table.1.0.0
+∗ installed owl-base.1.1
+∗ installed num.1.3
+∗ installed angstrom.0.16.0
+∗ installed base.v0.16.3
+∗ installed base64.3.4.0
+∗ installed checkseum.0.3.4
+∗ installed conf-autoconf.0.1
+∗ installed conf-libffi.2.0.0
+∗ installed conf-zlib.1
+∗ installed domain-local-await.1.0.0
+∗ installed integers.0.7.0
+∗ installed menhir.20200612
+∗ installed ocamlbuild.0.14.3
+∗ installed ocamlgraph.2.0.0
+∗ installed ocplib-endian.1.2
+∗ installed saturn_lockfree.0.4.0
+∗ installed yojson.2.1.2
+∗ installed zarith.1.10
+∗ installed camlzip.1.11
+∗ installed ctypes.0.22.0
+∗ installed decompress.1.1.0
+∗ installed psmt2-frontend.0.4.0
+∗ installed saturn.0.4.0
+∗ installed stdio.v0.16.0
+∗ installed topkg.1.0.7
+∗ installed uri.4.1.0
+∗ installed orun.0.1
+∗ installed rungen.0.0.1
+∗ installed cubicle.1.2.0
+∗ installed nbcodec.20151119
+∗ installed lwt.5.7.0
+∗ installed npy.0.0.9
+∗ installed domainslib.0.5.1
+∗ installed astring.0.8.5
+∗ installed fmt.0.9.0
+∗ installed mtime.1.2.0
+∗ installed react.1.2.2
+∗ installed rresult.0.6.0
+∗ installed uuidm.0.9.8
+∗ installed uutf.1.0.3
+∗ installed ocplib-simplex.0.4.1
+∗ installed cstruct.6.2.0
+∗ installed ctypes-foreign.0.22.0
+∗ installed logs.0.7.0
+∗ installed jsonm.1.0.2
+∗ installed eqaf.0.9
+∗ installed hdr_histogram.0.0.2
+∗ installed repr.0.6.0
+∗ installed digestif.1.0.0
+∗ installed alt-ergo-lib.2.4.2
+∗ installed owl.1.1
+∗ installed runtime_events_tools.~dev
+∗ installed alt-ergo-parsers.2.4.2
+∗ installed alt-ergo.2.4.2
+Done.
+# Run eval $(opam env) to update the current shell environment
+# Packages matching: installed
+# Name               # Installed # Synopsis
+alt-ergo             2.4.2       The Alt-Ergo SMT prover
+alt-ergo-lib         2.4.2       The Alt-Ergo SMT prover library
+alt-ergo-parsers     2.4.2       The Alt-Ergo SMT prover parser library
+angstrom             0.16.0      Parser combinators built for speed and memory-efficiency
+astring              0.8.5       Alternative String module for OCaml
+base                 v0.16.3     Full standard library replacement for OCaml
+base-bigarray        base
+base-bytes           base        Bytes library distributed with the OCaml compiler
+base-threads         base
+base-unix            base
+base64               3.4.0       Base64 encoding for OCaml
+bigarray-compat      1.1.0       Compatibility library to use Stdlib.Bigarray when possible
+bigstringaf          0.6.1       Bigstring intrinsics and fast blits based on memcpy/memmove
+camlp-streams        5.0         The Stream and Genlex libraries for use with Camlp4 and Camlp5
+camlzip              1.11        Accessing compressed files in ZIP, GZIP and JAR format
+checkseum            0.3.4       Adler-32, CRC32 and CRC32-C implementation in C and OCaml
+cmdliner             1.2.0       Declarative definition of command line interfaces for OCaml
+conf-autoconf        0.1         Virtual package relying on autoconf installation
+conf-bash            1           Virtual package to install the Bash shell
+conf-cmake           1           Virtual package relying on cmake
+conf-findutils       1           Virtual package relying on findutils
+conf-gmp             1           Virtual package relying on a GMP lib system installation
+conf-libffi          2.0.0       Virtual package relying on libffi system installation
+conf-m4              1           Virtual package relying on m4
+conf-openblas        0.2.2       Virtual package to install OpenBLAS and LAPACKE
+conf-perl            1           Virtual package relying on perl
+conf-pkg-config      1.2         Virtual package relying on pkg-config installation
+conf-which           1           Virtual package relying on which
+conf-zlib            1           Virtual package relying on zlib
+cppo                 1.6.7       Code preprocessor like cpp for OCaml
+csexp                1.5.2       Parsing and printing of S-expressions in Canonical form
+cstruct              6.2.0       Access C-like structures directly from OCaml
+ctypes               0.22.0      Combinators for binding to C libraries without writing any C
+ctypes-foreign       0.22.0      Dynamic access to foreign C libraries using Ctypes
+cubicle              1.2.0       SMT based model checker for parameterized systems
+decompress           1.1.0       Implementation of Zlib and GZip in OCaml
+digestif             1.0.0       Hashes implementations (SHA*, RIPEMD160, BLAKE2* and MD5)
+domain-local-await   1.0.0       A scheduler independent blocking mechanism
+domain_shims         0.1.0       A non-parallel implementation of Domains compatible with OCaml 4
+domainslib           0.5.1       Parallel Structures over Domains for Multicore OCaml
+dune                 3.5.0       pinned to version 3.5.0
+dune-configurator    3.5.0       Helper library for gathering system configuration
+either               1.0.0       Compatibility Either module
+eqaf                 0.9         Constant-time equal function on string
+fmt                  0.9.0       OCaml Format pretty-printer combinators
+hdr_histogram        0.0.2       OCaml bindings to Hdr Histogram
+integers             0.7.0       Various signed and unsigned integer types for OCaml
+jsonm                1.0.2       Non-blocking streaming JSON codec for OCaml
+logs                 0.7.0       Logging infrastructure for OCaml
+lru                  0.3.1       Scalable LRU caches
+lwt                  5.7.0       Promises and event-driven I/O
+menhir               20200612    An LR(1) parser generator
+menhirLib            20200612    Runtime support library for parsers generated by Menhir
+menhirSdk            20200612    Compile-time library for auxiliary tools related to Menhir
+minilight            1.6         Minimal global illumination renderer.
+mtime                1.2.0       Monotonic wall-clock time for OCaml
+nbcodec              20151119    non-blocking IO interface design
+npy                  0.0.9       Numpy npy file format reading/writing.
+num                  1.3         The legacy Num library for arbitrary-precision integer and rational arithmetic
+ocaml                5.3.0+trunk The OCaml compiler (virtual package)
+ocaml-base-compiler  5.3.0+trunk OCaml compiler
+ocaml-config         1           OCaml Switch Configuration
+ocaml-syntax-shims   1.0.0       Backport new syntax to older OCaml versions
+ocamlbuild           0.14.3      OCamlbuild is a build system with builtin rules to easily build most OCaml projects
+ocamlfind            1.9.3.git   pinned to version 1.9.3.git at https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlgraph           2.0.0       A generic graph library for OCaml
+ocplib-endian        1.2         Optimised functions to read and write int16/32/64 from strings and bigarrays
+ocplib-simplex       0.4.1       A library implementing a simplex algorithm, in a functional style, for solving systems of linear inequalities
+optint               0.3.0       Efficient integer types on 64-bit architectures
+orun                 0.1         pinned to version 0.1 at git+https://github.com/ocaml-bench/orun.git
+owl                  1.1         OCaml Scientific and Engineering Computing
+owl-base             1.1         OCaml Scientific and Engineering Computing - Base
+psmt2-frontend       0.4.0       The psmt2-frontend project
+psq                  0.2.1       Functional Priority Search Queues
+re                   1.11.0      RE is a regular expression library for OCaml
+react                1.2.2       Declarative events and signals for OCaml
+repr                 0.6.0       Dynamic type representations. Provides no stability guarantee
+result               1.5         Compatibility Result module
+rresult              0.6.0       Result value combinators for OCaml
+rungen               0.0.1       Generates dune files to run benchmarks from centralised config
+runtime_events_tools ~dev        pinned to version ~dev at git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+saturn               0.4.0       Parallelism-safe data structures for multicore OCaml
+saturn_lockfree      0.4.0       Lock-free data structures for multicore OCaml
+seq                  base        Compatibility package for OCaml's standard iterator type starting from 4.07.
+sexplib0             v0.16.0     Library containing the definition of S-expressions and some base converters
+stdio                v0.16.0     Standard IO library for OCaml
+stdlib-shims         0.1.0       Backport some of the new stdlib features to older compiler
+stringext            1.6.0       Extra string functions for OCaml
+thread-table         1.0.0       A lock-free thread-safe integer keyed hash table
+topkg                1.0.7       The transitory OCaml software packager
+uri                  4.1.0       An RFC3986 URI/URL parsing library
+uuidm                0.9.8       Universally unique identifiers (UUIDs) for OCaml
+uutf                 1.0.3       Non-blocking streaming Unicode codec for OCaml
+yojson               2.1.2       Yojson is an optimized parsing and printing library for the JSON format
+zarith               1.10        Implements arithmetic and logical operations over arbitrary-precision integers
+git log -n 1
+commit 5b97f1f2977b95feb5fc88a5b3dd5cb9c3d90989
+Merge: 13ab71d 23de8f3
+Author: Shakthi Kannan <author@shakthimaan.com>
+Date:   Fri Feb 2 18:10:15 2024 +0530
+
+    Merge pull request #468 from punchagan/readme-updates
+    
+    Updates to the README and minor local workflow improvements
+opam exec --switch 5.3.0+trunk -- rungen _build/5.3.0+trunk_1 multicore_parallel_navajo_run_config_filtered.json > runs_dune.inc
+opam exec --switch 5.3.0+trunk -- dune build --profile=release --workspace=ocaml-versions/.workspace.5.3.0+trunk @multibench_parallel;
+Generating edge list...
+Generated. Time: 93.468443 s.
+Generating edge list...
+Generated. Time: 92.582253 s.
+Executing benchmarks with:
+  RUN_CONFIG_JSON=multicore_parallel_navajo_run_config_filtered.json
+  RUN_BENCH_TARGET=run_orunchrt  (WRAPPER=orunchrt)
+  PRE_BENCH_EXEC=
+File "runs_dune.inc", line 1137, characters 0-297:
+1137 | (rule (targets minilight.roomfront.orunchrt.bench)
+1138 |  (action
+1139 |   (ignore-stdout
+1140 |    (ignore-stderr
+1141 |     (chdir benchmarks/multicore-minilight/sequential
+1142 |      (run orun -o %{workspace_root}/minilight.roomfront.orunchrt.bench --
+1143 |       taskset --cpu-list 4 chrt -r 1 ./minilight.exe roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1145, characters 0-343:
+1145 | (rule (targets minilight_multicore.1_roomfront.orunchrt.bench)
+1146 |  (action
+1147 |   (ignore-stdout
+1148 |    (ignore-stderr
+1149 |     (chdir benchmarks/multicore-minilight/parallel
+1150 |      (run orun -o
+1151 |       %{workspace_root}/minilight_multicore.1_roomfront.orunchrt.bench --
+1152 |       taskset --cpu-list 4 chrt -r 1 ./minilight_multicore.exe 1
+1153 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1155, characters 0-346:
+1155 | (rule (targets minilight_multicore.8_roomfront.orunchrt.bench)
+1156 |  (action
+1157 |   (ignore-stdout
+1158 |    (ignore-stderr
+1159 |     (chdir benchmarks/multicore-minilight/parallel
+1160 |      (run orun -o
+1161 |       %{workspace_root}/minilight_multicore.8_roomfront.orunchrt.bench --
+1162 |       taskset --cpu-list 4-11 chrt -r 1 ./minilight_multicore.exe 8
+1163 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1165, characters 0-349:
+1165 | (rule (targets minilight_multicore.16_roomfront.orunchrt.bench)
+1166 |  (action
+1167 |   (ignore-stdout
+1168 |    (ignore-stderr
+1169 |     (chdir benchmarks/multicore-minilight/parallel
+1170 |      (run orun -o
+1171 |       %{workspace_root}/minilight_multicore.16_roomfront.orunchrt.bench --
+1172 |       taskset --cpu-list 4-19 chrt -r 1 ./minilight_multicore.exe 16
+1173 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1175, characters 0-349:
+1175 | (rule (targets minilight_multicore.32_roomfront.orunchrt.bench)
+1176 |  (action
+1177 |   (ignore-stdout
+1178 |    (ignore-stderr
+1179 |     (chdir benchmarks/multicore-minilight/parallel
+1180 |      (run orun -o
+1181 |       %{workspace_root}/minilight_multicore.32_roomfront.orunchrt.bench --
+1182 |       taskset --cpu-list 4-35 chrt -r 1 ./minilight_multicore.exe 32
+1183 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1185, characters 0-355:
+1185 | (rule (targets minilight_multicore.64_roomfront.orunchrt.bench)
+1186 |  (action
+1187 |   (ignore-stdout
+1188 |    (ignore-stderr
+1189 |     (chdir benchmarks/multicore-minilight/parallel
+1190 |      (run orun -o
+1191 |       %{workspace_root}/minilight_multicore.64_roomfront.orunchrt.bench --
+1192 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./minilight_multicore.exe 64
+1193 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1195, characters 0-356:
+1195 | (rule (targets minilight_multicore.96_roomfront.orunchrt.bench)
+1196 |  (action
+1197 |   (ignore-stdout
+1198 |    (ignore-stderr
+1199 |     (chdir benchmarks/multicore-minilight/parallel
+1200 |      (run orun -o
+1201 |       %{workspace_root}/minilight_multicore.96_roomfront.orunchrt.bench --
+1202 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./minilight_multicore.exe 96
+1203 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1205, characters 0-359:
+1205 | (rule (targets minilight_multicore.120_roomfront.orunchrt.bench)
+1206 |  (action
+1207 |   (ignore-stdout
+1208 |    (ignore-stderr
+1209 |     (chdir benchmarks/multicore-minilight/parallel
+1210 |      (run orun -o
+1211 |       %{workspace_root}/minilight_multicore.120_roomfront.orunchrt.bench --
+1212 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./minilight_multicore.exe 120
+1213 |       roomfront.ml.txt))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1215, characters 0-277:
+1215 | (rule (targets spectralnorm2.32_768.orunchrt.bench)
+1216 |  (action
+1217 |   (ignore-stdout
+1218 |    (ignore-stderr
+1219 |     (chdir benchmarks/benchmarksgame
+1220 |      (run orun -o %{workspace_root}/spectralnorm2.32_768.orunchrt.bench --
+1221 |       taskset --cpu-list 4 chrt -r 1 ./spectralnorm2.exe 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1223, characters 0-324:
+1223 | (rule (targets spectralnorm2_multicore.1_32_768.orunchrt.bench)
+1224 |  (action
+1225 |   (ignore-stdout
+1226 |    (ignore-stderr
+1227 |     (chdir benchmarks/multicore-numerical
+1228 |      (run orun -o
+1229 |       %{workspace_root}/spectralnorm2_multicore.1_32_768.orunchrt.bench --
+1230 |       taskset --cpu-list 4 chrt -r 1 ./spectralnorm2_multicore.exe 1 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1232, characters 0-333:
+1232 | (rule (targets spectralnorm2_multicore.8_32_768.orunchrt.bench)
+1233 |  (action
+1234 |   (ignore-stdout
+1235 |    (ignore-stderr
+1236 |     (chdir benchmarks/multicore-numerical
+1237 |      (run orun -o
+1238 |       %{workspace_root}/spectralnorm2_multicore.8_32_768.orunchrt.bench --
+1239 |       taskset --cpu-list 4-11 chrt -r 1 ./spectralnorm2_multicore.exe 8
+1240 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1242, characters 0-336:
+1242 | (rule (targets spectralnorm2_multicore.16_32_768.orunchrt.bench)
+1243 |  (action
+1244 |   (ignore-stdout
+1245 |    (ignore-stderr
+1246 |     (chdir benchmarks/multicore-numerical
+1247 |      (run orun -o
+1248 |       %{workspace_root}/spectralnorm2_multicore.16_32_768.orunchrt.bench --
+1249 |       taskset --cpu-list 4-19 chrt -r 1 ./spectralnorm2_multicore.exe 16
+1250 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1252, characters 0-336:
+1252 | (rule (targets spectralnorm2_multicore.32_32_768.orunchrt.bench)
+1253 |  (action
+1254 |   (ignore-stdout
+1255 |    (ignore-stderr
+1256 |     (chdir benchmarks/multicore-numerical
+1257 |      (run orun -o
+1258 |       %{workspace_root}/spectralnorm2_multicore.32_32_768.orunchrt.bench --
+1259 |       taskset --cpu-list 4-35 chrt -r 1 ./spectralnorm2_multicore.exe 32
+1260 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1262, characters 0-342:
+1262 | (rule (targets spectralnorm2_multicore.64_32_768.orunchrt.bench)
+1263 |  (action
+1264 |   (ignore-stdout
+1265 |    (ignore-stderr
+1266 |     (chdir benchmarks/multicore-numerical
+1267 |      (run orun -o
+1268 |       %{workspace_root}/spectralnorm2_multicore.64_32_768.orunchrt.bench --
+1269 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./spectralnorm2_multicore.exe
+1270 |       64 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1272, characters 0-343:
+1272 | (rule (targets spectralnorm2_multicore.96_32_768.orunchrt.bench)
+1273 |  (action
+1274 |   (ignore-stdout
+1275 |    (ignore-stderr
+1276 |     (chdir benchmarks/multicore-numerical
+1277 |      (run orun -o
+1278 |       %{workspace_root}/spectralnorm2_multicore.96_32_768.orunchrt.bench --
+1279 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./spectralnorm2_multicore.exe
+1280 |       96 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1282, characters 0-346:
+1282 | (rule (targets spectralnorm2_multicore.120_32_768.orunchrt.bench)
+1283 |  (action
+1284 |   (ignore-stdout
+1285 |    (ignore-stderr
+1286 |     (chdir benchmarks/multicore-numerical
+1287 |      (run orun -o
+1288 |       %{workspace_root}/spectralnorm2_multicore.120_32_768.orunchrt.bench --
+1289 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./spectralnorm2_multicore.exe
+1290 |       120 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1292, characters 0-365:
+1292 | (rule
+1293 |  (targets graph500_gen.-scale_21_-edgefactor_16_edges_data.orunchrt.bench)
+1294 |  (action
+1295 |   (ignore-stdout
+1296 |    (ignore-stderr
+1297 |     (chdir benchmarks/graph500seq
+1298 |      (run orun -o
+1299 |       %{workspace_root}/graph500_gen.-scale_21_-edgefactor_16_edges_data.orunchrt.bench
+1300 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -scale 21 -edgefactor 16
+1301 |       edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1303, characters 0-354:
+1303 | (rule (targets graph500_gen_multicore.1_graph500_gen.orunchrt.bench)
+1304 |  (action
+1305 |   (ignore-stdout
+1306 |    (ignore-stderr
+1307 |     (chdir benchmarks/graph500par
+1308 |      (run orun -o
+1309 |       %{workspace_root}/graph500_gen_multicore.1_graph500_gen.orunchrt.bench
+1310 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -ndomains 1 -scale 21
+1311 |       -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1313, characters 0-354:
+1313 | (rule (targets graph500_gen_multicore.2_graph500_gen.orunchrt.bench)
+1314 |  (action
+1315 |   (ignore-stdout
+1316 |    (ignore-stderr
+1317 |     (chdir benchmarks/graph500par
+1318 |      (run orun -o
+1319 |       %{workspace_root}/graph500_gen_multicore.2_graph500_gen.orunchrt.bench
+1320 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -ndomains 2 -scale 21
+1321 |       -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1323, characters 0-354:
+1323 | (rule (targets graph500_gen_multicore.4_graph500_gen.orunchrt.bench)
+1324 |  (action
+1325 |   (ignore-stdout
+1326 |    (ignore-stderr
+1327 |     (chdir benchmarks/graph500par
+1328 |      (run orun -o
+1329 |       %{workspace_root}/graph500_gen_multicore.4_graph500_gen.orunchrt.bench
+1330 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -ndomains 4 -scale 21
+1331 |       -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1333, characters 0-354:
+1333 | (rule (targets graph500_gen_multicore.8_graph500_gen.orunchrt.bench)
+1334 |  (action
+1335 |   (ignore-stdout
+1336 |    (ignore-stderr
+1337 |     (chdir benchmarks/graph500par
+1338 |      (run orun -o
+1339 |       %{workspace_root}/graph500_gen_multicore.8_graph500_gen.orunchrt.bench
+1340 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -ndomains 8 -scale 21
+1341 |       -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1343, characters 0-357:
+1343 | (rule (targets graph500_gen_multicore.12_graph500_gen.orunchrt.bench)
+1344 |  (action
+1345 |   (ignore-stdout
+1346 |    (ignore-stderr
+1347 |     (chdir benchmarks/graph500par
+1348 |      (run orun -o
+1349 |       %{workspace_root}/graph500_gen_multicore.12_graph500_gen.orunchrt.bench
+1350 |       -- taskset --cpu-list 2-13 chrt -r 1 ./gen.exe -ndomains 12 -scale 21
+1351 |       -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1353, characters 0-363:
+1353 | (rule (targets graph500_gen_multicore.16_graph500_gen.orunchrt.bench)
+1354 |  (action
+1355 |   (ignore-stdout
+1356 |    (ignore-stderr
+1357 |     (chdir benchmarks/graph500par
+1358 |      (run orun -o
+1359 |       %{workspace_root}/graph500_gen_multicore.16_graph500_gen.orunchrt.bench
+1360 |       -- taskset --cpu-list 2-13,16-27 chrt -r 1 ./gen.exe -ndomains 16
+1361 |       -scale 21 -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1363, characters 0-363:
+1363 | (rule (targets graph500_gen_multicore.20_graph500_gen.orunchrt.bench)
+1364 |  (action
+1365 |   (ignore-stdout
+1366 |    (ignore-stderr
+1367 |     (chdir benchmarks/graph500par
+1368 |      (run orun -o
+1369 |       %{workspace_root}/graph500_gen_multicore.20_graph500_gen.orunchrt.bench
+1370 |       -- taskset --cpu-list 2-13,16-27 chrt -r 1 ./gen.exe -ndomains 20
+1371 |       -scale 21 -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1373, characters 0-363:
+1373 | (rule (targets graph500_gen_multicore.24_graph500_gen.orunchrt.bench)
+1374 |  (action
+1375 |   (ignore-stdout
+1376 |    (ignore-stderr
+1377 |     (chdir benchmarks/graph500par
+1378 |      (run orun -o
+1379 |       %{workspace_root}/graph500_gen_multicore.24_graph500_gen.orunchrt.bench
+1380 |       -- taskset --cpu-list 2-13,16-27 chrt -r 1 ./gen.exe -ndomains 24
+1381 |       -scale 21 -edgefactor 16 edges.data))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1383, characters 0-271:
+1383 | (rule (targets mandelbrot6.32_768.orunchrt.bench)
+1384 |  (action
+1385 |   (ignore-stdout
+1386 |    (ignore-stderr
+1387 |     (chdir benchmarks/benchmarksgame
+1388 |      (run orun -o %{workspace_root}/mandelbrot6.32_768.orunchrt.bench --
+1389 |       taskset --cpu-list 4 chrt -r 1 ./mandelbrot6.exe 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1391, characters 0-318:
+1391 | (rule (targets mandelbrot6_multicore.1_32_768.orunchrt.bench)
+1392 |  (action
+1393 |   (ignore-stdout
+1394 |    (ignore-stderr
+1395 |     (chdir benchmarks/multicore-numerical
+1396 |      (run orun -o
+1397 |       %{workspace_root}/mandelbrot6_multicore.1_32_768.orunchrt.bench --
+1398 |       taskset --cpu-list 4 chrt -r 1 ./mandelbrot6_multicore.exe 1 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1400, characters 0-321:
+1400 | (rule (targets mandelbrot6_multicore.8_32_768.orunchrt.bench)
+1401 |  (action
+1402 |   (ignore-stdout
+1403 |    (ignore-stderr
+1404 |     (chdir benchmarks/multicore-numerical
+1405 |      (run orun -o
+1406 |       %{workspace_root}/mandelbrot6_multicore.8_32_768.orunchrt.bench --
+1407 |       taskset --cpu-list 4-11 chrt -r 1 ./mandelbrot6_multicore.exe 8 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1409, characters 0-330:
+1409 | (rule (targets mandelbrot6_multicore.16_32_768.orunchrt.bench)
+1410 |  (action
+1411 |   (ignore-stdout
+1412 |    (ignore-stderr
+1413 |     (chdir benchmarks/multicore-numerical
+1414 |      (run orun -o
+1415 |       %{workspace_root}/mandelbrot6_multicore.16_32_768.orunchrt.bench --
+1416 |       taskset --cpu-list 4-19 chrt -r 1 ./mandelbrot6_multicore.exe 16
+1417 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1419, characters 0-330:
+1419 | (rule (targets mandelbrot6_multicore.32_32_768.orunchrt.bench)
+1420 |  (action
+1421 |   (ignore-stdout
+1422 |    (ignore-stderr
+1423 |     (chdir benchmarks/multicore-numerical
+1424 |      (run orun -o
+1425 |       %{workspace_root}/mandelbrot6_multicore.32_32_768.orunchrt.bench --
+1426 |       taskset --cpu-list 4-35 chrt -r 1 ./mandelbrot6_multicore.exe 32
+1427 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1429, characters 0-336:
+1429 | (rule (targets mandelbrot6_multicore.64_32_768.orunchrt.bench)
+1430 |  (action
+1431 |   (ignore-stdout
+1432 |    (ignore-stderr
+1433 |     (chdir benchmarks/multicore-numerical
+1434 |      (run orun -o
+1435 |       %{workspace_root}/mandelbrot6_multicore.64_32_768.orunchrt.bench --
+1436 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./mandelbrot6_multicore.exe 64
+1437 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1439, characters 0-337:
+1439 | (rule (targets mandelbrot6_multicore.96_32_768.orunchrt.bench)
+1440 |  (action
+1441 |   (ignore-stdout
+1442 |    (ignore-stderr
+1443 |     (chdir benchmarks/multicore-numerical
+1444 |      (run orun -o
+1445 |       %{workspace_root}/mandelbrot6_multicore.96_32_768.orunchrt.bench --
+1446 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./mandelbrot6_multicore.exe 96
+1447 |       32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1449, characters 0-340:
+1449 | (rule (targets mandelbrot6_multicore.120_32_768.orunchrt.bench)
+1450 |  (action
+1451 |   (ignore-stdout
+1452 |    (ignore-stderr
+1453 |     (chdir benchmarks/multicore-numerical
+1454 |      (run orun -o
+1455 |       %{workspace_root}/mandelbrot6_multicore.120_32_768.orunchrt.bench --
+1456 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./mandelbrot6_multicore.exe
+1457 |       120 32_768))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1459, characters 0-265:
+1459 | (rule (targets fannkuchredux.13.orunchrt.bench)
+1460 |  (action
+1461 |   (ignore-stdout
+1462 |    (ignore-stderr
+1463 |     (chdir benchmarks/benchmarksgame
+1464 |      (run orun -o %{workspace_root}/fannkuchredux.13.orunchrt.bench --
+1465 |       taskset --cpu-list 4 chrt -r 1 ./fannkuchredux.exe 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1467, characters 0-312:
+1467 | (rule (targets fannkuchredux_multicore.1_13.orunchrt.bench)
+1468 |  (action
+1469 |   (ignore-stdout
+1470 |    (ignore-stderr
+1471 |     (chdir benchmarks/multicore-numerical
+1472 |      (run orun -o
+1473 |       %{workspace_root}/fannkuchredux_multicore.1_13.orunchrt.bench --
+1474 |       taskset --cpu-list 4 chrt -r 1 ./fannkuchredux_multicore.exe 1 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1476, characters 0-315:
+1476 | (rule (targets fannkuchredux_multicore.8_13.orunchrt.bench)
+1477 |  (action
+1478 |   (ignore-stdout
+1479 |    (ignore-stderr
+1480 |     (chdir benchmarks/multicore-numerical
+1481 |      (run orun -o
+1482 |       %{workspace_root}/fannkuchredux_multicore.8_13.orunchrt.bench --
+1483 |       taskset --cpu-list 4-11 chrt -r 1 ./fannkuchredux_multicore.exe 8 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1485, characters 0-318:
+1485 | (rule (targets fannkuchredux_multicore.16_13.orunchrt.bench)
+1486 |  (action
+1487 |   (ignore-stdout
+1488 |    (ignore-stderr
+1489 |     (chdir benchmarks/multicore-numerical
+1490 |      (run orun -o
+1491 |       %{workspace_root}/fannkuchredux_multicore.16_13.orunchrt.bench --
+1492 |       taskset --cpu-list 4-19 chrt -r 1 ./fannkuchredux_multicore.exe 16 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1494, characters 0-318:
+1494 | (rule (targets fannkuchredux_multicore.32_13.orunchrt.bench)
+1495 |  (action
+1496 |   (ignore-stdout
+1497 |    (ignore-stderr
+1498 |     (chdir benchmarks/multicore-numerical
+1499 |      (run orun -o
+1500 |       %{workspace_root}/fannkuchredux_multicore.32_13.orunchrt.bench --
+1501 |       taskset --cpu-list 4-35 chrt -r 1 ./fannkuchredux_multicore.exe 32 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1503, characters 0-330:
+1503 | (rule (targets fannkuchredux_multicore.64_13.orunchrt.bench)
+1504 |  (action
+1505 |   (ignore-stdout
+1506 |    (ignore-stderr
+1507 |     (chdir benchmarks/multicore-numerical
+1508 |      (run orun -o
+1509 |       %{workspace_root}/fannkuchredux_multicore.64_13.orunchrt.bench --
+1510 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./fannkuchredux_multicore.exe
+1511 |       64 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1513, characters 0-331:
+1513 | (rule (targets fannkuchredux_multicore.96_13.orunchrt.bench)
+1514 |  (action
+1515 |   (ignore-stdout
+1516 |    (ignore-stderr
+1517 |     (chdir benchmarks/multicore-numerical
+1518 |      (run orun -o
+1519 |       %{workspace_root}/fannkuchredux_multicore.96_13.orunchrt.bench --
+1520 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./fannkuchredux_multicore.exe
+1521 |       96 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1523, characters 0-334:
+1523 | (rule (targets fannkuchredux_multicore.120_13.orunchrt.bench)
+1524 |  (action
+1525 |   (ignore-stdout
+1526 |    (ignore-stderr
+1527 |     (chdir benchmarks/multicore-numerical
+1528 |      (run orun -o
+1529 |       %{workspace_root}/fannkuchredux_multicore.120_13.orunchrt.bench --
+1530 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./fannkuchredux_multicore.exe
+1531 |       120 13))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1533, characters 0-300:
+1533 | (rule (targets matrix_multiplication.2048.orunchrt.bench)
+1534 |  (action
+1535 |   (ignore-stdout
+1536 |    (ignore-stderr
+1537 |     (chdir benchmarks/multicore-numerical
+1538 |      (run orun -o %{workspace_root}/matrix_multiplication.2048.orunchrt.bench
+1539 |       -- taskset --cpu-list 4 chrt -r 1 ./matrix_multiplication.exe 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1541, characters 0-348:
+1541 | (rule (targets matrix_multiplication_multicore.1_2048.orunchrt.bench)
+1542 |  (action
+1543 |   (ignore-stdout
+1544 |    (ignore-stderr
+1545 |     (chdir benchmarks/multicore-numerical
+1546 |      (run orun -o
+1547 |       %{workspace_root}/matrix_multiplication_multicore.1_2048.orunchrt.bench
+1548 |       -- taskset --cpu-list 4 chrt -r 1 ./matrix_multiplication_multicore.exe
+1549 |       1 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1551, characters 0-351:
+1551 | (rule (targets matrix_multiplication_multicore.8_2048.orunchrt.bench)
+1552 |  (action
+1553 |   (ignore-stdout
+1554 |    (ignore-stderr
+1555 |     (chdir benchmarks/multicore-numerical
+1556 |      (run orun -o
+1557 |       %{workspace_root}/matrix_multiplication_multicore.8_2048.orunchrt.bench
+1558 |       -- taskset --cpu-list 4-11 chrt -r 1
+1559 |       ./matrix_multiplication_multicore.exe 8 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1561, characters 0-354:
+1561 | (rule (targets matrix_multiplication_multicore.16_2048.orunchrt.bench)
+1562 |  (action
+1563 |   (ignore-stdout
+1564 |    (ignore-stderr
+1565 |     (chdir benchmarks/multicore-numerical
+1566 |      (run orun -o
+1567 |       %{workspace_root}/matrix_multiplication_multicore.16_2048.orunchrt.bench
+1568 |       -- taskset --cpu-list 4-19 chrt -r 1
+1569 |       ./matrix_multiplication_multicore.exe 16 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1571, characters 0-354:
+1571 | (rule (targets matrix_multiplication_multicore.32_2048.orunchrt.bench)
+1572 |  (action
+1573 |   (ignore-stdout
+1574 |    (ignore-stderr
+1575 |     (chdir benchmarks/multicore-numerical
+1576 |      (run orun -o
+1577 |       %{workspace_root}/matrix_multiplication_multicore.32_2048.orunchrt.bench
+1578 |       -- taskset --cpu-list 4-35 chrt -r 1
+1579 |       ./matrix_multiplication_multicore.exe 32 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1581, characters 0-360:
+1581 | (rule (targets matrix_multiplication_multicore.64_2048.orunchrt.bench)
+1582 |  (action
+1583 |   (ignore-stdout
+1584 |    (ignore-stderr
+1585 |     (chdir benchmarks/multicore-numerical
+1586 |      (run orun -o
+1587 |       %{workspace_root}/matrix_multiplication_multicore.64_2048.orunchrt.bench
+1588 |       -- taskset --cpu-list 4-63,68-71 chrt -r 1
+1589 |       ./matrix_multiplication_multicore.exe 64 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1591, characters 0-361:
+1591 | (rule (targets matrix_multiplication_multicore.96_2048.orunchrt.bench)
+1592 |  (action
+1593 |   (ignore-stdout
+1594 |    (ignore-stderr
+1595 |     (chdir benchmarks/multicore-numerical
+1596 |      (run orun -o
+1597 |       %{workspace_root}/matrix_multiplication_multicore.96_2048.orunchrt.bench
+1598 |       -- taskset --cpu-list 4-63,68-103 chrt -r 1
+1599 |       ./matrix_multiplication_multicore.exe 96 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1601, characters 0-364:
+1601 | (rule (targets matrix_multiplication_multicore.120_2048.orunchrt.bench)
+1602 |  (action
+1603 |   (ignore-stdout
+1604 |    (ignore-stderr
+1605 |     (chdir benchmarks/multicore-numerical
+1606 |      (run orun -o
+1607 |       %{workspace_root}/matrix_multiplication_multicore.120_2048.orunchrt.bench
+1608 |       -- taskset --cpu-list 4-63,68-127 chrt -r 1
+1609 |       ./matrix_multiplication_multicore.exe 120 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1611, characters 0-262:
+1611 | (rule (targets binarytrees5.24.orunchrt.bench)
+1612 |  (action
+1613 |   (ignore-stdout
+1614 |    (ignore-stderr
+1615 |     (chdir benchmarks/benchmarksgame
+1616 |      (run orun -o %{workspace_root}/binarytrees5.24.orunchrt.bench -- taskset
+1617 |       --cpu-list 4 chrt -r 1 ./binarytrees5.exe 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1619, characters 0-309:
+1619 | (rule (targets binarytrees5_multicore.1_24.orunchrt.bench)
+1620 |  (action
+1621 |   (ignore-stdout
+1622 |    (ignore-stderr
+1623 |     (chdir benchmarks/multicore-numerical
+1624 |      (run orun -o
+1625 |       %{workspace_root}/binarytrees5_multicore.1_24.orunchrt.bench -- taskset
+1626 |       --cpu-list 4 chrt -r 1 ./binarytrees5_multicore.exe 1 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1628, characters 0-312:
+1628 | (rule (targets binarytrees5_multicore.8_24.orunchrt.bench)
+1629 |  (action
+1630 |   (ignore-stdout
+1631 |    (ignore-stderr
+1632 |     (chdir benchmarks/multicore-numerical
+1633 |      (run orun -o
+1634 |       %{workspace_root}/binarytrees5_multicore.8_24.orunchrt.bench -- taskset
+1635 |       --cpu-list 4-11 chrt -r 1 ./binarytrees5_multicore.exe 8 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1637, characters 0-315:
+1637 | (rule (targets binarytrees5_multicore.16_24.orunchrt.bench)
+1638 |  (action
+1639 |   (ignore-stdout
+1640 |    (ignore-stderr
+1641 |     (chdir benchmarks/multicore-numerical
+1642 |      (run orun -o
+1643 |       %{workspace_root}/binarytrees5_multicore.16_24.orunchrt.bench --
+1644 |       taskset --cpu-list 4-19 chrt -r 1 ./binarytrees5_multicore.exe 16 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1646, characters 0-315:
+1646 | (rule (targets binarytrees5_multicore.32_24.orunchrt.bench)
+1647 |  (action
+1648 |   (ignore-stdout
+1649 |    (ignore-stderr
+1650 |     (chdir benchmarks/multicore-numerical
+1651 |      (run orun -o
+1652 |       %{workspace_root}/binarytrees5_multicore.32_24.orunchrt.bench --
+1653 |       taskset --cpu-list 4-35 chrt -r 1 ./binarytrees5_multicore.exe 32 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1655, characters 0-327:
+1655 | (rule (targets binarytrees5_multicore.64_24.orunchrt.bench)
+1656 |  (action
+1657 |   (ignore-stdout
+1658 |    (ignore-stderr
+1659 |     (chdir benchmarks/multicore-numerical
+1660 |      (run orun -o
+1661 |       %{workspace_root}/binarytrees5_multicore.64_24.orunchrt.bench --
+1662 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./binarytrees5_multicore.exe 64
+1663 |       24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1665, characters 0-328:
+1665 | (rule (targets binarytrees5_multicore.96_24.orunchrt.bench)
+1666 |  (action
+1667 |   (ignore-stdout
+1668 |    (ignore-stderr
+1669 |     (chdir benchmarks/multicore-numerical
+1670 |      (run orun -o
+1671 |       %{workspace_root}/binarytrees5_multicore.96_24.orunchrt.bench --
+1672 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./binarytrees5_multicore.exe
+1673 |       96 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1675, characters 0-331:
+1675 | (rule (targets binarytrees5_multicore.120_24.orunchrt.bench)
+1676 |  (action
+1677 |   (ignore-stdout
+1678 |    (ignore-stderr
+1679 |     (chdir benchmarks/multicore-numerical
+1680 |      (run orun -o
+1681 |       %{workspace_root}/binarytrees5_multicore.120_24.orunchrt.bench --
+1682 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./binarytrees5_multicore.exe
+1683 |       120 24))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1685, characters 0-273:
+1685 | (rule (targets game_of_life.1024.orunchrt.bench)
+1686 |  (action
+1687 |   (ignore-stdout
+1688 |    (ignore-stderr
+1689 |     (chdir benchmarks/multicore-numerical
+1690 |      (run orun -o %{workspace_root}/game_of_life.1024.orunchrt.bench --
+1691 |       taskset --cpu-list 4 chrt -r 1 ./game_of_life.exe 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1693, characters 0-315:
+1693 | (rule (targets game_of_life_multicore.1_1024.orunchrt.bench)
+1694 |  (action
+1695 |   (ignore-stdout
+1696 |    (ignore-stderr
+1697 |     (chdir benchmarks/multicore-numerical
+1698 |      (run orun -o
+1699 |       %{workspace_root}/game_of_life_multicore.1_1024.orunchrt.bench --
+1700 |       taskset --cpu-list 4 chrt -r 1 ./game_of_life_multicore.exe 1 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1702, characters 0-318:
+1702 | (rule (targets game_of_life_multicore.8_1024.orunchrt.bench)
+1703 |  (action
+1704 |   (ignore-stdout
+1705 |    (ignore-stderr
+1706 |     (chdir benchmarks/multicore-numerical
+1707 |      (run orun -o
+1708 |       %{workspace_root}/game_of_life_multicore.8_1024.orunchrt.bench --
+1709 |       taskset --cpu-list 4-11 chrt -r 1 ./game_of_life_multicore.exe 8 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1711, characters 0-321:
+1711 | (rule (targets game_of_life_multicore.16_1024.orunchrt.bench)
+1712 |  (action
+1713 |   (ignore-stdout
+1714 |    (ignore-stderr
+1715 |     (chdir benchmarks/multicore-numerical
+1716 |      (run orun -o
+1717 |       %{workspace_root}/game_of_life_multicore.16_1024.orunchrt.bench --
+1718 |       taskset --cpu-list 4-19 chrt -r 1 ./game_of_life_multicore.exe 16 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1720, characters 0-321:
+1720 | (rule (targets game_of_life_multicore.32_1024.orunchrt.bench)
+1721 |  (action
+1722 |   (ignore-stdout
+1723 |    (ignore-stderr
+1724 |     (chdir benchmarks/multicore-numerical
+1725 |      (run orun -o
+1726 |       %{workspace_root}/game_of_life_multicore.32_1024.orunchrt.bench --
+1727 |       taskset --cpu-list 4-35 chrt -r 1 ./game_of_life_multicore.exe 32 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1729, characters 0-333:
+1729 | (rule (targets game_of_life_multicore.64_1024.orunchrt.bench)
+1730 |  (action
+1731 |   (ignore-stdout
+1732 |    (ignore-stderr
+1733 |     (chdir benchmarks/multicore-numerical
+1734 |      (run orun -o
+1735 |       %{workspace_root}/game_of_life_multicore.64_1024.orunchrt.bench --
+1736 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./game_of_life_multicore.exe 64
+1737 |       1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1739, characters 0-334:
+1739 | (rule (targets game_of_life_multicore.96_1024.orunchrt.bench)
+1740 |  (action
+1741 |   (ignore-stdout
+1742 |    (ignore-stderr
+1743 |     (chdir benchmarks/multicore-numerical
+1744 |      (run orun -o
+1745 |       %{workspace_root}/game_of_life_multicore.96_1024.orunchrt.bench --
+1746 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./game_of_life_multicore.exe
+1747 |       96 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1749, characters 0-337:
+1749 | (rule (targets game_of_life_multicore.120_1024.orunchrt.bench)
+1750 |  (action
+1751 |   (ignore-stdout
+1752 |    (ignore-stderr
+1753 |     (chdir benchmarks/multicore-numerical
+1754 |      (run orun -o
+1755 |       %{workspace_root}/game_of_life_multicore.120_1024.orunchrt.bench --
+1756 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./game_of_life_multicore.exe
+1757 |       120 1024))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1759, characters 0-285:
+1759 | (rule (targets LU_decomposition.4096.orunchrt.bench)
+1760 |  (action
+1761 |   (ignore-stdout
+1762 |    (ignore-stderr
+1763 |     (chdir benchmarks/multicore-numerical
+1764 |      (run orun -o %{workspace_root}/LU_decomposition.4096.orunchrt.bench --
+1765 |       taskset --cpu-list 4 chrt -r 1 ./LU_decomposition.exe 4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1767, characters 0-327:
+1767 | (rule (targets LU_decomposition_multicore.1_4096.orunchrt.bench)
+1768 |  (action
+1769 |   (ignore-stdout
+1770 |    (ignore-stderr
+1771 |     (chdir benchmarks/multicore-numerical
+1772 |      (run orun -o
+1773 |       %{workspace_root}/LU_decomposition_multicore.1_4096.orunchrt.bench --
+1774 |       taskset --cpu-list 4 chrt -r 1 ./LU_decomposition_multicore.exe 1 4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1776, characters 0-336:
+1776 | (rule (targets LU_decomposition_multicore.8_4096.orunchrt.bench)
+1777 |  (action
+1778 |   (ignore-stdout
+1779 |    (ignore-stderr
+1780 |     (chdir benchmarks/multicore-numerical
+1781 |      (run orun -o
+1782 |       %{workspace_root}/LU_decomposition_multicore.8_4096.orunchrt.bench --
+1783 |       taskset --cpu-list 4-11 chrt -r 1 ./LU_decomposition_multicore.exe 8
+1784 |       4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1786, characters 0-339:
+1786 | (rule (targets LU_decomposition_multicore.16_4096.orunchrt.bench)
+1787 |  (action
+1788 |   (ignore-stdout
+1789 |    (ignore-stderr
+1790 |     (chdir benchmarks/multicore-numerical
+1791 |      (run orun -o
+1792 |       %{workspace_root}/LU_decomposition_multicore.16_4096.orunchrt.bench --
+1793 |       taskset --cpu-list 4-19 chrt -r 1 ./LU_decomposition_multicore.exe 16
+1794 |       4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1796, characters 0-339:
+1796 | (rule (targets LU_decomposition_multicore.32_4096.orunchrt.bench)
+1797 |  (action
+1798 |   (ignore-stdout
+1799 |    (ignore-stderr
+1800 |     (chdir benchmarks/multicore-numerical
+1801 |      (run orun -o
+1802 |       %{workspace_root}/LU_decomposition_multicore.32_4096.orunchrt.bench --
+1803 |       taskset --cpu-list 4-35 chrt -r 1 ./LU_decomposition_multicore.exe 32
+1804 |       4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1806, characters 0-345:
+1806 | (rule (targets LU_decomposition_multicore.64_4096.orunchrt.bench)
+1807 |  (action
+1808 |   (ignore-stdout
+1809 |    (ignore-stderr
+1810 |     (chdir benchmarks/multicore-numerical
+1811 |      (run orun -o
+1812 |       %{workspace_root}/LU_decomposition_multicore.64_4096.orunchrt.bench --
+1813 |       taskset --cpu-list 4-63,68-71 chrt -r 1
+1814 |       ./LU_decomposition_multicore.exe 64 4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1816, characters 0-346:
+1816 | (rule (targets LU_decomposition_multicore.96_4096.orunchrt.bench)
+1817 |  (action
+1818 |   (ignore-stdout
+1819 |    (ignore-stderr
+1820 |     (chdir benchmarks/multicore-numerical
+1821 |      (run orun -o
+1822 |       %{workspace_root}/LU_decomposition_multicore.96_4096.orunchrt.bench --
+1823 |       taskset --cpu-list 4-63,68-103 chrt -r 1
+1824 |       ./LU_decomposition_multicore.exe 96 4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1826, characters 0-349:
+1826 | (rule (targets LU_decomposition_multicore.120_4096.orunchrt.bench)
+1827 |  (action
+1828 |   (ignore-stdout
+1829 |    (ignore-stderr
+1830 |     (chdir benchmarks/multicore-numerical
+1831 |      (run orun -o
+1832 |       %{workspace_root}/LU_decomposition_multicore.120_4096.orunchrt.bench --
+1833 |       taskset --cpu-list 4-63,68-127 chrt -r 1
+1834 |       ./LU_decomposition_multicore.exe 120 4096))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1836, characters 0-279:
+1836 | (rule (targets floyd_warshall.2048.orunchrt.bench)
+1837 |  (action
+1838 |   (ignore-stdout
+1839 |    (ignore-stderr
+1840 |     (chdir benchmarks/multicore-numerical
+1841 |      (run orun -o %{workspace_root}/floyd_warshall.2048.orunchrt.bench --
+1842 |       taskset --cpu-list 4 chrt -r 1 ./floyd_warshall.exe 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1844, characters 0-321:
+1844 | (rule (targets floyd_warshall_multicore.1_2048.orunchrt.bench)
+1845 |  (action
+1846 |   (ignore-stdout
+1847 |    (ignore-stderr
+1848 |     (chdir benchmarks/multicore-numerical
+1849 |      (run orun -o
+1850 |       %{workspace_root}/floyd_warshall_multicore.1_2048.orunchrt.bench --
+1851 |       taskset --cpu-list 4 chrt -r 1 ./floyd_warshall_multicore.exe 1 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1853, characters 0-330:
+1853 | (rule (targets floyd_warshall_multicore.8_2048.orunchrt.bench)
+1854 |  (action
+1855 |   (ignore-stdout
+1856 |    (ignore-stderr
+1857 |     (chdir benchmarks/multicore-numerical
+1858 |      (run orun -o
+1859 |       %{workspace_root}/floyd_warshall_multicore.8_2048.orunchrt.bench --
+1860 |       taskset --cpu-list 4-11 chrt -r 1 ./floyd_warshall_multicore.exe 8
+1861 |       2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1863, characters 0-333:
+1863 | (rule (targets floyd_warshall_multicore.16_2048.orunchrt.bench)
+1864 |  (action
+1865 |   (ignore-stdout
+1866 |    (ignore-stderr
+1867 |     (chdir benchmarks/multicore-numerical
+1868 |      (run orun -o
+1869 |       %{workspace_root}/floyd_warshall_multicore.16_2048.orunchrt.bench --
+1870 |       taskset --cpu-list 4-19 chrt -r 1 ./floyd_warshall_multicore.exe 16
+1871 |       2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1873, characters 0-333:
+1873 | (rule (targets floyd_warshall_multicore.32_2048.orunchrt.bench)
+1874 |  (action
+1875 |   (ignore-stdout
+1876 |    (ignore-stderr
+1877 |     (chdir benchmarks/multicore-numerical
+1878 |      (run orun -o
+1879 |       %{workspace_root}/floyd_warshall_multicore.32_2048.orunchrt.bench --
+1880 |       taskset --cpu-list 4-35 chrt -r 1 ./floyd_warshall_multicore.exe 32
+1881 |       2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1883, characters 0-339:
+1883 | (rule (targets floyd_warshall_multicore.64_2048.orunchrt.bench)
+1884 |  (action
+1885 |   (ignore-stdout
+1886 |    (ignore-stderr
+1887 |     (chdir benchmarks/multicore-numerical
+1888 |      (run orun -o
+1889 |       %{workspace_root}/floyd_warshall_multicore.64_2048.orunchrt.bench --
+1890 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./floyd_warshall_multicore.exe
+1891 |       64 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1893, characters 0-340:
+1893 | (rule (targets floyd_warshall_multicore.96_2048.orunchrt.bench)
+1894 |  (action
+1895 |   (ignore-stdout
+1896 |    (ignore-stderr
+1897 |     (chdir benchmarks/multicore-numerical
+1898 |      (run orun -o
+1899 |       %{workspace_root}/floyd_warshall_multicore.96_2048.orunchrt.bench --
+1900 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./floyd_warshall_multicore.exe
+1901 |       96 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1903, characters 0-343:
+1903 | (rule (targets floyd_warshall_multicore.120_2048.orunchrt.bench)
+1904 |  (action
+1905 |   (ignore-stdout
+1906 |    (ignore-stderr
+1907 |     (chdir benchmarks/multicore-numerical
+1908 |      (run orun -o
+1909 |       %{workspace_root}/floyd_warshall_multicore.120_2048.orunchrt.bench --
+1910 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./floyd_warshall_multicore.exe
+1911 |       120 2048))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1913, characters 0-264:
+1913 | (rule (targets nbody.128_8192.orunchrt.bench)
+1914 |  (action
+1915 |   (ignore-stdout
+1916 |    (ignore-stderr
+1917 |     (chdir benchmarks/multicore-numerical
+1918 |      (run orun -o %{workspace_root}/nbody.128_8192.orunchrt.bench -- taskset
+1919 |       --cpu-list 4 chrt -r 1 ./nbody.exe 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1921, characters 0-300:
+1921 | (rule (targets nbody_multicore.1_128_8192.orunchrt.bench)
+1922 |  (action
+1923 |   (ignore-stdout
+1924 |    (ignore-stderr
+1925 |     (chdir benchmarks/multicore-numerical
+1926 |      (run orun -o %{workspace_root}/nbody_multicore.1_128_8192.orunchrt.bench
+1927 |       -- taskset --cpu-list 4 chrt -r 1 ./nbody_multicore.exe 1 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1929, characters 0-303:
+1929 | (rule (targets nbody_multicore.8_128_8192.orunchrt.bench)
+1930 |  (action
+1931 |   (ignore-stdout
+1932 |    (ignore-stderr
+1933 |     (chdir benchmarks/multicore-numerical
+1934 |      (run orun -o %{workspace_root}/nbody_multicore.8_128_8192.orunchrt.bench
+1935 |       -- taskset --cpu-list 4-11 chrt -r 1 ./nbody_multicore.exe 8 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1937, characters 0-312:
+1937 | (rule (targets nbody_multicore.16_128_8192.orunchrt.bench)
+1938 |  (action
+1939 |   (ignore-stdout
+1940 |    (ignore-stderr
+1941 |     (chdir benchmarks/multicore-numerical
+1942 |      (run orun -o
+1943 |       %{workspace_root}/nbody_multicore.16_128_8192.orunchrt.bench -- taskset
+1944 |       --cpu-list 4-19 chrt -r 1 ./nbody_multicore.exe 16 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1946, characters 0-312:
+1946 | (rule (targets nbody_multicore.32_128_8192.orunchrt.bench)
+1947 |  (action
+1948 |   (ignore-stdout
+1949 |    (ignore-stderr
+1950 |     (chdir benchmarks/multicore-numerical
+1951 |      (run orun -o
+1952 |       %{workspace_root}/nbody_multicore.32_128_8192.orunchrt.bench -- taskset
+1953 |       --cpu-list 4-35 chrt -r 1 ./nbody_multicore.exe 32 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1955, characters 0-318:
+1955 | (rule (targets nbody_multicore.64_128_8192.orunchrt.bench)
+1956 |  (action
+1957 |   (ignore-stdout
+1958 |    (ignore-stderr
+1959 |     (chdir benchmarks/multicore-numerical
+1960 |      (run orun -o
+1961 |       %{workspace_root}/nbody_multicore.64_128_8192.orunchrt.bench -- taskset
+1962 |       --cpu-list 4-63,68-71 chrt -r 1 ./nbody_multicore.exe 64 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1964, characters 0-319:
+1964 | (rule (targets nbody_multicore.96_128_8192.orunchrt.bench)
+1965 |  (action
+1966 |   (ignore-stdout
+1967 |    (ignore-stderr
+1968 |     (chdir benchmarks/multicore-numerical
+1969 |      (run orun -o
+1970 |       %{workspace_root}/nbody_multicore.96_128_8192.orunchrt.bench -- taskset
+1971 |       --cpu-list 4-63,68-103 chrt -r 1 ./nbody_multicore.exe 96 128 8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1973, characters 0-328:
+1973 | (rule (targets nbody_multicore.120_128_8192.orunchrt.bench)
+1974 |  (action
+1975 |   (ignore-stdout
+1976 |    (ignore-stderr
+1977 |     (chdir benchmarks/multicore-numerical
+1978 |      (run orun -o
+1979 |       %{workspace_root}/nbody_multicore.120_128_8192.orunchrt.bench --
+1980 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./nbody_multicore.exe 120 128
+1981 |       8192))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1983, characters 0-336:
+1983 | (rule (targets evolutionary_algorithm.20000_20000.orunchrt.bench)
+1984 |  (action
+1985 |   (ignore-stdout
+1986 |    (ignore-stderr
+1987 |     (chdir benchmarks/multicore-numerical
+1988 |      (run orun -o
+1989 |       %{workspace_root}/evolutionary_algorithm.20000_20000.orunchrt.bench --
+1990 |       taskset --cpu-list 4 chrt -r 1 ./evolutionary_algorithm.exe 20000
+1991 |       20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 1993, characters 0-372:
+1993 | (rule (targets evolutionary_algorithm_multicore.1_20000_20000.orunchrt.bench)
+1994 |  (action
+1995 |   (ignore-stdout
+1996 |    (ignore-stderr
+1997 |     (chdir benchmarks/multicore-numerical
+1998 |      (run orun -o
+1999 |       %{workspace_root}/evolutionary_algorithm_multicore.1_20000_20000.orunchrt.bench
+2000 |       -- taskset --cpu-list 4 chrt -r 1
+2001 |       ./evolutionary_algorithm_multicore.exe 1 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2003, characters 0-375:
+2003 | (rule (targets evolutionary_algorithm_multicore.8_20000_20000.orunchrt.bench)
+2004 |  (action
+2005 |   (ignore-stdout
+2006 |    (ignore-stderr
+2007 |     (chdir benchmarks/multicore-numerical
+2008 |      (run orun -o
+2009 |       %{workspace_root}/evolutionary_algorithm_multicore.8_20000_20000.orunchrt.bench
+2010 |       -- taskset --cpu-list 4-11 chrt -r 1
+2011 |       ./evolutionary_algorithm_multicore.exe 8 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2013, characters 0-379:
+2013 | (rule
+2014 |  (targets evolutionary_algorithm_multicore.16_20000_20000.orunchrt.bench)
+2015 |  (action
+2016 |   (ignore-stdout
+2017 |    (ignore-stderr
+2018 |     (chdir benchmarks/multicore-numerical
+2019 |      (run orun -o
+2020 |       %{workspace_root}/evolutionary_algorithm_multicore.16_20000_20000.orunchrt.bench
+2021 |       -- taskset --cpu-list 4-19 chrt -r 1
+2022 |       ./evolutionary_algorithm_multicore.exe 16 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2024, characters 0-379:
+2024 | (rule
+2025 |  (targets evolutionary_algorithm_multicore.32_20000_20000.orunchrt.bench)
+2026 |  (action
+2027 |   (ignore-stdout
+2028 |    (ignore-stderr
+2029 |     (chdir benchmarks/multicore-numerical
+2030 |      (run orun -o
+2031 |       %{workspace_root}/evolutionary_algorithm_multicore.32_20000_20000.orunchrt.bench
+2032 |       -- taskset --cpu-list 4-35 chrt -r 1
+2033 |       ./evolutionary_algorithm_multicore.exe 32 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2035, characters 0-385:
+2035 | (rule
+2036 |  (targets evolutionary_algorithm_multicore.64_20000_20000.orunchrt.bench)
+2037 |  (action
+2038 |   (ignore-stdout
+2039 |    (ignore-stderr
+2040 |     (chdir benchmarks/multicore-numerical
+2041 |      (run orun -o
+2042 |       %{workspace_root}/evolutionary_algorithm_multicore.64_20000_20000.orunchrt.bench
+2043 |       -- taskset --cpu-list 4-63,68-71 chrt -r 1
+2044 |       ./evolutionary_algorithm_multicore.exe 64 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2046, characters 0-386:
+2046 | (rule
+2047 |  (targets evolutionary_algorithm_multicore.96_20000_20000.orunchrt.bench)
+2048 |  (action
+2049 |   (ignore-stdout
+2050 |    (ignore-stderr
+2051 |     (chdir benchmarks/multicore-numerical
+2052 |      (run orun -o
+2053 |       %{workspace_root}/evolutionary_algorithm_multicore.96_20000_20000.orunchrt.bench
+2054 |       -- taskset --cpu-list 4-63,68-103 chrt -r 1
+2055 |       ./evolutionary_algorithm_multicore.exe 96 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2057, characters 0-389:
+2057 | (rule
+2058 |  (targets evolutionary_algorithm_multicore.120_20000_20000.orunchrt.bench)
+2059 |  (action
+2060 |   (ignore-stdout
+2061 |    (ignore-stderr
+2062 |     (chdir benchmarks/multicore-numerical
+2063 |      (run orun -o
+2064 |       %{workspace_root}/evolutionary_algorithm_multicore.120_20000_20000.orunchrt.bench
+2065 |       -- taskset --cpu-list 4-63,68-127 chrt -r 1
+2066 |       ./evolutionary_algorithm_multicore.exe 120 20000 20000))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2068, characters 0-306:
+2068 | (rule (targets test_decompress.256_1_048_576.orunchrt.bench)
+2069 |  (action
+2070 |   (ignore-stdout
+2071 |    (ignore-stderr
+2072 |     (chdir benchmarks/decompress
+2073 |      (run orun -o
+2074 |       %{workspace_root}/test_decompress.256_1_048_576.orunchrt.bench --
+2075 |       taskset --cpu-list 4 chrt -r 1 ./test_decompress.exe 256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2077, characters 0-348:
+2077 | (rule (targets test_decompress_multicore.1_256_1_048_576.orunchrt.bench)
+2078 |  (action
+2079 |   (ignore-stdout
+2080 |    (ignore-stderr
+2081 |     (chdir benchmarks/decompress
+2082 |      (run orun -o
+2083 |       %{workspace_root}/test_decompress_multicore.1_256_1_048_576.orunchrt.bench
+2084 |       -- taskset --cpu-list 4 chrt -r 1 ./test_decompress_multicore.exe 1 256
+2085 |       1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2087, characters 0-351:
+2087 | (rule (targets test_decompress_multicore.8_256_1_048_576.orunchrt.bench)
+2088 |  (action
+2089 |   (ignore-stdout
+2090 |    (ignore-stderr
+2091 |     (chdir benchmarks/decompress
+2092 |      (run orun -o
+2093 |       %{workspace_root}/test_decompress_multicore.8_256_1_048_576.orunchrt.bench
+2094 |       -- taskset --cpu-list 4-11 chrt -r 1 ./test_decompress_multicore.exe 8
+2095 |       256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2097, characters 0-354:
+2097 | (rule (targets test_decompress_multicore.16_256_1_048_576.orunchrt.bench)
+2098 |  (action
+2099 |   (ignore-stdout
+2100 |    (ignore-stderr
+2101 |     (chdir benchmarks/decompress
+2102 |      (run orun -o
+2103 |       %{workspace_root}/test_decompress_multicore.16_256_1_048_576.orunchrt.bench
+2104 |       -- taskset --cpu-list 4-19 chrt -r 1 ./test_decompress_multicore.exe 16
+2105 |       256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2107, characters 0-354:
+2107 | (rule (targets test_decompress_multicore.32_256_1_048_576.orunchrt.bench)
+2108 |  (action
+2109 |   (ignore-stdout
+2110 |    (ignore-stderr
+2111 |     (chdir benchmarks/decompress
+2112 |      (run orun -o
+2113 |       %{workspace_root}/test_decompress_multicore.32_256_1_048_576.orunchrt.bench
+2114 |       -- taskset --cpu-list 4-35 chrt -r 1 ./test_decompress_multicore.exe 32
+2115 |       256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2117, characters 0-360:
+2117 | (rule (targets test_decompress_multicore.64_256_1_048_576.orunchrt.bench)
+2118 |  (action
+2119 |   (ignore-stdout
+2120 |    (ignore-stderr
+2121 |     (chdir benchmarks/decompress
+2122 |      (run orun -o
+2123 |       %{workspace_root}/test_decompress_multicore.64_256_1_048_576.orunchrt.bench
+2124 |       -- taskset --cpu-list 4-63,68-71 chrt -r 1
+2125 |       ./test_decompress_multicore.exe 64 256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2127, characters 0-361:
+2127 | (rule (targets test_decompress_multicore.96_256_1_048_576.orunchrt.bench)
+2128 |  (action
+2129 |   (ignore-stdout
+2130 |    (ignore-stderr
+2131 |     (chdir benchmarks/decompress
+2132 |      (run orun -o
+2133 |       %{workspace_root}/test_decompress_multicore.96_256_1_048_576.orunchrt.bench
+2134 |       -- taskset --cpu-list 4-63,68-103 chrt -r 1
+2135 |       ./test_decompress_multicore.exe 96 256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2137, characters 0-364:
+2137 | (rule (targets test_decompress_multicore.120_256_1_048_576.orunchrt.bench)
+2138 |  (action
+2139 |   (ignore-stdout
+2140 |    (ignore-stderr
+2141 |     (chdir benchmarks/decompress
+2142 |      (run orun -o
+2143 |       %{workspace_root}/test_decompress_multicore.120_256_1_048_576.orunchrt.bench
+2144 |       -- taskset --cpu-list 4-63,68-127 chrt -r 1
+2145 |       ./test_decompress_multicore.exe 120 256 1_048_576))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2147, characters 0-257:
+2147 | (rule (targets grammatrix.0.orunchrt.bench)
+2148 |  (action
+2149 |   (ignore-stdout
+2150 |    (ignore-stderr
+2151 |     (chdir benchmarks/multicore-grammatrix
+2152 |      (run orun -o %{workspace_root}/grammatrix.0.orunchrt.bench -- taskset
+2153 |       --cpu-list 4 chrt -r 1 ./grammatrix.exe))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2155, characters 0-293:
+2155 | (rule (targets grammatrix_multicore.1_0.orunchrt.bench)
+2156 |  (action
+2157 |   (ignore-stdout
+2158 |    (ignore-stderr
+2159 |     (chdir benchmarks/multicore-grammatrix
+2160 |      (run orun -o %{workspace_root}/grammatrix_multicore.1_0.orunchrt.bench
+2161 |       -- taskset --cpu-list 4 chrt -r 1 ./grammatrix_multicore.exe 1))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2163, characters 0-296:
+2163 | (rule (targets grammatrix_multicore.8_0.orunchrt.bench)
+2164 |  (action
+2165 |   (ignore-stdout
+2166 |    (ignore-stderr
+2167 |     (chdir benchmarks/multicore-grammatrix
+2168 |      (run orun -o %{workspace_root}/grammatrix_multicore.8_0.orunchrt.bench
+2169 |       -- taskset --cpu-list 4-11 chrt -r 1 ./grammatrix_multicore.exe 8))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2171, characters 0-299:
+2171 | (rule (targets grammatrix_multicore.16_0.orunchrt.bench)
+2172 |  (action
+2173 |   (ignore-stdout
+2174 |    (ignore-stderr
+2175 |     (chdir benchmarks/multicore-grammatrix
+2176 |      (run orun -o %{workspace_root}/grammatrix_multicore.16_0.orunchrt.bench
+2177 |       -- taskset --cpu-list 4-19 chrt -r 1 ./grammatrix_multicore.exe 16))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2179, characters 0-299:
+2179 | (rule (targets grammatrix_multicore.32_0.orunchrt.bench)
+2180 |  (action
+2181 |   (ignore-stdout
+2182 |    (ignore-stderr
+2183 |     (chdir benchmarks/multicore-grammatrix
+2184 |      (run orun -o %{workspace_root}/grammatrix_multicore.32_0.orunchrt.bench
+2185 |       -- taskset --cpu-list 4-35 chrt -r 1 ./grammatrix_multicore.exe 32))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2187, characters 0-311:
+2187 | (rule (targets grammatrix_multicore.64_0.orunchrt.bench)
+2188 |  (action
+2189 |   (ignore-stdout
+2190 |    (ignore-stderr
+2191 |     (chdir benchmarks/multicore-grammatrix
+2192 |      (run orun -o %{workspace_root}/grammatrix_multicore.64_0.orunchrt.bench
+2193 |       -- taskset --cpu-list 4-63,68-71 chrt -r 1 ./grammatrix_multicore.exe
+2194 |       64))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2196, characters 0-312:
+2196 | (rule (targets grammatrix_multicore.96_0.orunchrt.bench)
+2197 |  (action
+2198 |   (ignore-stdout
+2199 |    (ignore-stderr
+2200 |     (chdir benchmarks/multicore-grammatrix
+2201 |      (run orun -o %{workspace_root}/grammatrix_multicore.96_0.orunchrt.bench
+2202 |       -- taskset --cpu-list 4-63,68-103 chrt -r 1 ./grammatrix_multicore.exe
+2203 |       96))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2205, characters 0-315:
+2205 | (rule (targets grammatrix_multicore.120_0.orunchrt.bench)
+2206 |  (action
+2207 |   (ignore-stdout
+2208 |    (ignore-stderr
+2209 |     (chdir benchmarks/multicore-grammatrix
+2210 |      (run orun -o %{workspace_root}/grammatrix_multicore.120_0.orunchrt.bench
+2211 |       -- taskset --cpu-list 4-63,68-127 chrt -r 1 ./grammatrix_multicore.exe
+2212 |       120))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2214, characters 0-252:
+2214 | (rule (targets nqueens.15.orunchrt.bench)
+2215 |  (action
+2216 |   (ignore-stdout
+2217 |    (ignore-stderr
+2218 |     (chdir benchmarks/multicore-numerical
+2219 |      (run orun -o %{workspace_root}/nqueens.15.orunchrt.bench -- taskset
+2220 |       --cpu-list 4 chrt -r 1 ./nqueens.exe 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2222, characters 0-288:
+2222 | (rule (targets nqueens_multicore.1_15.orunchrt.bench)
+2223 |  (action
+2224 |   (ignore-stdout
+2225 |    (ignore-stderr
+2226 |     (chdir benchmarks/multicore-numerical
+2227 |      (run orun -o %{workspace_root}/nqueens_multicore.1_15.orunchrt.bench --
+2228 |       taskset --cpu-list 4 chrt -r 1 ./nqueens_multicore.exe 1 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2230, characters 0-291:
+2230 | (rule (targets nqueens_multicore.8_15.orunchrt.bench)
+2231 |  (action
+2232 |   (ignore-stdout
+2233 |    (ignore-stderr
+2234 |     (chdir benchmarks/multicore-numerical
+2235 |      (run orun -o %{workspace_root}/nqueens_multicore.8_15.orunchrt.bench --
+2236 |       taskset --cpu-list 4-11 chrt -r 1 ./nqueens_multicore.exe 8 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2238, characters 0-294:
+2238 | (rule (targets nqueens_multicore.16_15.orunchrt.bench)
+2239 |  (action
+2240 |   (ignore-stdout
+2241 |    (ignore-stderr
+2242 |     (chdir benchmarks/multicore-numerical
+2243 |      (run orun -o %{workspace_root}/nqueens_multicore.16_15.orunchrt.bench --
+2244 |       taskset --cpu-list 4-19 chrt -r 1 ./nqueens_multicore.exe 16 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2246, characters 0-294:
+2246 | (rule (targets nqueens_multicore.32_15.orunchrt.bench)
+2247 |  (action
+2248 |   (ignore-stdout
+2249 |    (ignore-stderr
+2250 |     (chdir benchmarks/multicore-numerical
+2251 |      (run orun -o %{workspace_root}/nqueens_multicore.32_15.orunchrt.bench --
+2252 |       taskset --cpu-list 4-35 chrt -r 1 ./nqueens_multicore.exe 32 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2254, characters 0-300:
+2254 | (rule (targets nqueens_multicore.64_15.orunchrt.bench)
+2255 |  (action
+2256 |   (ignore-stdout
+2257 |    (ignore-stderr
+2258 |     (chdir benchmarks/multicore-numerical
+2259 |      (run orun -o %{workspace_root}/nqueens_multicore.64_15.orunchrt.bench --
+2260 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./nqueens_multicore.exe 64 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2262, characters 0-301:
+2262 | (rule (targets nqueens_multicore.96_15.orunchrt.bench)
+2263 |  (action
+2264 |   (ignore-stdout
+2265 |    (ignore-stderr
+2266 |     (chdir benchmarks/multicore-numerical
+2267 |      (run orun -o %{workspace_root}/nqueens_multicore.96_15.orunchrt.bench --
+2268 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./nqueens_multicore.exe 96 15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2270, characters 0-310:
+2270 | (rule (targets nqueens_multicore.120_15.orunchrt.bench)
+2271 |  (action
+2272 |   (ignore-stdout
+2273 |    (ignore-stderr
+2274 |     (chdir benchmarks/multicore-numerical
+2275 |      (run orun -o %{workspace_root}/nqueens_multicore.120_15.orunchrt.bench
+2276 |       -- taskset --cpu-list 4-63,68-127 chrt -r 1 ./nqueens_multicore.exe 120
+2277 |       15))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2279, characters 0-279:
+2279 | (rule (targets mergesort.134217728.orunchrt.bench)
+2280 |  (action
+2281 |   (ignore-stdout
+2282 |    (ignore-stderr
+2283 |     (chdir benchmarks/multicore-numerical
+2284 |      (run orun -o %{workspace_root}/mergesort.134217728.orunchrt.bench --
+2285 |       taskset --cpu-list 4 chrt -r 1 ./mergesort.exe 134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2287, characters 0-321:
+2287 | (rule (targets mergesort_multicore.1_134217728.orunchrt.bench)
+2288 |  (action
+2289 |   (ignore-stdout
+2290 |    (ignore-stderr
+2291 |     (chdir benchmarks/multicore-numerical
+2292 |      (run orun -o
+2293 |       %{workspace_root}/mergesort_multicore.1_134217728.orunchrt.bench --
+2294 |       taskset --cpu-list 4 chrt -r 1 ./mergesort_multicore.exe 1 134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2296, characters 0-330:
+2296 | (rule (targets mergesort_multicore.8_134217728.orunchrt.bench)
+2297 |  (action
+2298 |   (ignore-stdout
+2299 |    (ignore-stderr
+2300 |     (chdir benchmarks/multicore-numerical
+2301 |      (run orun -o
+2302 |       %{workspace_root}/mergesort_multicore.8_134217728.orunchrt.bench --
+2303 |       taskset --cpu-list 4-11 chrt -r 1 ./mergesort_multicore.exe 8
+2304 |       134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2306, characters 0-333:
+2306 | (rule (targets mergesort_multicore.16_134217728.orunchrt.bench)
+2307 |  (action
+2308 |   (ignore-stdout
+2309 |    (ignore-stderr
+2310 |     (chdir benchmarks/multicore-numerical
+2311 |      (run orun -o
+2312 |       %{workspace_root}/mergesort_multicore.16_134217728.orunchrt.bench --
+2313 |       taskset --cpu-list 4-19 chrt -r 1 ./mergesort_multicore.exe 16
+2314 |       134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2316, characters 0-333:
+2316 | (rule (targets mergesort_multicore.32_134217728.orunchrt.bench)
+2317 |  (action
+2318 |   (ignore-stdout
+2319 |    (ignore-stderr
+2320 |     (chdir benchmarks/multicore-numerical
+2321 |      (run orun -o
+2322 |       %{workspace_root}/mergesort_multicore.32_134217728.orunchrt.bench --
+2323 |       taskset --cpu-list 4-35 chrt -r 1 ./mergesort_multicore.exe 32
+2324 |       134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2326, characters 0-339:
+2326 | (rule (targets mergesort_multicore.64_134217728.orunchrt.bench)
+2327 |  (action
+2328 |   (ignore-stdout
+2329 |    (ignore-stderr
+2330 |     (chdir benchmarks/multicore-numerical
+2331 |      (run orun -o
+2332 |       %{workspace_root}/mergesort_multicore.64_134217728.orunchrt.bench --
+2333 |       taskset --cpu-list 4-63,68-71 chrt -r 1 ./mergesort_multicore.exe 64
+2334 |       134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2336, characters 0-340:
+2336 | (rule (targets mergesort_multicore.96_134217728.orunchrt.bench)
+2337 |  (action
+2338 |   (ignore-stdout
+2339 |    (ignore-stderr
+2340 |     (chdir benchmarks/multicore-numerical
+2341 |      (run orun -o
+2342 |       %{workspace_root}/mergesort_multicore.96_134217728.orunchrt.bench --
+2343 |       taskset --cpu-list 4-63,68-103 chrt -r 1 ./mergesort_multicore.exe 96
+2344 |       134217728))))))
+Command exited with code 1.
+File "runs_dune.inc", line 2346, characters 0-343:
+2346 | (rule (targets mergesort_multicore.120_134217728.orunchrt.bench)
+2347 |  (action
+2348 |   (ignore-stdout
+2349 |    (ignore-stderr
+2350 |     (chdir benchmarks/multicore-numerical
+2351 |      (run orun -o
+2352 |       %{workspace_root}/mergesort_multicore.120_134217728.orunchrt.bench --
+2353 |       taskset --cpu-list 4-63,68-127 chrt -r 1 ./mergesort_multicore.exe 120
+2354 |       134217728))))))
+Command exited with code 1.
+make: *** [Makefile:250: ocaml-versions/5.3.0+trunk.bench] Error 1
