@@ -1,0 +1,47 @@
+System load detected, waiting to run bench (retrying in 5 minutes)
+Loadavg: 108
+5.3.0
+Filtering some benchmarks for OCaml 5.3.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.3.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.3.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.3.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk/
+{	if [ "https://github.com/ocaml/ocaml/archive/18c4510e6c8693c1feffb4871f429987a1d714ff.zip" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.3.0+trunk.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/18c4510e6c8693c1feffb4871f429987a1d714ff.zip"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.3.0+trunk/opam;
+# Read OCAML_CONFIG_OPTION from the ocaml-version/5.3.0+trunk.json file if env
+# variable is not set already.  The variable is read even if the
+# environment variable is set to be empty. `run_all_custom.sh` always
+# sets the OCAML_CONFIG_OPTION -- it is empty if no "configure" key is
+# present in the sandmark nightly config file.
+# Read OCAML_RUN_PARAM from the ocaml-version/5.3.0+trunk.json file if env
+# variable is not set already. See comment above for
+# OCAML_CONFIG_OPTION.
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.3.0+trunk ocaml-base-compiler.5.3.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ERROR] The sources of the following couldn't be obtained, aborting:
+          - ocaml-base-compiler.5.3.0+trunk: curl error code 502
+
+Switch initialisation failed: clean up? ('n' will leave the switch partially installed) [Y/n] y
+make: *** [Makefile:141: _opam/5.3.0+trunk] Error 40
