@@ -1,0 +1,1220 @@
+{"version":"5.15.0-91-generic","hostname":"navajo","kernel":"Linux","arch":"x86_64"}
+# started on Fri Apr 12 11:25:17 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./nbody.exe 50_000_000':
+
+          5,863.00 msec task-clock                #    1.000 CPUs utilized          
+                53      context-switches          #    9.040 /sec                   
+                 1      cpu-migrations            #    0.171 /sec                   
+               279      page-faults               #   47.587 /sec                   
+    17,531,082,105      cycles                    #    2.990 GHz                      (83.29%)
+         2,764,772      stalled-cycles-frontend   #    0.02% frontend cycles idle     (83.35%)
+    13,218,782,648      stalled-cycles-backend    #   75.40% backend cycles idle      (83.36%)
+    40,657,712,740      instructions              #    2.32  insn per cycle         
+                                                  #    0.33  stalled cycles per insn  (83.36%)
+     3,252,594,586      branches                  #  554.767 M/sec                    (83.36%)
+            62,686      branch-misses             #    0.00% of all branches          (83.29%)
+
+       5.865481294 seconds time elapsed
+
+       5.860002000 seconds user
+       0.003997000 seconds sys
+
+
+# started on Fri Apr 12 11:25:25 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./spectralnorm2.exe 5_500':
+
+          5,727.50 msec task-clock                #    1.000 CPUs utilized          
+                55      context-switches          #    9.603 /sec                   
+                 1      cpu-migrations            #    0.175 /sec                   
+             1,094      page-faults               #  191.008 /sec                   
+    17,122,947,155      cycles                    #    2.990 GHz                      (83.31%)
+         5,365,958      stalled-cycles-frontend   #    0.03% frontend cycles idle     (83.31%)
+     9,179,990,097      stalled-cycles-backend    #   53.61% backend cycles idle      (83.32%)
+    56,922,623,329      instructions              #    3.32  insn per cycle         
+                                                  #    0.16  stalled cycles per insn  (83.33%)
+     7,270,347,740      branches                  #    1.269 G/sec                    (83.38%)
+           332,339      branch-misses             #    0.00% of all branches          (83.35%)
+
+       5.730311641 seconds time elapsed
+
+       5.728680000 seconds user
+       0.000000000 seconds sys
+
+
+# started on Fri Apr 12 11:25:31 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 minilight-ocaml benchmarks/minilight/roomfront.ml.txt':
+
+         16,527.08 msec task-clock                #    0.999 CPUs utilized          
+               155      context-switches          #    9.379 /sec                   
+                 1      cpu-migrations            #    0.061 /sec                   
+             3,593      page-faults               #  217.401 /sec                   
+    49,340,439,032      cycles                    #    2.985 GHz                      (83.34%)
+       515,288,703      stalled-cycles-frontend   #    1.04% frontend cycles idle     (83.34%)
+    19,132,469,496      stalled-cycles-backend    #   38.78% backend cycles idle      (83.34%)
+    79,367,120,130      instructions              #    1.61  insn per cycle         
+                                                  #    0.24  stalled cycles per insn  (83.32%)
+     9,807,697,328      branches                  #  593.432 M/sec                    (83.34%)
+       329,200,183      branch-misses             #    3.36% of all branches          (83.34%)
+
+      16.540296145 seconds time elapsed
+
+      16.503536000 seconds user
+       0.023987000 seconds sys
+
+
+# started on Fri Apr 12 11:20:57 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./mergesort.exe 67108864':
+
+         15,808.01 msec task-clock                #    0.999 CPUs utilized          
+               142      context-switches          #    8.983 /sec                   
+                 1      cpu-migrations            #    0.063 /sec                   
+           262,988      page-faults               #   16.636 K/sec                  
+    47,243,192,638      cycles                    #    2.989 GHz                      (83.35%)
+     1,424,159,754      stalled-cycles-frontend   #    3.01% frontend cycles idle     (83.31%)
+     2,181,844,868      stalled-cycles-backend    #    4.62% backend cycles idle      (83.34%)
+    72,058,385,894      instructions              #    1.53  insn per cycle         
+                                                  #    0.03  stalled cycles per insn  (83.33%)
+    18,433,513,238      branches                  #    1.166 G/sec                    (83.34%)
+       948,155,106      branch-misses             #    5.14% of all branches          (83.35%)
+
+      15.824453689 seconds time elapsed
+
+      15.228454000 seconds user
+       0.579560000 seconds sys
+
+
+# started on Fri Apr 12 11:43:13 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./markbench.exe 20':
+
+         30,952.91 msec task-clock                #    0.999 CPUs utilized          
+               265      context-switches          #    8.561 /sec                   
+                 1      cpu-migrations            #    0.032 /sec                   
+           202,733      page-faults               #    6.550 K/sec                  
+    92,247,123,509      cycles                    #    2.980 GHz                      (83.32%)
+       207,772,807      stalled-cycles-frontend   #    0.23% frontend cycles idle     (83.34%)
+    58,700,857,304      stalled-cycles-backend    #   63.63% backend cycles idle      (83.32%)
+   232,380,689,514      instructions              #    2.52  insn per cycle         
+                                                  #    0.25  stalled cycles per insn  (83.34%)
+    54,747,883,381      branches                  #    1.769 G/sec                    (83.33%)
+        13,029,275      branch-misses             #    0.02% of all branches          (83.35%)
+
+      30.977462569 seconds time elapsed
+
+      30.426217000 seconds user
+       0.523900000 seconds sys
+
+
+# started on Fri Apr 12 11:42:46 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./levinson_durbin.exe':
+
+          1,928.92 msec task-clock                #    0.999 CPUs utilized          
+                20      context-switches          #   10.369 /sec                   
+                 1      cpu-migrations            #    0.518 /sec                   
+            43,323      page-faults               #   22.460 K/sec                  
+     5,764,468,271      cycles                    #    2.988 GHz                      (83.21%)
+        26,708,290      stalled-cycles-frontend   #    0.46% frontend cycles idle     (83.21%)
+     2,082,335,745      stalled-cycles-backend    #   36.12% backend cycles idle      (83.39%)
+    24,558,562,531      instructions              #    4.26  insn per cycle         
+                                                  #    0.08  stalled cycles per insn  (83.41%)
+     5,025,457,932      branches                  #    2.605 G/sec                    (83.43%)
+         1,287,642      branch-misses             #    0.03% of all branches          (83.36%)
+
+       1.931102149 seconds time elapsed
+
+       1.890443000 seconds user
+       0.039882000 seconds sys
+
+
+# started on Fri Apr 12 11:19:07 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./kernel1_run.exe edges.data':
+
+         23,234.17 msec task-clock                #    0.998 CPUs utilized          
+               225      context-switches          #    9.684 /sec                   
+                 1      cpu-migrations            #    0.043 /sec                   
+         1,548,671      page-faults               #   66.655 K/sec                  
+    69,198,235,438      cycles                    #    2.978 GHz                      (83.32%)
+     2,278,391,462      stalled-cycles-frontend   #    3.29% frontend cycles idle     (83.33%)
+    44,639,289,109      stalled-cycles-backend    #   64.51% backend cycles idle      (83.34%)
+    89,317,627,826      instructions              #    1.29  insn per cycle         
+                                                  #    0.50  stalled cycles per insn  (83.36%)
+    18,028,589,754      branches                  #  775.952 M/sec                    (83.33%)
+        90,491,893      branch-misses             #    0.50% of all branches          (83.32%)
+
+      23.274371868 seconds time elapsed
+
+      20.145167000 seconds user
+       3.087565000 seconds sys
+
+
+# started on Fri Apr 12 11:24:27 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./revcomp2.exe':
+
+          2,524.11 msec task-clock                #    0.999 CPUs utilized          
+                22      context-switches          #    8.716 /sec                   
+                 1      cpu-migrations            #    0.396 /sec                   
+            53,852      page-faults               #   21.335 K/sec                  
+     7,538,236,086      cycles                    #    2.986 GHz                      (83.38%)
+       141,571,609      stalled-cycles-frontend   #    1.88% frontend cycles idle     (83.37%)
+     3,306,906,087      stalled-cycles-backend    #   43.87% backend cycles idle      (83.22%)
+    20,215,309,401      instructions              #    2.68  insn per cycle         
+                                                  #    0.16  stalled cycles per insn  (83.37%)
+     3,677,289,508      branches                  #    1.457 G/sec                    (83.37%)
+        12,130,129      branch-misses             #    0.33% of all branches          (83.30%)
+
+       2.527279591 seconds time elapsed
+
+       2.361414000 seconds user
+       0.164098000 seconds sys
+
+
+# started on Fri Apr 12 11:26:34 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./main.exe':
+
+          8,693.22 msec task-clock                #    1.000 CPUs utilized          
+                80      context-switches          #    9.203 /sec                   
+                 1      cpu-migrations            #    0.115 /sec                   
+             1,173      page-faults               #  134.933 /sec                   
+    25,925,076,830      cycles                    #    2.982 GHz                      (83.34%)
+        51,493,780      stalled-cycles-frontend   #    0.20% frontend cycles idle     (83.35%)
+    13,749,644,736      stalled-cycles-backend    #   53.04% backend cycles idle      (83.35%)
+    64,316,797,787      instructions              #    2.48  insn per cycle         
+                                                  #    0.21  stalled cycles per insn  (83.35%)
+    10,283,328,124      branches                  #    1.183 G/sec                    (83.35%)
+        25,318,932      branch-misses             #    0.25% of all branches          (83.27%)
+
+       8.697313868 seconds time elapsed
+
+       8.690662000 seconds user
+       0.003999000 seconds sys
+
+
+# started on Fri Apr 12 11:26:11 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 alt-ergo benchmarks/alt-ergo/yyll.why':
+
+         23,235.39 msec task-clock                #    0.999 CPUs utilized          
+               211      context-switches          #    9.081 /sec                   
+                 1      cpu-migrations            #    0.043 /sec                   
+            84,521      page-faults               #    3.638 K/sec                  
+    69,441,700,030      cycles                    #    2.989 GHz                      (83.31%)
+     2,380,364,613      stalled-cycles-frontend   #    3.43% frontend cycles idle     (83.32%)
+     4,508,202,553      stalled-cycles-backend    #    6.49% backend cycles idle      (83.35%)
+   101,744,782,048      instructions              #    1.47  insn per cycle         
+                                                  #    0.04  stalled cycles per insn  (83.33%)
+    25,559,211,305      branches                  #    1.100 G/sec                    (83.35%)
+       492,333,635      branch-misses             #    1.93% of all branches          (83.34%)
+
+      23.253001617 seconds time elapsed
+
+      23.094722000 seconds user
+       0.139788000 seconds sys
+
+
+# started on Fri Apr 12 11:31:42 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 cubicle benchmarks/cubicle/german_pfs.cub':
+
+        277,698.90 msec task-clock                #    0.999 CPUs utilized          
+             2,582      context-switches          #    9.298 /sec                   
+                 1      cpu-migrations            #    0.004 /sec                   
+           250,784      page-faults               #  903.079 /sec                   
+   829,266,733,182      cycles                    #    2.986 GHz                      (83.33%)
+    32,202,728,587      stalled-cycles-frontend   #    3.88% frontend cycles idle     (83.33%)
+   401,639,690,829      stalled-cycles-backend    #   48.43% backend cycles idle      (83.33%)
+   956,421,562,444      instructions              #    1.15  insn per cycle         
+                                                  #    0.42  stalled cycles per insn  (83.34%)
+   233,837,120,219      branches                  #  842.053 M/sec                    (83.33%)
+     3,656,347,087      branch-misses             #    1.56% of all branches          (83.34%)
+
+     277.982928121 seconds time elapsed
+
+     276.302768000 seconds user
+       1.359750000 seconds sys
+
+
+# started on Fri Apr 12 11:24:41 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./mandelbrot6.exe 16_000':
+
+         26,702.60 msec task-clock                #    0.999 CPUs utilized          
+               236      context-switches          #    8.838 /sec                   
+                 1      cpu-migrations            #    0.037 /sec                   
+               290      page-faults               #   10.860 /sec                   
+    79,845,403,948      cycles                    #    2.990 GHz                      (83.33%)
+       551,682,150      stalled-cycles-frontend   #    0.69% frontend cycles idle     (83.33%)
+    26,376,879,279      stalled-cycles-backend    #   33.03% backend cycles idle      (83.33%)
+   185,758,682,232      instructions              #    2.33  insn per cycle         
+                                                  #    0.14  stalled cycles per insn  (83.33%)
+    21,287,230,904      branches                  #  797.197 M/sec                    (83.33%)
+       412,373,320      branch-misses             #    1.94% of all branches          (83.34%)
+
+      26.718866903 seconds time elapsed
+
+      26.699623000 seconds user
+       0.003999000 seconds sys
+
+
+# started on Fri Apr 12 11:24:36 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./fasta6.exe 25_000_000':
+
+          4,444.89 msec task-clock                #    0.999 CPUs utilized          
+                45      context-switches          #   10.124 /sec                   
+                 1      cpu-migrations            #    0.225 /sec                   
+            50,054      page-faults               #   11.261 K/sec                  
+    13,226,609,227      cycles                    #    2.976 GHz                      (83.27%)
+       328,986,237      stalled-cycles-frontend   #    2.49% frontend cycles idle     (83.34%)
+     2,144,415,309      stalled-cycles-backend    #   16.21% backend cycles idle      (83.36%)
+    17,229,371,049      instructions              #    1.30  insn per cycle         
+                                                  #    0.12  stalled cycles per insn  (83.37%)
+     2,826,086,605      branches                  #  635.806 M/sec                    (83.36%)
+       182,905,512      branch-misses             #    6.47% of all branches          (83.31%)
+
+       4.448580971 seconds time elapsed
+
+       4.354004000 seconds user
+       0.091957000 seconds sys
+
+
+# started on Fri Apr 12 11:24:30 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./fasta3.exe 25_000_000':
+
+          6,102.59 msec task-clock                #    1.000 CPUs utilized          
+                53      context-switches          #    8.685 /sec                   
+                 1      cpu-migrations            #    0.164 /sec                   
+               919      page-faults               #  150.592 /sec                   
+    18,183,140,969      cycles                    #    2.980 GHz                      (83.29%)
+       264,584,987      stalled-cycles-frontend   #    1.46% frontend cycles idle     (83.34%)
+     1,003,946,549      stalled-cycles-backend    #    5.52% backend cycles idle      (83.35%)
+    21,446,083,815      instructions              #    1.18  insn per cycle         
+                                                  #    0.05  stalled cycles per insn  (83.36%)
+     3,924,828,301      branches                  #  643.142 M/sec                    (83.36%)
+       174,837,959      branch-misses             #    4.45% of all branches          (83.30%)
+
+       6.105318836 seconds time elapsed
+
+       6.100053000 seconds user
+       0.003997000 seconds sys
+
+
+# started on Fri Apr 12 11:25:48 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./test_lwt.exe 200':
+
+         19,204.46 msec task-clock                #    0.999 CPUs utilized          
+               178      context-switches          #    9.269 /sec                   
+                 1      cpu-migrations            #    0.052 /sec                   
+             2,092      page-faults               #  108.933 /sec                   
+    57,415,682,062      cycles                    #    2.990 GHz                      (83.32%)
+       167,403,638      stalled-cycles-frontend   #    0.29% frontend cycles idle     (83.32%)
+    11,839,866,942      stalled-cycles-backend    #   20.62% backend cycles idle      (83.33%)
+   175,451,307,001      instructions              #    3.06  insn per cycle         
+                                                  #    0.07  stalled cycles per insn  (83.35%)
+    44,472,199,996      branches                  #    2.316 G/sec                    (83.34%)
+        54,387,378      branch-misses             #    0.12% of all branches          (83.34%)
+
+      19.218199106 seconds time elapsed
+
+      19.193256000 seconds user
+       0.011995000 seconds sys
+
+
+# started on Fri Apr 12 11:19:34 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./sequence_cps.exe 10000':
+
+          1,459.10 msec task-clock                #    0.999 CPUs utilized          
+                11      context-switches          #    7.539 /sec                   
+                 1      cpu-migrations            #    0.685 /sec                   
+               872      page-faults               #  597.627 /sec                   
+     4,361,992,605      cycles                    #    2.990 GHz                      (83.28%)
+         2,274,329      stalled-cycles-frontend   #    0.05% frontend cycles idle     (83.28%)
+       322,587,367      stalled-cycles-backend    #    7.40% backend cycles idle      (83.28%)
+    14,205,702,794      instructions              #    3.26  insn per cycle         
+                                                  #    0.02  stalled cycles per insn  (83.29%)
+     2,889,986,231      branches                  #    1.981 G/sec                    (83.53%)
+           132,013      branch-misses             #    0.00% of all branches          (83.33%)
+
+       1.460393117 seconds time elapsed
+
+       1.460098000 seconds user
+       0.000000000 seconds sys
+
+
+# started on Fri Apr 12 11:42:55 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./soli.exe 2000':
+
+          8,833.37 msec task-clock                #    1.000 CPUs utilized          
+                87      context-switches          #    9.849 /sec                   
+                 1      cpu-migrations            #    0.113 /sec                   
+               772      page-faults               #   87.396 /sec                   
+    26,411,564,768      cycles                    #    2.990 GHz                      (83.34%)
+       269,325,805      stalled-cycles-frontend   #    1.02% frontend cycles idle     (83.29%)
+     9,546,612,792      stalled-cycles-backend    #   36.15% backend cycles idle      (83.34%)
+    76,231,404,991      instructions              #    2.89  insn per cycle         
+                                                  #    0.13  stalled cycles per insn  (83.34%)
+    16,092,015,873      branches                  #    1.822 G/sec                    (83.34%)
+       232,025,368      branch-misses             #    1.44% of all branches          (83.35%)
+
+       8.836707400 seconds time elapsed
+
+       8.830735000 seconds user
+       0.004001000 seconds sys
+
+
+# started on Fri Apr 12 11:26:11 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 alt-ergo benchmarks/alt-ergo/fill.why':
+
+            192.93 msec task-clock                #    0.995 CPUs utilized          
+                 2      context-switches          #   10.367 /sec                   
+                 1      cpu-migrations            #    5.183 /sec                   
+             9,892      page-faults               #   51.273 K/sec                  
+       575,752,804      cycles                    #    2.984 GHz                      (83.45%)
+        30,466,239      stalled-cycles-frontend   #    5.29% frontend cycles idle     (83.43%)
+        88,917,546      stalled-cycles-backend    #   15.44% backend cycles idle      (83.41%)
+     1,129,314,927      instructions              #    1.96  insn per cycle         
+                                                  #    0.08  stalled cycles per insn  (83.42%)
+       254,265,981      branches                  #    1.318 G/sec                    (83.37%)
+         2,854,905      branch-misses             #    1.12% of all branches          (82.92%)
+
+       0.193929681 seconds time elapsed
+
+       0.170744000 seconds user
+       0.023239000 seconds sys
+
+
+# started on Fri Apr 12 11:30:27 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 menhir -v -t benchmarks/menhir/keywords.mly benchmarks/menhir/sql-parser.mly --base sql-parser':
+
+          5,853.81 msec task-clock                #    0.999 CPUs utilized          
+                53      context-switches          #    9.054 /sec                   
+                 1      cpu-migrations            #    0.171 /sec                   
+            87,207      page-faults               #   14.897 K/sec                  
+    17,494,211,973      cycles                    #    2.989 GHz                      (83.34%)
+       438,654,649      stalled-cycles-frontend   #    2.51% frontend cycles idle     (83.33%)
+     1,744,114,841      stalled-cycles-backend    #    9.97% backend cycles idle      (83.27%)
+    37,171,704,849      instructions              #    2.12  insn per cycle         
+                                                  #    0.05  stalled cycles per insn  (83.34%)
+     8,572,039,730      branches                  #    1.464 G/sec                    (83.36%)
+        95,406,714      branch-misses             #    1.11% of all branches          (83.36%)
+
+       5.858554353 seconds time elapsed
+
+       5.678225000 seconds user
+       0.176069000 seconds sys
+
+
+# started on Fri Apr 12 11:42:48 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./crout_decomposition.exe':
+
+          1,028.67 msec task-clock                #    0.998 CPUs utilized          
+                13      context-switches          #   12.638 /sec                   
+                 1      cpu-migrations            #    0.972 /sec                   
+            15,962      page-faults               #   15.517 K/sec                  
+     3,074,226,334      cycles                    #    2.989 GHz                      (83.28%)
+        19,659,135      stalled-cycles-frontend   #    0.64% frontend cycles idle     (83.29%)
+     1,557,214,977      stalled-cycles-backend    #   50.65% backend cycles idle      (83.31%)
+    10,551,792,787      instructions              #    3.43  insn per cycle         
+                                                  #    0.15  stalled cycles per insn  (83.29%)
+     2,261,717,794      branches                  #    2.199 G/sec                    (83.31%)
+           321,130      branch-misses             #    0.01% of all branches          (83.52%)
+
+       1.030745076 seconds time elapsed
+
+       1.013916000 seconds user
+       0.016030000 seconds sys
+
+
+# started on Fri Apr 12 11:42:40 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./chameneos_redux_lwt.exe 600000':
+
+          2,119.49 msec task-clock                #    0.999 CPUs utilized          
+                18      context-switches          #    8.493 /sec                   
+                 1      cpu-migrations            #    0.472 /sec                   
+             1,118      page-faults               #  527.485 /sec                   
+     6,334,782,845      cycles                    #    2.989 GHz                      (83.31%)
+       772,149,408      stalled-cycles-frontend   #   12.19% frontend cycles idle     (83.40%)
+       409,742,100      stalled-cycles-backend    #    6.47% backend cycles idle      (83.21%)
+     8,775,053,273      instructions              #    1.39  insn per cycle         
+                                                  #    0.09  stalled cycles per insn  (83.39%)
+     1,890,643,897      branches                  #  892.027 M/sec                    (83.40%)
+        39,180,686      branch-misses             #    2.07% of all branches          (83.29%)
+
+       2.121594475 seconds time elapsed
+
+       1.663923000 seconds user
+       0.457077000 seconds sys
+
+
+# started on Fri Apr 12 11:25:15 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./quicksort.exe 4000000':
+
+          2,153.07 msec task-clock                #    0.999 CPUs utilized          
+                21      context-switches          #    9.753 /sec                   
+                 1      cpu-migrations            #    0.464 /sec                   
+             8,147      page-faults               #    3.784 K/sec                  
+     6,435,874,635      cycles                    #    2.989 GHz                      (83.28%)
+        48,089,466      stalled-cycles-frontend   #    0.75% frontend cycles idle     (83.29%)
+        28,267,963      stalled-cycles-backend    #    0.44% backend cycles idle      (83.30%)
+    17,357,679,796      instructions              #    2.70  insn per cycle         
+                                                  #    0.00  stalled cycles per insn  (83.28%)
+     3,821,259,442      branches                  #    1.775 G/sec                    (83.41%)
+        38,438,973      branch-misses             #    1.01% of all branches          (83.44%)
+
+       2.155586523 seconds time elapsed
+
+       2.134469000 seconds user
+       0.019985000 seconds sys
+
+
+# started on Fri Apr 12 11:42:42 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./durand_kerner_aberth.exe':
+
+          1,158.32 msec task-clock                #    0.999 CPUs utilized          
+                13      context-switches          #   11.223 /sec                   
+                 1      cpu-migrations            #    0.863 /sec                   
+               979      page-faults               #  845.190 /sec                   
+     3,399,880,229      cycles                    #    2.935 GHz                      (83.09%)
+         5,159,176      stalled-cycles-frontend   #    0.15% frontend cycles idle     (83.41%)
+     1,727,680,031      stalled-cycles-backend    #   50.82% backend cycles idle      (83.43%)
+     9,973,742,314      instructions              #    2.93  insn per cycle         
+                                                  #    0.17  stalled cycles per insn  (83.44%)
+     2,093,206,122      branches                  #    1.807 G/sec                    (83.43%)
+         2,197,146      branch-misses             #    0.10% of all branches          (83.21%)
+
+       1.159634354 seconds time elapsed
+
+       1.155287000 seconds user
+       0.003997000 seconds sys
+
+
+# started on Fri Apr 12 11:42:53 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./qr_decomposition.exe':
+
+          1,513.97 msec task-clock                #    0.999 CPUs utilized          
+                13      context-switches          #    8.587 /sec                   
+                 1      cpu-migrations            #    0.661 /sec                   
+             1,687      page-faults               #    1.114 K/sec                  
+     4,524,815,567      cycles                    #    2.989 GHz                      (83.25%)
+         7,134,993      stalled-cycles-frontend   #    0.16% frontend cycles idle     (83.36%)
+     1,474,636,657      stalled-cycles-backend    #   32.59% backend cycles idle      (83.36%)
+    18,847,347,386      instructions              #    4.17  insn per cycle         
+                                                  #    0.08  stalled cycles per insn  (83.36%)
+     4,047,072,085      branches                  #    2.673 G/sec                    (83.36%)
+         1,598,967      branch-misses             #    0.04% of all branches          (83.31%)
+
+       1.515880575 seconds time elapsed
+
+       1.507355000 seconds user
+       0.007996000 seconds sys
+
+
+# started on Fri Apr 12 11:26:46 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./kb_no_exc.exe':
+
+          1,867.10 msec task-clock                #    0.999 CPUs utilized          
+                19      context-switches          #   10.176 /sec                   
+                 1      cpu-migrations            #    0.536 /sec                   
+             2,119      page-faults               #    1.135 K/sec                  
+     5,581,070,271      cycles                    #    2.989 GHz                      (83.29%)
+        63,847,792      stalled-cycles-frontend   #    1.14% frontend cycles idle     (83.30%)
+       355,890,487      stalled-cycles-backend    #    6.38% backend cycles idle      (83.30%)
+    14,207,387,532      instructions              #    2.55  insn per cycle         
+                                                  #    0.03  stalled cycles per insn  (83.30%)
+     3,435,955,962      branches                  #    1.840 G/sec                    (83.44%)
+        46,527,000      branch-misses             #    1.35% of all branches          (83.38%)
+
+       1.869364499 seconds time elapsed
+
+       1.860260000 seconds user
+       0.008001000 seconds sys
+
+
+# started on Fri Apr 12 11:19:35 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./thread_ring_lwt_mvar.exe 20_000':
+
+          2,745.45 msec task-clock                #    0.999 CPUs utilized          
+                28      context-switches          #   10.199 /sec                   
+                 1      cpu-migrations            #    0.364 /sec                   
+             1,321      page-faults               #  481.160 /sec                   
+     8,205,744,369      cycles                    #    2.989 GHz                      (83.25%)
+        51,162,102      stalled-cycles-frontend   #    0.62% frontend cycles idle     (83.26%)
+     1,545,815,737      stalled-cycles-backend    #   18.84% backend cycles idle      (83.36%)
+    22,106,980,453      instructions              #    2.69  insn per cycle         
+                                                  #    0.07  stalled cycles per insn  (83.40%)
+     4,776,603,934      branches                  #    1.740 G/sec                    (83.40%)
+        11,743,236      branch-misses             #    0.25% of all branches          (83.33%)
+
+       2.747935674 seconds time elapsed
+
+       2.738547000 seconds user
+       0.007995000 seconds sys
+
+
+# started on Fri Apr 12 11:26:43 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./kb.exe':
+
+          3,040.23 msec task-clock                #    0.999 CPUs utilized          
+                27      context-switches          #    8.881 /sec                   
+                 1      cpu-migrations            #    0.329 /sec                   
+             2,160      page-faults               #  710.472 /sec                   
+     9,088,514,153      cycles                    #    2.989 GHz                      (83.32%)
+       172,283,200      stalled-cycles-frontend   #    1.90% frontend cycles idle     (83.30%)
+       615,711,123      stalled-cycles-backend    #    6.77% backend cycles idle      (83.30%)
+    15,489,982,363      instructions              #    1.70  insn per cycle         
+                                                  #    0.04  stalled cycles per insn  (83.31%)
+     3,594,129,089      branches                  #    1.182 G/sec                    (83.39%)
+       149,952,181      branch-misses             #    4.17% of all branches          (83.38%)
+
+       3.043632765 seconds time elapsed
+
+       3.033325000 seconds user
+       0.007992000 seconds sys
+
+
+# started on Fri Apr 12 11:19:56 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./LU_decomposition.exe 1024':
+
+          2,884.92 msec task-clock                #    0.998 CPUs utilized          
+                32      context-switches          #   11.092 /sec                   
+                 1      cpu-migrations            #    0.347 /sec                   
+             9,039      page-faults               #    3.133 K/sec                  
+     8,619,845,197      cycles                    #    2.988 GHz                      (83.23%)
+        15,590,964      stalled-cycles-frontend   #    0.18% frontend cycles idle     (83.31%)
+     4,498,345,922      stalled-cycles-backend    #   52.19% backend cycles idle      (83.37%)
+    30,144,451,405      instructions              #    3.50  insn per cycle         
+                                                  #    0.15  stalled cycles per insn  (83.37%)
+     4,741,158,499      branches                  #    1.643 G/sec                    (83.37%)
+           657,340      branch-misses             #    0.01% of all branches          (83.34%)
+
+       2.890063248 seconds time elapsed
+
+       2.877936000 seconds user
+       0.008016000 seconds sys
+
+
+# started on Fri Apr 12 11:23:37 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./knucleotide3.exe':
+
+         36,351.58 msec task-clock                #    0.999 CPUs utilized          
+               331      context-switches          #    9.106 /sec                   
+                 1      cpu-migrations            #    0.028 /sec                   
+            66,062      page-faults               #    1.817 K/sec                  
+   108,665,830,023      cycles                    #    2.989 GHz                      (83.33%)
+       369,732,193      stalled-cycles-frontend   #    0.34% frontend cycles idle     (83.32%)
+    47,993,550,632      stalled-cycles-backend    #   44.17% backend cycles idle      (83.34%)
+   300,931,208,388      instructions              #    2.77  insn per cycle         
+                                                  #    0.16  stalled cycles per insn  (83.33%)
+    62,127,688,231      branches                  #    1.709 G/sec                    (83.34%)
+       109,028,636      branch-misses             #    0.18% of all branches          (83.34%)
+
+      36.381149216 seconds time elapsed
+
+      36.154646000 seconds user
+       0.195949000 seconds sys
+
+
+# started on Fri Apr 12 11:26:48 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./zarith_pi.exe 10_000':
+
+          2,434.78 msec task-clock                #    0.999 CPUs utilized          
+                23      context-switches          #    9.446 /sec                   
+                 1      cpu-migrations            #    0.411 /sec                   
+            81,647      page-faults               #   33.534 K/sec                  
+     7,276,995,585      cycles                    #    2.989 GHz                      (83.25%)
+        72,127,025      stalled-cycles-frontend   #    0.99% frontend cycles idle     (83.25%)
+     3,907,566,595      stalled-cycles-backend    #   53.70% backend cycles idle      (83.39%)
+    18,649,885,480      instructions              #    2.56  insn per cycle         
+                                                  #    0.21  stalled cycles per insn  (83.42%)
+     2,163,580,133      branches                  #  888.613 M/sec                    (83.41%)
+        12,031,890      branch-misses             #    0.56% of all branches          (83.29%)
+
+       2.436504928 seconds time elapsed
+
+       2.331715000 seconds user
+       0.103987000 seconds sys
+
+
+# started on Fri Apr 12 11:25:23 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./pidigits5.exe 10_000':
+
+          2,434.15 msec task-clock                #    0.999 CPUs utilized          
+                24      context-switches          #    9.860 /sec                   
+                 1      cpu-migrations            #    0.411 /sec                   
+           110,534      page-faults               #   45.410 K/sec                  
+     7,274,926,855      cycles                    #    2.989 GHz                      (83.25%)
+       105,560,145      stalled-cycles-frontend   #    1.45% frontend cycles idle     (83.24%)
+     3,388,268,991      stalled-cycles-backend    #   46.57% backend cycles idle      (83.39%)
+    17,942,857,504      instructions              #    2.47  insn per cycle         
+                                                  #    0.19  stalled cycles per insn  (83.41%)
+     2,142,436,187      branches                  #  880.159 M/sec                    (83.41%)
+        15,112,689      branch-misses             #    0.71% of all branches          (83.31%)
+
+       2.436091873 seconds time elapsed
+
+       2.275344000 seconds user
+       0.159953000 seconds sys
+
+
+# started on Fri Apr 12 11:42:43 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./fft.exe':
+
+          2,638.35 msec task-clock                #    0.999 CPUs utilized          
+                23      context-switches          #    8.718 /sec                   
+                 1      cpu-migrations            #    0.379 /sec                   
+            63,609      page-faults               #   24.109 K/sec                  
+     7,864,593,971      cycles                    #    2.981 GHz                      (83.33%)
+        48,025,205      stalled-cycles-frontend   #    0.61% frontend cycles idle     (83.36%)
+     4,767,614,256      stalled-cycles-backend    #   60.62% backend cycles idle      (83.33%)
+    19,611,904,316      instructions              #    2.49  insn per cycle         
+                                                  #    0.24  stalled cycles per insn  (83.19%)
+     3,849,911,594      branches                  #    1.459 G/sec                    (83.41%)
+         4,028,625      branch-misses             #    0.10% of all branches          (83.39%)
+
+       2.641446679 seconds time elapsed
+
+       2.523110000 seconds user
+       0.116143000 seconds sys
+
+
+# started on Fri Apr 12 11:20:11 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./evolutionary_algorithm.exe 10000 10000':
+
+         38,825.89 msec task-clock                #    0.999 CPUs utilized          
+               341      context-switches          #    8.783 /sec                   
+                 1      cpu-migrations            #    0.026 /sec                   
+           899,172      page-faults               #   23.159 K/sec                  
+   116,045,183,120      cycles                    #    2.989 GHz                      (83.32%)
+     4,674,828,311      stalled-cycles-frontend   #    4.03% frontend cycles idle     (83.34%)
+    15,385,002,763      stalled-cycles-backend    #   13.26% backend cycles idle      (83.33%)
+   246,574,642,876      instructions              #    2.12  insn per cycle         
+                                                  #    0.06  stalled cycles per insn  (83.35%)
+    50,809,164,691      branches                  #    1.309 G/sec                    (83.33%)
+     1,255,242,008      branch-misses             #    2.47% of all branches          (83.33%)
+
+      38.871468967 seconds time elapsed
+
+      37.114643000 seconds user
+       1.707201000 seconds sys
+
+
+# started on Fri Apr 12 11:19:38 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./thread_ring_lwt_stream.exe 20_000':
+
+          9,495.00 msec task-clock                #    0.999 CPUs utilized          
+                99      context-switches          #   10.427 /sec                   
+                 1      cpu-migrations            #    0.105 /sec                   
+             1,633      page-faults               #  171.985 /sec                   
+    28,375,654,247      cycles                    #    2.988 GHz                      (83.33%)
+       219,295,442      stalled-cycles-frontend   #    0.77% frontend cycles idle     (83.33%)
+     6,401,094,809      stalled-cycles-backend    #   22.56% backend cycles idle      (83.33%)
+    71,584,219,805      instructions              #    2.52  insn per cycle         
+                                                  #    0.09  stalled cycles per insn  (83.33%)
+    14,669,622,908      branches                  #    1.545 G/sec                    (83.35%)
+        98,696,096      branch-misses             #    0.67% of all branches          (83.34%)
+
+       9.508360777 seconds time elapsed
+
+       9.487716000 seconds user
+       0.007996000 seconds sys
+
+
+# started on Fri Apr 12 11:21:13 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./grammatrix.exe':
+
+         65,374.30 msec task-clock                #    0.999 CPUs utilized          
+               621      context-switches          #    9.499 /sec                   
+                 1      cpu-migrations            #    0.015 /sec                   
+           126,661      page-faults               #    1.937 K/sec                  
+   194,844,373,777      cycles                    #    2.980 GHz                      (83.32%)
+    41,468,045,224      stalled-cycles-frontend   #   21.28% frontend cycles idle     (83.34%)
+     1,711,589,236      stalled-cycles-backend    #    0.88% backend cycles idle      (83.33%)
+   448,375,161,041      instructions              #    2.30  insn per cycle         
+                                                  #    0.09  stalled cycles per insn  (83.33%)
+    99,495,750,234      branches                  #    1.522 G/sec                    (83.34%)
+        26,969,137      branch-misses             #    0.03% of all branches          (83.33%)
+
+      65.435447140 seconds time elapsed
+
+      64.823190000 seconds user
+       0.543892000 seconds sys
+
+
+# started on Fri Apr 12 11:20:01 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./game_of_life.exe 256':
+
+         10,455.20 msec task-clock                #    0.999 CPUs utilized          
+                82      context-switches          #    7.843 /sec                   
+                 1      cpu-migrations            #    0.096 /sec                   
+             4,448      page-faults               #  425.434 /sec                   
+    31,259,195,275      cycles                    #    2.990 GHz                      (83.33%)
+       124,311,581      stalled-cycles-frontend   #    0.40% frontend cycles idle     (83.29%)
+    20,957,357,043      stalled-cycles-backend    #   67.04% backend cycles idle      (83.34%)
+    64,389,157,132      instructions              #    2.06  insn per cycle         
+                                                  #    0.33  stalled cycles per insn  (83.37%)
+     9,245,291,025      branches                  #  884.277 M/sec                    (83.37%)
+        47,642,586      branch-misses             #    0.52% of all branches          (83.30%)
+
+      10.463217480 seconds time elapsed
+
+      10.443919000 seconds user
+       0.011999000 seconds sys
+
+
+# started on Fri Apr 12 11:43:04 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./hamming.exe 1_000_000':
+
+          1,166.44 msec task-clock                #    0.998 CPUs utilized          
+                10      context-switches          #    8.573 /sec                   
+                 1      cpu-migrations            #    0.857 /sec                   
+            41,123      page-faults               #   35.255 K/sec                  
+     3,484,203,428      cycles                    #    2.987 GHz                      (83.21%)
+        86,541,539      stalled-cycles-frontend   #    2.48% frontend cycles idle     (83.19%)
+       636,343,231      stalled-cycles-backend    #   18.26% backend cycles idle      (83.25%)
+     7,792,728,445      instructions              #    2.24  insn per cycle         
+                                                  #    0.08  stalled cycles per insn  (83.54%)
+     1,548,746,578      branches                  #    1.328 G/sec                    (83.57%)
+         5,786,310      branch-misses             #    0.37% of all branches          (83.24%)
+
+       1.168227143 seconds time elapsed
+
+       1.079642000 seconds user
+       0.087970000 seconds sys
+
+
+# started on Fri Apr 12 11:26:07 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./bdd.exe 26':
+
+          3,794.64 msec task-clock                #    0.999 CPUs utilized          
+                36      context-switches          #    9.487 /sec                   
+                 1      cpu-migrations            #    0.264 /sec                   
+             5,260      page-faults               #    1.386 K/sec                  
+    11,340,617,510      cycles                    #    2.989 GHz                      (83.29%)
+       107,705,801      stalled-cycles-frontend   #    0.95% frontend cycles idle     (83.36%)
+     1,968,192,936      stalled-cycles-backend    #   17.36% backend cycles idle      (83.36%)
+    23,349,474,079      instructions              #    2.06  insn per cycle         
+                                                  #    0.08  stalled cycles per insn  (83.35%)
+     5,128,413,063      branches                  #    1.351 G/sec                    (83.35%)
+        63,407,132      branch-misses             #    1.24% of all branches          (83.29%)
+
+       3.798007003 seconds time elapsed
+
+       3.767635000 seconds user
+       0.027997000 seconds sys
+
+
+# started on Fri Apr 12 11:19:30 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./test_decompress.exe 64 524_288':
+
+          2,795.43 msec task-clock                #    0.999 CPUs utilized          
+                22      context-switches          #    7.870 /sec                   
+                 1      cpu-migrations            #    0.358 /sec                   
+            18,603      page-faults               #    6.655 K/sec                  
+     8,355,968,934      cycles                    #    2.989 GHz                      (83.27%)
+        49,225,386      stalled-cycles-frontend   #    0.59% frontend cycles idle     (83.26%)
+     2,516,223,334      stalled-cycles-backend    #   30.11% backend cycles idle      (83.27%)
+    27,959,994,402      instructions              #    3.35  insn per cycle         
+                                                  #    0.09  stalled cycles per insn  (83.41%)
+     5,162,714,717      branches                  #    1.847 G/sec                    (83.42%)
+         7,469,892      branch-misses             #    0.14% of all branches          (83.37%)
+
+       2.798138126 seconds time elapsed
+
+       2.752588000 seconds user
+       0.043945000 seconds sys
+
+
+# started on Fri Apr 12 11:24:13 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./regexredux2.exe':
+
+         14,365.27 msec task-clock                #    0.999 CPUs utilized          
+               139      context-switches          #    9.676 /sec                   
+                 1      cpu-migrations            #    0.070 /sec                   
+           295,384      page-faults               #   20.562 K/sec                  
+    42,930,357,211      cycles                    #    2.988 GHz                      (83.33%)
+     1,089,728,382      stalled-cycles-frontend   #    2.54% frontend cycles idle     (83.33%)
+     4,262,034,144      stalled-cycles-backend    #    9.93% backend cycles idle      (83.32%)
+    90,860,990,505      instructions              #    2.12  insn per cycle         
+                                                  #    0.05  stalled cycles per insn  (83.33%)
+    18,289,381,425      branches                  #    1.273 G/sec                    (83.35%)
+       389,858,916      branch-misses             #    2.13% of all branches          (83.34%)
+
+      14.380294538 seconds time elapsed
+
+      13.822098000 seconds user
+       0.543610000 seconds sys
+
+
+# started on Fri Apr 12 11:22:54 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./knucleotide.exe':
+
+         42,390.60 msec task-clock                #    0.999 CPUs utilized          
+               379      context-switches          #    8.941 /sec                   
+                 1      cpu-migrations            #    0.024 /sec                   
+            99,309      page-faults               #    2.343 K/sec                  
+   126,647,796,532      cycles                    #    2.988 GHz                      (83.33%)
+       515,251,297      stalled-cycles-frontend   #    0.41% frontend cycles idle     (83.33%)
+    45,171,852,625      stalled-cycles-backend    #   35.67% backend cycles idle      (83.33%)
+   284,997,233,541      instructions              #    2.25  insn per cycle         
+                                                  #    0.16  stalled cycles per insn  (83.34%)
+    58,221,078,656      branches                  #    1.373 G/sec                    (83.33%)
+        82,131,938      branch-misses             #    0.14% of all branches          (83.33%)
+
+      42.424164601 seconds time elapsed
+
+      42.129290000 seconds user
+       0.259859000 seconds sys
+
+
+# started on Fri Apr 12 11:43:05 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./zdd.exe words.txt':
+
+          8,560.06 msec task-clock                #    0.999 CPUs utilized          
+                83      context-switches          #    9.696 /sec                   
+                 1      cpu-migrations            #    0.117 /sec                   
+           163,071      page-faults               #   19.050 K/sec                  
+    25,486,665,923      cycles                    #    2.977 GHz                      (83.33%)
+     3,290,831,487      stalled-cycles-frontend   #   12.91% frontend cycles idle     (83.34%)
+    13,945,309,496      stalled-cycles-backend    #   54.72% backend cycles idle      (83.33%)
+    23,308,352,451      instructions              #    0.91  insn per cycle         
+                                                  #    0.60  stalled cycles per insn  (83.29%)
+     4,863,726,648      branches                  #  568.189 M/sec                    (83.37%)
+        47,552,478      branch-misses             #    0.98% of all branches          (83.34%)
+
+       8.567870124 seconds time elapsed
+
+       8.256680000 seconds user
+       0.303877000 seconds sys
+
+
+# started on Fri Apr 12 11:20:50 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./nqueens.exe 14':
+
+          6,369.18 msec task-clock                #    0.999 CPUs utilized          
+                58      context-switches          #    9.106 /sec                   
+                 1      cpu-migrations            #    0.157 /sec                   
+               793      page-faults               #  124.506 /sec                   
+    19,042,139,463      cycles                    #    2.990 GHz                      (83.30%)
+       408,474,929      stalled-cycles-frontend   #    2.15% frontend cycles idle     (83.30%)
+        16,674,846      stalled-cycles-backend    #    0.09% backend cycles idle      (83.36%)
+    30,440,173,839      instructions              #    1.60  insn per cycle         
+                                                  #    0.01  stalled cycles per insn  (83.36%)
+    11,061,940,977      branches                  #    1.737 G/sec                    (83.36%)
+       333,069,099      branch-misses             #    3.01% of all branches          (83.31%)
+
+       6.372666973 seconds time elapsed
+
+       6.366693000 seconds user
+       0.003999000 seconds sys
+
+
+# started on Fri Apr 12 11:42:49 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./naive_multilayer.exe':
+
+          3,807.04 msec task-clock                #    0.999 CPUs utilized          
+                37      context-switches          #    9.719 /sec                   
+                 1      cpu-migrations            #    0.263 /sec                   
+             1,121      page-faults               #  294.455 /sec                   
+    11,317,633,879      cycles                    #    2.973 GHz                      (83.30%)
+        77,062,002      stalled-cycles-frontend   #    0.68% frontend cycles idle     (83.30%)
+     1,933,894,037      stalled-cycles-backend    #   17.09% backend cycles idle      (83.26%)
+    32,793,066,564      instructions              #    2.90  insn per cycle         
+                                                  #    0.06  stalled cycles per insn  (83.41%)
+     6,940,522,149      branches                  #    1.823 G/sec                    (83.41%)
+        47,102,137      branch-misses             #    0.68% of all branches          (83.33%)
+
+       3.810069743 seconds time elapsed
+
+       3.800566000 seconds user
+       0.008001000 seconds sys
+
+
+# started on Fri Apr 12 11:19:48 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./binarytrees5.exe 21':
+
+          8,217.95 msec task-clock                #    0.999 CPUs utilized          
+                73      context-switches          #    8.883 /sec                   
+                 1      cpu-migrations            #    0.122 /sec                   
+            54,427      page-faults               #    6.623 K/sec                  
+    24,539,697,503      cycles                    #    2.986 GHz                      (83.32%)
+       273,151,455      stalled-cycles-frontend   #    1.11% frontend cycles idle     (83.32%)
+     5,432,033,928      stalled-cycles-backend    #   22.14% backend cycles idle      (83.31%)
+    60,509,454,750      instructions              #    2.47  insn per cycle         
+                                                  #    0.09  stalled cycles per insn  (83.37%)
+    14,473,210,373      branches                  #    1.761 G/sec                    (83.37%)
+        36,440,068      branch-misses             #    0.25% of all branches          (83.31%)
+
+       8.225298521 seconds time elapsed
+
+       8.081660000 seconds user
+       0.135893000 seconds sys
+
+
+# started on Fri Apr 12 11:30:33 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 menhir -v --table benchmarks/menhir/sysver.mly':
+
+         68,424.63 msec task-clock                #    0.999 CPUs utilized          
+               601      context-switches          #    8.783 /sec                   
+                 1      cpu-migrations            #    0.015 /sec                   
+           248,666      page-faults               #    3.634 K/sec                  
+   204,509,613,662      cycles                    #    2.989 GHz                      (83.34%)
+     2,713,428,086      stalled-cycles-frontend   #    1.33% frontend cycles idle     (83.34%)
+    16,707,085,453      stalled-cycles-backend    #    8.17% backend cycles idle      (83.33%)
+   422,133,522,066      instructions              #    2.06  insn per cycle         
+                                                  #    0.04  stalled cycles per insn  (83.32%)
+   100,487,065,174      branches                  #    1.469 G/sec                    (83.33%)
+     1,171,049,779      branch-misses             #    1.17% of all branches          (83.34%)
+
+      68.480596930 seconds time elapsed
+
+      67.522367000 seconds user
+       0.899658000 seconds sys
+
+
+# started on Fri Apr 12 11:19:33 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./ydump.exe -c sample.json':
+
+            672.08 msec task-clock                #    0.998 CPUs utilized          
+                 7      context-switches          #   10.415 /sec                   
+                 1      cpu-migrations            #    1.488 /sec                   
+             3,416      page-faults               #    5.083 K/sec                  
+     2,008,506,277      cycles                    #    2.989 GHz                      (83.33%)
+        19,428,830      stalled-cycles-frontend   #    0.97% frontend cycles idle     (83.35%)
+       761,789,902      stalled-cycles-backend    #   37.93% backend cycles idle      (83.35%)
+     4,191,181,454      instructions              #    2.09  insn per cycle         
+                                                  #    0.18  stalled cycles per insn  (83.35%)
+       863,335,926      branches                  #    1.285 G/sec                    (83.36%)
+         7,102,065      branch-misses             #    0.82% of all branches          (83.26%)
+
+       0.673346318 seconds time elapsed
+
+       0.624936000 seconds user
+       0.048072000 seconds sys
+
+
+# started on Fri Apr 12 11:19:59 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./floyd_warshall.exe 512':
+
+          2,084.82 msec task-clock                #    0.999 CPUs utilized          
+                18      context-switches          #    8.634 /sec                   
+                 1      cpu-migrations            #    0.480 /sec                   
+             4,755      page-faults               #    2.281 K/sec                  
+     6,214,670,290      cycles                    #    2.981 GHz                      (83.32%)
+        41,253,669      stalled-cycles-frontend   #    0.66% frontend cycles idle     (83.32%)
+     4,828,789,733      stalled-cycles-backend    #   77.70% backend cycles idle      (83.32%)
+     6,028,273,256      instructions              #    0.97  insn per cycle         
+                                                  #    0.80  stalled cycles per insn  (83.34%)
+     1,441,055,061      branches                  #  691.213 M/sec                    (83.34%)
+         9,845,804      branch-misses             #    0.68% of all branches          (83.36%)
+
+       2.087009160 seconds time elapsed
+
+       2.073534000 seconds user
+       0.012032000 seconds sys
+
+
+# started on Fri Apr 12 11:26:50 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 menhir benchmarks/menhir/ocaml.mly --list-errors -la 2 --no-stdlib --lalr':
+
+        216,753.31 msec task-clock                #    0.999 CPUs utilized          
+             1,997      context-switches          #    9.213 /sec                   
+                 1      cpu-migrations            #    0.005 /sec                   
+         1,795,982      page-faults               #    8.286 K/sec                  
+   647,970,177,752      cycles                    #    2.989 GHz                      (83.34%)
+    17,807,718,047      stalled-cycles-frontend   #    2.75% frontend cycles idle     (83.33%)
+   112,632,819,565      stalled-cycles-backend    #   17.38% backend cycles idle      (83.33%)
+ 1,151,066,437,391      instructions              #    1.78  insn per cycle         
+                                                  #    0.10  stalled cycles per insn  (83.33%)
+   250,671,989,257      branches                  #    1.156 G/sec                    (83.34%)
+     3,503,806,558      branch-misses             #    1.40% of all branches          (83.34%)
+
+     216.961751526 seconds time elapsed
+
+     212.637200000 seconds user
+       4.094097000 seconds sys
+
+
+# started on Fri Apr 12 11:25:07 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./matrix_multiplication.exe 1024':
+
+          7,059.54 msec task-clock                #    0.999 CPUs utilized          
+                60      context-switches          #    8.499 /sec                   
+                 1      cpu-migrations            #    0.142 /sec                   
+             6,508      page-faults               #  921.873 /sec                   
+    21,102,966,465      cycles                    #    2.989 GHz                      (83.30%)
+        14,624,612      stalled-cycles-frontend   #    0.07% frontend cycles idle     (83.31%)
+    17,664,995,092      stalled-cycles-backend    #   83.71% backend cycles idle      (83.35%)
+    32,729,227,561      instructions              #    1.55  insn per cycle         
+                                                  #    0.54  stalled cycles per insn  (83.35%)
+     6,549,890,379      branches                  #  927.807 M/sec                    (83.35%)
+         1,213,830      branch-misses             #    0.02% of all branches          (83.33%)
+
+       7.065184382 seconds time elapsed
+
+       7.040411000 seconds user
+       0.019989000 seconds sys
+
+
+# started on Fri Apr 12 11:36:20 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 cubicle benchmarks/cubicle/szymanski_at.cub':
+
+        379,731.91 msec task-clock                #    0.999 CPUs utilized          
+             3,293      context-switches          #    8.672 /sec                   
+                 1      cpu-migrations            #    0.003 /sec                   
+            99,643      page-faults               #  262.404 /sec                   
+ 1,134,561,869,998      cycles                    #    2.988 GHz                      (83.33%)
+    12,712,095,282      stalled-cycles-frontend   #    1.12% frontend cycles idle     (83.33%)
+   184,944,654,453      stalled-cycles-backend    #   16.30% backend cycles idle      (83.33%)
+ 2,599,442,643,949      instructions              #    2.29  insn per cycle         
+                                                  #    0.07  stalled cycles per insn  (83.34%)
+   574,304,462,322      branches                  #    1.512 G/sec                    (83.33%)
+     5,268,656,268      branch-misses             #    0.92% of all branches          (83.34%)
+
+     380.101369667 seconds time elapsed
+
+     379.417282000 seconds user
+       0.271902000 seconds sys
+
+
+# started on Fri Apr 12 11:43:44 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./owl_gc.exe':
+
+          3,003.52 msec task-clock                #    0.999 CPUs utilized          
+                30      context-switches          #    9.988 /sec                   
+                 1      cpu-migrations            #    0.333 /sec                   
+            25,471      page-faults               #    8.480 K/sec                  
+     8,976,577,062      cycles                    #    2.989 GHz                      (83.22%)
+        64,562,221      stalled-cycles-frontend   #    0.72% frontend cycles idle     (83.33%)
+     4,357,819,076      stalled-cycles-backend    #   48.55% backend cycles idle      (83.37%)
+    19,722,157,645      instructions              #    2.20  insn per cycle         
+                                                  #    0.22  stalled cycles per insn  (83.37%)
+     3,251,417,974      branches                  #    1.083 G/sec                    (83.37%)
+        15,014,007      branch-misses             #    0.46% of all branches          (83.34%)
+
+       3.006682077 seconds time elapsed
+
+       2.940615000 seconds user
+       0.063926000 seconds sys
+
+
+# started on Fri Apr 12 11:22:18 2024
+
+
+ Performance counter stats for 'taskset --cpu-list 5 ./fannkuchredux.exe 12':
+
+         35,783.99 msec task-clock                #    0.999 CPUs utilized          
+               331      context-switches          #    9.250 /sec                   
+                 1      cpu-migrations            #    0.028 /sec                   
+               225      page-faults               #    6.288 /sec                   
+   106,991,405,466      cycles                    #    2.990 GHz                      (83.33%)
+     2,349,256,237      stalled-cycles-frontend   #    2.20% frontend cycles idle     (83.33%)
+     6,592,278,822      stalled-cycles-backend    #    6.16% backend cycles idle      (83.34%)
+   192,758,758,999      instructions              #    1.80  insn per cycle         
+                                                  #    0.03  stalled cycles per insn  (83.34%)
+    40,208,280,250      branches                  #    1.124 G/sec                    (83.33%)
+     2,041,054,017      branch-misses             #    5.08% of all branches          (83.33%)
+
+      35.805860208 seconds time elapsed
+
+      35.784972000 seconds user
+       0.000000000 seconds sys
+
+
