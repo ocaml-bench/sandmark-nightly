@@ -95,3 +95,7 @@ You can find the most updated information about these benchmarking machines [her
 ### Reporting issues
 
 Please report any issues with the Sandmark Nightly Service at [ocaml/infrastructure](https://github.com/ocaml/infrastructure/issues)
+
+### Maintenance
+
+This project is created and maintained by <a href="https://tarides.com"><img alt="Tarides logo" width="200" src="https://tarides.com/images/logo_tarides.svg" /></a>

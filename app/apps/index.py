@@ -43,7 +43,7 @@ def app():
     st.title("Sandmark Nightly")
     tuple_list_of_info = get_the_latest_commits(["turing", "navajo"])
     with open(HERE / ".." / "pages" / "index.md") as f:
-        st.markdown(f.read())
+        st.markdown(f.read(), unsafe_allow_html=True)
     st.header("Sandmark info")
     st.subheader("Latest commit")
     for machine, commit in tuple_list_of_info:
