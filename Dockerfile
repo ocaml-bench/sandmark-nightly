@@ -8,4 +8,4 @@ RUN chmod 0644 /etc/cron.d/sandmark-nightly-client-crontab && \
 WORKDIR /sandmark-nightly
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
-CMD streamlit run app/app.py
+CMD ["streamlit", "run", "app/app.py"]
