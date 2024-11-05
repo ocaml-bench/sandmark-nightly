@@ -98,4 +98,6 @@ Please report any issues with the Sandmark Nightly Service at [ocaml/infrastruct
 
 ### Maintenance
 
+This page can be edited [here](https://github.com/ocaml-bench/sandmark-nightly/blob/main/app/pages/index.md).
+
 This project is created and maintained by <a href="https://tarides.com"><img alt="Tarides logo" width="200" src="https://tarides.com/images/logo_tarides.svg" /></a>
