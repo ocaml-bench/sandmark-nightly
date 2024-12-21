@@ -1,0 +1,104 @@
+5.4.0
+Filtering some benchmarks for OCaml 5.4.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.4.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.4.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.4.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk/
+{	if [ "https://github.com/ocaml/ocaml/archive/trunk.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.4.0+trunk.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/trunk.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk/opam;
+# Read OCAML_CONFIG_OPTION from the ocaml-version/5.4.0+trunk.json file if env
+# variable is not set already.  The variable is read even if the
+# environment variable is set to be empty. `run_all_custom.sh` always
+# sets the OCAML_CONFIG_OPTION -- it is empty if no "configure" key is
+# present in the sandmark nightly config file.
+# Read OCAML_RUN_PARAM from the ocaml-version/5.4.0+trunk.json file if env
+# variable is not set already. See comment above for
+# OCAML_CONFIG_OPTION.
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="" opam switch create --keep-build-dir --yes 5.4.0+trunk ocaml-base-compiler.5.4.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.4.0+trunk] downloaded from https://github.com/ocaml/ocaml/archive/trunk.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed base-bigarray.base
+-> installed base-threads.base
+-> installed base-unix.base
+-> installed ocaml-base-compiler.5.4.0+trunk
+-> installed ocaml-config.1
+-> installed ocaml.5.4.0+trunk
+Done.
+# Run eval $(opam env) to update the current shell environment
+# TODO remove pin when a new orun version is released on opam
+opam pin add -n --yes --switch 5.4.0+trunk orun https://github.com/ocaml-bench/orun.git
+Package orun does not exist, create as a NEW package? [Y/n] y
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev] synchronised from git+https://github.com/ocaml-bench/orun.git
+orun is now pinned to git+https://github.com/ocaml-bench/orun.git (version 0.1)
+# TODO remove pin when a new runtime_events_tools is released on opam
+opam pin add -n --yes --switch 5.4.0+trunk runtime_events_tools https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+Package runtime_events_tools does not exist, create as a NEW package? [Y/n] y
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev] synchronised from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+runtime_events_tools is now pinned to git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25 (version ~dev)
+opam pin add -n --yes --switch 5.4.0+trunk ocamlfind https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+Package ocamlfind does not exist, create as a NEW package? [Y/n] y
+[ocamlfind.~dev: http]
+[ocamlfind.~dev] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlfind is now pinned to https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz (version 1.9.3.git)
+opam pin add -n --yes --switch 5.4.0+trunk coq-core https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-core does not exist, create as a NEW package? [Y/n] y
+[coq-core.~dev: http]
+[coq-core.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-core is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.4.0+trunk coq-stdlib https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-stdlib does not exist, create as a NEW package? [Y/n] y
+[coq-stdlib.~dev: http]
+[coq-stdlib.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-stdlib is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+Using default dune.3.15.3
+/home/sandmark/.opam/default
+Linking to system dune files found at: /home/sandmark/.opam/default
+/home/sandmark/.opam/default/bin/dune --version = n/a
+ln -s /home/sandmark/.opam/default/bin/dune /tmp/sandmark/_opam/sys_dune/bin/dune
+ln -s /home/sandmark/.opam/default/bin/jbuilder /tmp/sandmark/_opam/sys_dune/bin/jbuilder
+ln -s /home/sandmark/.opam/default/lib/dune /tmp/sandmark/_opam/sys_dune/lib/dune
+opam repo add upstream "git+https://github.com/ocaml/opam-repository.git" --on-switch=5.4.0+trunk --rank 2
+[ERROR] Could not update repository "upstream": "/bin/git fetch -q" exited with code 128 "error: 4759 bytes of body are still expected"
+[ERROR] Initial repository fetch failed
+make: *** [Makefile:105: setup_sys_dune/5.4.0+trunk] Error 40
