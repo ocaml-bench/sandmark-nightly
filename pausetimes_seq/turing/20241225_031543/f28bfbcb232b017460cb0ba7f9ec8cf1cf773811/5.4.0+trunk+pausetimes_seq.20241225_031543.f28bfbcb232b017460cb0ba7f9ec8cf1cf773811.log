@@ -1,0 +1,597 @@
+5.4.0
+Filtering some benchmarks for OCaml 5.4.0
+opam init --bare --no-setup --no-opamrc --disable-sandboxing ./dependencies
+[NOTE] Will configure from built-in defaults.
+Checking for available remotes: rsync and local, git, mercurial.
+  - you won't be able to use darcs repositories unless you install the darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><><><><><>
+[default] Initialised
+rm -rf dependencies/packages/ocaml/ocaml.5.4.0+trunk
+rm -rf dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk
+mkdir -p dependencies/packages/ocaml/ocaml.5.4.0+trunk
+cp -R dependencies/template/ocaml/* dependencies/packages/ocaml/ocaml.5.4.0+trunk/
+mkdir -p dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk
+cp -R dependencies/template/ocaml-base-compiler/* \
+  dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk/
+{	if [ "https://github.com/ocaml/ocaml/archive/trunk.tar.gz" == "" ]; then	\
+		url="$(jq -r '.url // empty' ocaml-versions/5.4.0+trunk.json)"; \
+	else \
+		url="https://github.com/ocaml/ocaml/archive/trunk.tar.gz"; \
+	fi; \
+	echo "url { src: \"$url\" }"; echo "setenv: [ [ ORUN_CONFIG_ocaml_url = \"$url\" ] ]"; } \
+>> dependencies/packages/ocaml-base-compiler/ocaml-base-compiler.5.4.0+trunk/opam;
+# Read OCAML_CONFIG_OPTION from the ocaml-version/5.4.0+trunk.json file if env
+# variable is not set already.  The variable is read even if the
+# environment variable is set to be empty. `run_all_custom.sh` always
+# sets the OCAML_CONFIG_OPTION -- it is empty if no "configure" key is
+# present in the sandmark nightly config file.
+# Read OCAML_RUN_PARAM from the ocaml-version/5.4.0+trunk.json file if env
+# variable is not set already. See comment above for
+# OCAML_CONFIG_OPTION.
+opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] synchronised from file:///tmp/sandmark/dependencies
+Now run 'opam upgrade' to apply any package updates.
+OCAMLRUNPARAM="" OCAMLCONFIGOPTION="CC='gcc -Wa,-mbranches-within-32B' AS='as -mbranches-within-32B'" opam switch create --keep-build-dir --yes 5.4.0+trunk ocaml-base-compiler.5.4.0+trunk
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[ocaml-base-compiler.5.4.0+trunk] downloaded from https://github.com/ocaml/ocaml/archive/trunk.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed base-bigarray.base
+-> installed base-threads.base
+-> installed base-unix.base
+-> installed ocaml-base-compiler.5.4.0+trunk
+-> installed ocaml-config.1
+-> installed ocaml.5.4.0+trunk
+Done.
+# Run eval $(opam env) to update the current shell environment
+# TODO remove pin when a new orun version is released on opam
+opam pin add -n --yes --switch 5.4.0+trunk orun https://github.com/ocaml-bench/orun.git
+Package orun does not exist, create as a NEW package? [Y/n] y
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev: git]
+[orun.~dev] synchronised from git+https://github.com/ocaml-bench/orun.git
+orun is now pinned to git+https://github.com/ocaml-bench/orun.git (version 0.1)
+# TODO remove pin when a new runtime_events_tools is released on opam
+opam pin add -n --yes --switch 5.4.0+trunk runtime_events_tools https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+Package runtime_events_tools does not exist, create as a NEW package? [Y/n] y
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev: git]
+[runtime_events_tools.~dev] synchronised from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+runtime_events_tools is now pinned to git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25 (version ~dev)
+opam pin add -n --yes --switch 5.4.0+trunk ocamlfind https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+Package ocamlfind does not exist, create as a NEW package? [Y/n] y
+[ocamlfind.~dev: http]
+[ocamlfind.~dev] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlfind is now pinned to https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz (version 1.9.3.git)
+opam pin add -n --yes --switch 5.4.0+trunk coq-core https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-core does not exist, create as a NEW package? [Y/n] y
+[coq-core.~dev: http]
+[coq-core.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-core is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+opam pin add -n --yes --switch 5.4.0+trunk coq-stdlib https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+Package coq-stdlib does not exist, create as a NEW package? [Y/n] y
+[coq-stdlib.~dev: http]
+[coq-stdlib.~dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+coq-stdlib is now pinned to https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz (version dev)
+Using default dune.3.15.3
+/home/sandmark/.opam/default
+Linking to system dune files found at: /home/sandmark/.opam/default
+/home/sandmark/.opam/default/bin/dune --version = n/a
+ln -s /home/sandmark/.opam/default/bin/dune /tmp/sandmark/_opam/sys_dune/bin/dune
+ln -s /home/sandmark/.opam/default/bin/jbuilder /tmp/sandmark/_opam/sys_dune/bin/jbuilder
+ln -s /home/sandmark/.opam/default/lib/dune /tmp/sandmark/_opam/sys_dune/lib/dune
+opam repo add upstream "git+https://github.com/ocaml/opam-repository.git" --on-switch=5.4.0+trunk --rank 2
+[upstream] Initialised
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+opam install --switch=5.4.0+trunk --yes ocamlfind
+
+<><> Synchronising pinned packages ><><><><><><><><><><><><><><><><><><><><><><>
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+
+The following actions will be performed:
+  - install ocamlfind 1.9.3.git*
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed ocamlfind.1.9.3.git
+Done.
+# Run eval $(opam env) to update the current shell environment
+opam install --switch=5.4.0+trunk --yes "dune.3.15.3" "dune-configurator.3.15.3"
+The following actions will be performed:
+  - install dune              3.15.3
+  - install csexp             1.5.2  [required by dune-configurator]
+  - install dune-configurator 3.15.3
+===== 3 to install =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[csexp.1.5.2] downloaded from https://github.com/ocaml-dune/csexp/releases/download/1.5.2/csexp-1.5.2.tbz
+[dune.3.15.3] downloaded from https://github.com/ocaml/dune/releases/download/3.15.3/dune-3.15.3.tbz
+[dune-configurator.3.15.3] downloaded from https://github.com/ocaml/dune/releases/download/3.15.3/dune-3.15.3.tbz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed dune.3.15.3
+-> installed csexp.1.5.2
+-> installed dune-configurator.3.15.3
+Done.
+# Run eval $(opam env) to update the current shell environment
+# Pin the version so it doesn't change when installing packages
+opam pin add --switch=5.4.0+trunk --yes -n dune "3.15.3"
+dune is now pinned to version 3.15.3
+# Retrieve set of version constraints for chosen OCaml version
+Using template/dev-5.x.opam
+# Conditionally install runtime_events_tools for olly (pausetimes)
+Enabling pausetimes for OCaml >= 5
+opam repo add alpha git+https://github.com/kit-ty-kate/opam-alpha-repository.git --on-switch=5.4.0+trunk --rank 2
+[alpha] Initialised
+opam exec --switch 5.4.0+trunk -- opam update
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] no changes from file:///tmp/sandmark/dependencies
+[alpha] no changes from git+https://github.com/kit-ty-kate/opam-alpha-repository.git
+[upstream] no changes from git+https://github.com/ocaml/opam-repository.git
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+
+<><> Synchronising development packages <><><><><><><><><><><><><><><><><><><><>
+[coq-core.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+[coq-stdlib.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[orun.0.1] no changes from git+https://github.com/ocaml-bench/orun.git
+[runtime_events_tools.~dev] no changes from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+opam install --switch=5.4.0+trunk --yes "lru" "psq"
+The following actions will be performed:
+  - install seq base  [required by psq]
+  - install psq 0.2.1
+  - install lru 0.3.1
+===== 3 to install =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[seq.base/META.seq] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/seq/META.seq
+[seq.base/seq.install] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/seq/seq.install
+[lru.0.3.1] downloaded from https://github.com/pqwy/lru/releases/download/v0.3.1/lru-0.3.1.tbz
+[psq.0.2.1] downloaded from https://github.com/pqwy/psq/releases/download/v0.2.1/psq-0.2.1.tbz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed seq.base
+-> installed psq.0.2.1
+-> installed lru.0.3.1
+Done.
+# Run eval $(opam env) to update the current shell environment
+opam exec --switch 5.4.0+trunk -- opam list
+# Packages matching: installed
+# Name              # Installed # Synopsis
+base-bigarray       base
+base-threads        base
+base-unix           base
+csexp               1.5.2       Parsing and printing of S-expressions in Canonical form
+dune                3.15.3      pinned to version 3.15.3
+dune-configurator   3.15.3      Helper library for gathering system configuration
+lru                 0.3.1       Scalable LRU caches
+ocaml               5.4.0+trunk The OCaml compiler (virtual package)
+ocaml-base-compiler 5.4.0+trunk OCaml compiler
+ocaml-config        1           OCaml Switch Configuration
+ocamlfind           1.9.3.git   pinned to version 1.9.3.git at https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+psq                 0.2.1       Functional Priority Search Queues
+seq                 base        Compatibility package for OCaml's standard iterator type starting from 4.07.
+opam update --switch=5.4.0+trunk
+
+<><> Updating package repositories ><><><><><><><><><><><><><><><><><><><><><><>
+[default] no changes from file:///tmp/sandmark/dependencies
+[alpha] no changes from git+https://github.com/kit-ty-kate/opam-alpha-repository.git
+[upstream] no changes from git+https://github.com/ocaml/opam-repository.git
+upstream (at git+https://github.com/ocaml/opam-repository.git): 
+    [WARNING] opam is out-of-date. Please consider updating it (https://opam.ocaml.org/doc/Install.html)
+
+
+<><> Synchronising development packages <><><><><><><><><><><><><><><><><><><><>
+[ocamlfind.1.9.3.git] downloaded from https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+[coq-core.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[orun.0.1] no changes from git+https://github.com/ocaml-bench/orun.git
+[coq-stdlib.dev] downloaded from https://github.com/ejgallego/coq/archive/refs/tags/multicore-2021-09-29.tar.gz
+[runtime_events_tools.~dev] no changes from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+The following actions will be performed:
+  - install conf-gmp                1
+  - install ocaml_intrinsics_kernel v0.17.1
+  - install conf-pkg-config         1.2
+  - install conf-findutils          1
+  - install conf-m4                 1
+  - install yojson                  2.2.2
+  - install conf-autoconf           0.2
+  - install thread-table            1.0.0
+  - install sexplib0                v0.17.0
+  - install ocaml-syntax-shims      1.0.0
+  - install conf-cmake              1
+  - install stdlib-shims            0.1.0
+  - install eqaf                    0.10
+  - install either                  1.0.0
+  - install menhirLib               20200612
+  - install stringext               1.6.0
+  - install menhirSdk               20200612
+  - install conf-openblas           0.2.2
+  - install ocamlbuild              0.15.0
+  - install bigarray-compat         1.1.0
+  - install base-bytes              base
+  - install conf-perl               1
+  - install cppo                    1.6.7
+  - install minilight               1.6
+  - install re                      1.12.0
+  - install owl-base                1.1
+  - install num                     1.3
+  - install camlp-streams           5.0
+  - install cmdliner                1.3.0
+  - install optint                  0.3.0
+  - install result                  1.5
+  - install domain_shims            0.1.0
+  - install conf-zlib               1
+  - install conf-libffi             2.0.0
+  - install domain-local-await      1.0.1
+  - install rungen                  0.0.1
+  - install base                    v0.17.1
+  - install ocamlgraph              2.0.0
+  - install integers                0.7.0
+  - install menhir                  20200612
+  - install topkg                   1.0.7
+  - install nbcodec                 20151119
+  - install bigstringaf             0.6.1
+  - install digestif                1.0.0
+  - install base64                  3.4.0
+  - install zarith                  1.10
+  - install ocplib-endian           1.2
+  - install ocplib-simplex          0.4.1
+  - install cubicle                 1.2.0
+  - install orun                    0.1*
+  - install checkseum               0.3.4
+  - install saturn_lockfree         0.4.0
+  - install camlzip                 1.13
+  - install stdio                   v0.17.0
+  - install ctypes                  0.23.0
+  - install psmt2-frontend          0.4.0
+  - install uutf                    1.0.3
+  - install uuidm                   0.9.9
+  - install rresult                 0.6.0
+  - install react                   1.2.2
+  - install mtime                   1.2.0
+  - install fmt                     0.9.0
+  - install astring                 0.8.5
+  - install angstrom                0.16.1
+  - install lwt                     5.7.0
+  - install alt-ergo-lib            2.4.2
+  - install decompress              1.1.0
+  - install saturn                  0.4.0
+  - install npy                     0.0.9
+  - install ctypes-foreign          0.23.0
+  - install jsonm                   1.0.2
+  - install uri                     4.1.0
+  - install logs                    0.7.0
+  - install alt-ergo-parsers        2.4.2
+  - install domainslib              0.5.1
+  - install owl                     1.1
+  - install hdr_histogram           0.0.4
+  - install repr                    0.6.0
+  - install alt-ergo                2.4.2
+  - install runtime_events_tools    ~dev*
+===== 80 to install =====
+
+<><> Gathering sources ><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+[alt-ergo-lib.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[alt-ergo-parsers.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[alt-ergo-lib.2.4.2/version_update.patch] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/alt-ergo-lib/version_update.patch
+[astring.0.8.5] downloaded from https://erratique.ch/software/astring/releases/astring-0.8.5.tbz
+[alt-ergo.2.4.2] downloaded from https://github.com/OCamlPro/alt-ergo/archive/refs/tags/2.4.2.tar.gz
+[angstrom.0.16.1] downloaded from https://github.com/inhabitedtype/angstrom/archive/0.16.1.tar.gz
+[base64.3.4.0] downloaded from https://github.com/mirage/ocaml-base64/releases/download/v3.4.0/base64-v3.4.0.tbz
+[base.v0.17.1] downloaded from https://github.com/janestreet/base/archive/refs/tags/v0.17.1.tar.gz
+[bigarray-compat.1.1.0] downloaded from https://github.com/mirage/bigarray-compat/releases/download/v1.1.0/bigarray-compat-1.1.0.tbz
+[camlp-streams.5.0] downloaded from https://github.com/ocaml/camlp-streams/archive/refs/tags/v5.0.tar.gz
+[camlzip.1.13] downloaded from https://github.com/xavierleroy/camlzip/archive/rel113.tar.gz
+[bigstringaf.0.6.1] downloaded from https://github.com/inhabitedtype/bigstringaf/archive/0.6.1.tar.gz
+[conf-cmake.1/configure.sh] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/conf-cmake/configure.sh
+[cmdliner.1.3.0] downloaded from https://erratique.ch/software/cmdliner/releases/cmdliner-1.3.0.tbz
+[conf-gmp.1/test.c] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/conf-gmp/test.c.1
+[checkseum.0.3.4] downloaded from https://github.com/mirage/checkseum/releases/download/v0.3.4/checkseum-0.3.4.tbz
+[conf-openblas.0.2.2/test.c] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/conf-openblas/test.c.0.2.2
+[cppo.1.6.7] downloaded from cache at https://opam.ocaml.org/cache/
+[ctypes-foreign.0.23.0] downloaded from https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.23.0.tar.gz
+[ctypes.0.23.0] downloaded from https://github.com/yallop/ocaml-ctypes/archive/refs/tags/0.23.0.tar.gz
+[cubicle.1.2.0] downloaded from https://github.com/cubicle-model-checker/cubicle/releases/download/1.2.0/cubicle-1.2.0.tar.gz
+[cubicle.1.2.0/cubicle.install] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/cubicle/cubicle.install
+[decompress.1.1.0] downloaded from https://github.com/mirage/decompress/releases/download/v1.1.0/decompress-v1.1.0.tbz
+[digestif.1.0.0] downloaded from https://github.com/mirage/digestif/releases/download/v1.0.0/digestif-v1.0.0.tbz
+[domain-local-await.1.0.1] downloaded from https://github.com/ocaml-multicore/domain-local-await/releases/download/1.0.1/domain-local-await-1.0.1.tbz
+[domain_shims.0.1.0] downloaded from https://gitlab.com/gasche/domain-shims/-/archive/0.1.0/domain-shims-0.1.0.tar.gz
+[either.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[domainslib.0.5.1] downloaded from https://github.com/ocaml-multicore/domainslib/releases/download/0.5.1/domainslib-0.5.1.tbz
+[fmt.0.9.0] downloaded from https://erratique.ch/software/fmt/releases/fmt-0.9.0.tbz
+[eqaf.0.10] downloaded from https://github.com/mirage/eqaf/releases/download/v0.10/eqaf-0.10.tbz
+[hdr_histogram.0.0.4] downloaded from https://github.com/ocaml-multicore/hdr_histogram_ocaml/releases/download/0.0.4/hdr_histogram-0.0.4.tbz
+[jsonm.1.0.2] downloaded from https://erratique.ch/software/jsonm/releases/jsonm-1.0.2.tbz
+[integers.0.7.0] downloaded from https://github.com/yallop/ocaml-integers/archive/0.7.0.tar.gz
+[logs.0.7.0] downloaded from https://erratique.ch/software/logs/releases/logs-0.7.0.tbz
+[lwt.5.7.0] downloaded from https://github.com/ocsigen/lwt/archive/refs/tags/5.7.0.tar.gz
+[menhir.20200612] downloaded from https://gitlab.inria.fr/fpottier/menhir/-/archive/20200612/archive.tar.gz
+[menhirLib.20200612] downloaded from https://gitlab.inria.fr/fpottier/menhir/-/archive/20200612/archive.tar.gz
+[menhirSdk.20200612] downloaded from https://gitlab.inria.fr/fpottier/menhir/-/archive/20200612/archive.tar.gz
+[mtime.1.2.0] downloaded from cache at https://opam.ocaml.org/cache/
+[minilight.1.6] downloaded from http://www.hxa.name/minilight/minilight16ocaml.tar.gz
+[nbcodec.20151119] downloaded from https://github.com/dbuenzli/nbcodec/archive/54ede66d0f552628625c9e0599df592bda63ab2e.tar.gz
+[minilight.1.6/minilight.install] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/minilight/minilight.install
+[npy.0.0.9] downloaded from https://github.com/LaurentMazare/npy-ocaml/archive/0.0.9.tar.gz
+[ocaml-syntax-shims.1.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[num.1.3] downloaded from https://github.com/ocaml/num/archive/v1.3.tar.gz
+[ocaml_intrinsics_kernel.v0.17.1] downloaded from https://github.com/janestreet/ocaml_intrinsics_kernel/archive/refs/tags/v0.17.1.tar.gz
+[num.1.3/installation-warning.patch] downloaded from https://raw.githubusercontent.com/ocaml/opam-source-archives/main/patches/num/installation-warning.patch
+[ocamlbuild.0.15.0] downloaded from https://github.com/ocaml/ocamlbuild/archive/refs/tags/0.15.0.tar.gz
+[ocamlgraph.2.0.0] downloaded from cache at https://opam.ocaml.org/cache/
+[ocplib-endian.1.2] downloaded from https://github.com/OCamlPro/ocplib-endian/archive/refs/tags/1.2.tar.gz
+[ocplib-simplex.0.4.1] downloaded from https://github.com/OCamlPro/ocplib-simplex/archive/refs/tags/v0.4.1.tar.gz
+[optint.0.3.0] downloaded from https://github.com/mirage/optint/releases/download/v0.3.0/optint-0.3.0.tbz
+[owl.1.1] downloaded from https://github.com/owlbarn/owl/releases/download/1.1/owl-1.1.tbz
+[owl-base.1.1] downloaded from https://github.com/owlbarn/owl/releases/download/1.1/owl-1.1.tbz
+[psmt2-frontend.0.4.0] downloaded from https://github.com/OCamlPro-Coquera/psmt2-frontend/archive/0.4.0.tar.gz
+[re.1.12.0] downloaded from https://github.com/ocaml/ocaml-re/releases/download/1.12.0/re-1.12.0.tbz
+[react.1.2.2] downloaded from https://erratique.ch/software/react/releases/react-1.2.2.tbz
+[result.1.5] downloaded from cache at https://opam.ocaml.org/cache/
+[rresult.0.6.0] downloaded from http://erratique.ch/software/rresult/releases/rresult-0.6.0.tbz
+[repr.0.6.0] downloaded from https://github.com/mirage/repr/releases/download/0.6.0/repr-fuzz-0.6.0.tbz
+[rungen.0.0.1] downloaded from https://github.com/shakthimaan/rungen/releases/download/v0.0.1/rungen-v0.0.1.tbz
+[runtime_events_tools.~dev] synchronised from git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+[saturn.0.4.0] downloaded from https://github.com/ocaml-multicore/saturn/releases/download/0.4.0/saturn-0.4.0.tbz
+[sexplib0.v0.17.0] downloaded from https://github.com/janestreet/sexplib0/archive/refs/tags/v0.17.0.tar.gz
+[saturn_lockfree.0.4.0] downloaded from https://github.com/ocaml-multicore/saturn/releases/download/0.4.0/saturn-0.4.0.tbz
+[stdio.v0.17.0] downloaded from https://github.com/janestreet/stdio/archive/refs/tags/v0.17.0.tar.gz
+[stdlib-shims.0.1.0] downloaded from https://github.com/ocaml/stdlib-shims/releases/download/0.1.0/stdlib-shims-0.1.0.tbz
+[stringext.1.6.0] downloaded from https://github.com/rgrinberg/stringext/releases/download/1.6.0/stringext-1.6.0.tbz
+[thread-table.1.0.0] downloaded from https://github.com/ocaml-multicore/thread-table/releases/download/1.0.0/thread-table-1.0.0.tbz
+[topkg.1.0.7] downloaded from https://erratique.ch/software/topkg/releases/topkg-1.0.7.tbz
+[uri.4.1.0] downloaded from cache at https://opam.ocaml.org/cache/
+[uuidm.0.9.9] downloaded from https://erratique.ch/software/uuidm/releases/uuidm-0.9.9.tbz
+[uutf.1.0.3] downloaded from https://erratique.ch/software/uutf/releases/uutf-1.0.3.tbz
+[yojson.2.2.2] downloaded from https://github.com/ocaml-community/yojson/releases/download/2.2.2/yojson-2.2.2.tbz
+[zarith.1.10] downloaded from https://github.com/ocaml/Zarith/archive/release-1.10.tar.gz
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+-> installed base-bytes.base
+-> installed bigarray-compat.1.1.0
+-> installed camlp-streams.5.0
+-> installed cmdliner.1.3.0
+-> installed bigstringaf.0.6.1
+-> installed conf-autoconf.0.2
+-> installed conf-cmake.1
+-> installed conf-findutils.1
+-> installed conf-gmp.1
+-> installed conf-m4.1
+-> installed conf-openblas.0.2.2
+-> installed conf-perl.1
+-> installed conf-pkg-config.1.2
+-> installed cppo.1.6.7
+-> installed domain_shims.0.1.0
+-> installed either.1.0.0
+-> installed eqaf.0.10
+-> installed menhirLib.20200612
+-> installed menhirSdk.20200612
+-> installed minilight.1.6
+-> installed ocaml-syntax-shims.1.0.0
+-> installed ocaml_intrinsics_kernel.v0.17.1
+-> installed optint.0.3.0
+-> installed re.1.12.0
+-> installed result.1.5
+-> installed sexplib0.v0.17.0
+-> installed stdlib-shims.0.1.0
+-> installed stringext.1.6.0
+-> installed thread-table.1.0.0
+-> installed yojson.2.2.2
+-> installed owl-base.1.1
+-> installed num.1.3
+-> installed angstrom.0.16.1
+-> installed base.v0.17.1
+-> installed base64.3.4.0
+-> installed checkseum.0.3.4
+-> installed conf-libffi.2.0.0
+-> installed conf-zlib.1
+-> installed digestif.1.0.0
+-> installed domain-local-await.1.0.1
+-> installed integers.0.7.0
+-> installed menhir.20200612
+-> installed ocamlbuild.0.15.0
+-> installed ocamlgraph.2.0.0
+-> installed ocplib-endian.1.2
+-> installed orun.0.1
+-> installed rungen.0.0.1
+-> installed saturn_lockfree.0.4.0
+-> installed zarith.1.10
+-> installed camlzip.1.13
+-> installed ctypes.0.23.0
+-> installed decompress.1.1.0
+-> installed psmt2-frontend.0.4.0
+-> installed stdio.v0.17.0
+-> installed topkg.1.0.7
+-> installed uri.4.1.0
+-> installed saturn.0.4.0
+-> installed cubicle.1.2.0
+-> installed nbcodec.20151119
+-> installed lwt.5.7.0
+-> installed npy.0.0.9
+-> installed astring.0.8.5
+-> installed fmt.0.9.0
+-> installed mtime.1.2.0
+-> installed react.1.2.2
+-> installed rresult.0.6.0
+-> installed uuidm.0.9.9
+-> installed uutf.1.0.3
+-> installed domainslib.0.5.1
+-> installed ocplib-simplex.0.4.1
+-> installed ctypes-foreign.0.23.0
+-> installed logs.0.7.0
+-> installed jsonm.1.0.2
+-> installed repr.0.6.0
+-> installed hdr_histogram.0.0.4
+-> installed alt-ergo-lib.2.4.2
+-> installed runtime_events_tools.~dev
+-> installed alt-ergo-parsers.2.4.2
+-> installed alt-ergo.2.4.2
+-> installed owl.1.1
+Done.
+# Run eval $(opam env) to update the current shell environment
+# Packages matching: installed
+# Name                  # Installed # Synopsis
+alt-ergo                2.4.2       The Alt-Ergo SMT prover
+alt-ergo-lib            2.4.2       The Alt-Ergo SMT prover library
+alt-ergo-parsers        2.4.2       The Alt-Ergo SMT prover parser library
+angstrom                0.16.1      Parser combinators built for speed and memory-efficiency
+astring                 0.8.5       Alternative String module for OCaml
+base                    v0.17.1     Full standard library replacement for OCaml
+base-bigarray           base
+base-bytes              base        Bytes library distributed with the OCaml compiler
+base-threads            base
+base-unix               base
+base64                  3.4.0       Base64 encoding for OCaml
+bigarray-compat         1.1.0       Compatibility library to use Stdlib.Bigarray when possible
+bigstringaf             0.6.1       Bigstring intrinsics and fast blits based on memcpy/memmove
+camlp-streams           5.0         The Stream and Genlex libraries for use with Camlp4 and Camlp5
+camlzip                 1.13        Accessing compressed files in ZIP, GZIP and JAR format
+checkseum               0.3.4       Adler-32, CRC32 and CRC32-C implementation in C and OCaml
+cmdliner                1.3.0       Declarative definition of command line interfaces for OCaml
+conf-autoconf           0.2         Virtual package relying on autoconf installation
+conf-cmake              1           Virtual package relying on cmake
+conf-findutils          1           Virtual package relying on findutils
+conf-gmp                1           Virtual package relying on a GMP lib system installation
+conf-libffi             2.0.0       Virtual package relying on libffi system installation
+conf-m4                 1           Virtual package relying on m4
+conf-openblas           0.2.2       Virtual package to install OpenBLAS and LAPACKE
+conf-perl               1           Virtual package relying on perl
+conf-pkg-config         1.2         Virtual package relying on pkg-config installation
+conf-zlib               1           Virtual package relying on zlib
+cppo                    1.6.7       Code preprocessor like cpp for OCaml
+csexp                   1.5.2       Parsing and printing of S-expressions in Canonical form
+ctypes                  0.23.0      Combinators for binding to C libraries without writing any C
+ctypes-foreign          0.23.0      Dynamic access to foreign C libraries using Ctypes
+cubicle                 1.2.0       SMT based model checker for parameterized systems
+decompress              1.1.0       Implementation of Zlib and GZip in OCaml
+digestif                1.0.0       Hashes implementations (SHA*, RIPEMD160, BLAKE2* and MD5)
+domain-local-await      1.0.1       A scheduler independent blocking mechanism
+domain_shims            0.1.0       A non-parallel implementation of Domains compatible with OCaml 4
+domainslib              0.5.1       Parallel Structures over Domains for Multicore OCaml
+dune                    3.15.3      pinned to version 3.15.3
+dune-configurator       3.15.3      Helper library for gathering system configuration
+either                  1.0.0       Compatibility Either module
+eqaf                    0.10        Constant-time equal function on string
+fmt                     0.9.0       OCaml Format pretty-printer combinators
+hdr_histogram           0.0.4       OCaml bindings to Hdr Histogram
+integers                0.7.0       Various signed and unsigned integer types for OCaml
+jsonm                   1.0.2       Non-blocking streaming JSON codec for OCaml
+logs                    0.7.0       Logging infrastructure for OCaml
+lru                     0.3.1       Scalable LRU caches
+lwt                     5.7.0       Promises and event-driven I/O
+menhir                  20200612    An LR(1) parser generator
+menhirLib               20200612    Runtime support library for parsers generated by Menhir
+menhirSdk               20200612    Compile-time library for auxiliary tools related to Menhir
+minilight               1.6         Minimal global illumination renderer.
+mtime                   1.2.0       Monotonic wall-clock time for OCaml
+nbcodec                 20151119    non-blocking IO interface design
+npy                     0.0.9       Numpy npy file format reading/writing.
+num                     1.3         The legacy Num library for arbitrary-precision integer and rational arithmetic
+ocaml                   5.4.0+trunk The OCaml compiler (virtual package)
+ocaml-base-compiler     5.4.0+trunk OCaml compiler
+ocaml-config            1           OCaml Switch Configuration
+ocaml-syntax-shims      1.0.0       Backport new syntax to older OCaml versions
+ocaml_intrinsics_kernel v0.17.1     Intrinsics
+ocamlbuild              0.15.0      OCamlbuild is a build system with builtin rules to easily build most OCaml projects
+ocamlfind               1.9.3.git   pinned to version 1.9.3.git at https://github.com/dra27/ocamlfind/archive/lib-layout.tar.gz
+ocamlgraph              2.0.0       A generic graph library for OCaml
+ocplib-endian           1.2         Optimised functions to read and write int16/32/64 from strings and bigarrays
+ocplib-simplex          0.4.1       A library implementing a simplex algorithm, in a functional style, for solving systems of linear inequalities
+optint                  0.3.0       Efficient integer types on 64-bit architectures
+orun                    0.1         pinned to version 0.1 at git+https://github.com/ocaml-bench/orun.git
+owl                     1.1         OCaml Scientific and Engineering Computing
+owl-base                1.1         OCaml Scientific and Engineering Computing - Base
+psmt2-frontend          0.4.0       The psmt2-frontend project
+psq                     0.2.1       Functional Priority Search Queues
+re                      1.12.0      RE is a regular expression library for OCaml
+react                   1.2.2       Declarative events and signals for OCaml
+repr                    0.6.0       Dynamic type representations. Provides no stability guarantee
+result                  1.5         Compatibility Result module
+rresult                 0.6.0       Result value combinators for OCaml
+rungen                  0.0.1       Generates dune files to run benchmarks from centralised config
+runtime_events_tools    ~dev        pinned to version ~dev at git+https://github.com/sadiqj/runtime_events_tools.git#09630b67b82f7d3226736793dd7bfc33999f4b25
+saturn                  0.4.0       Parallelism-safe data structures for multicore OCaml
+saturn_lockfree         0.4.0       Lock-free data structures for multicore OCaml
+seq                     base        Compatibility package for OCaml's standard iterator type starting from 4.07.
+sexplib0                v0.17.0     Library containing the definition of S-expressions and some base converters
+stdio                   v0.17.0     Standard IO library for OCaml
+stdlib-shims            0.1.0       Backport some of the new stdlib features to older compiler
+stringext               1.6.0       Extra string functions for OCaml
+thread-table            1.0.0       A lock-free thread-safe integer keyed hash table
+topkg                   1.0.7       The transitory OCaml software packager
+uri                     4.1.0       An RFC3986 URI/URL parsing library
+uuidm                   0.9.9       Universally unique identifiers (UUIDs) for OCaml
+uutf                    1.0.3       Non-blocking streaming Unicode codec for OCaml
+yojson                  2.2.2       Yojson is an optimized parsing and printing library for the JSON format
+zarith                  1.10        Implements arithmetic and logical operations over arbitrary-precision integers
+git log -n 1
+commit 5605805954a00497ed197c930641cddd580e1507
+Author: KC Sivaramakrishnan <kc@kcsrk.info>
+Date:   Tue Aug 27 11:48:16 2024 +0530
+
+    Update sequential notebook
+opam exec --switch 5.4.0+trunk -- rungen _build/5.4.0+trunk_1 run_config_filtered.json > runs_dune.inc
+opam exec --switch 5.4.0+trunk -- dune build --profile=release --workspace=ocaml-versions/.workspace.5.4.0+trunk @buildbench;
+File "benchmarks/valet/test_lib.ml", line 19, characters 13-20:
+19 |         id = Uuidm.v `V4;
+                  ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+
+File "benchmarks/valet/test_lib.ml", line 46, characters 11-18:
+46 |       id = Uuidm.v `V4;
+                ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+
+File "benchmarks/valet/test_lib.ml", line 83, characters 13-20:
+83 |     let id = Uuidm.v `V4 in
+                  ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+File "benchmarks/valet/test_lib.ml", line 19, characters 13-20:
+19 |         id = Uuidm.v `V4;
+                  ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+
+File "benchmarks/valet/test_lib.ml", line 46, characters 11-18:
+46 |       id = Uuidm.v `V4;
+                ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+
+File "benchmarks/valet/test_lib.ml", line 83, characters 13-20:
+83 |     let id = Uuidm.v `V4 in
+                  ^^^^^^^
+Alert deprecated: Uuidm.v
+Use the version specific Uuidm.v* functions.
+Generating edge list...
+Generated. Time: 93.350516 s.
+Executing benchmarks with:
+  RUN_CONFIG_JSON=run_config_filtered.json
+  RUN_BENCH_TARGET=run_pausetimes  (WRAPPER=pausetimes)
+  PRE_BENCH_EXEC=
